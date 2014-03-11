@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:padding="8.0dip" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="10.0dip" >
+
+        <ImageView
+            android:id="@id/imagem"
+            android:layout_width="200.0dip"
+            android:layout_height="200.0dip"
+            android:paddingLeft="10.0dip" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="10.0dip" >
+
+            <TextView
+                android:id="@id/titulo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Promoções do dias"
+                android:textSize="20.0dip" />
+            
+            <TextView
+                android:id="@id/descricao"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                 />
+
+            <TextView
+                android:id="@id/preco"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <!--
+            LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="9.0dip"
+                    android:src="@drawable/branco" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="9.0dip"
+                    android:src="@drawable/preto" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="9.0dip"
+                    android:src="@drawable/amarelo" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="9.0dip"
+                    android:src="@drawable/azul" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="9.0dip"
+                    android:src="@drawable/verde" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="9.0dip"
+                    android:src="@drawable/vermelho" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="9.0dip"
+                    android:src="@drawable/rosa" />
+            </LinearLayout
+            -->
+
+            <RadioGroup
+                android:id="@id/tamanho"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:orientation="horizontal"
+                android:visibility="visible" >
+
+                <RadioButton
+                    android:id="@id/P"
+                    android:checked="true"
+                    android:hint="P" />
+
+                <RadioButton
+                    android:id="@id/M"
+                    android:hint="M" />
+
+                <RadioButton
+                    android:id="@id/G"
+                    android:hint="G" />
+
+                <RadioButton
+                    android:id="@id/GG"
+                    android:hint="GG" />
+
+                <RadioButton
+                    android:id="@id/T_34"
+                    android:hint="34" />
+
+                <RadioButton
+                    android:id="@id/T_35"
+                    android:hint="35" />
+
+                <RadioButton
+                    android:id="@id/T_36"
+                    android:hint="36" />
+
+                <RadioButton
+                    android:id="@id/T_37"
+                    android:hint="37" />
+
+                <RadioButton
+                    android:id="@id/T_38"
+                    android:hint="38" />
+
+                <RadioButton
+                    android:id="@id/T_39"
+                    android:hint="39" />
+
+                <RadioButton
+                    android:id="@id/T_40"
+                    android:hint="40" />
+            </RadioGroup>
+
+            <Button
+                android:id="@id/adicionar"
+                style="?android:attr/verticalDivider"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1.0"
+                android:gravity="center"
+                android:text="Adicionar" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

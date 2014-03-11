@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/all_in_shopping"
+    android:orientation="vertical" >
+
+    <EditText
+        android:id="@id/zipcode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="65dip"
+        android:layout_marginLeft="27.0dip"
+        android:ems="10"
+        android:hint="Informe o CEP"
+        android:maxLength="9" />
+
+    <TextView
+        android:id="@+id/shopping"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/progressText"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="60dp"
+        android:gravity="bottom|left|center"
+        android:text="Shopping"
+        android:textColor="#ff008080"
+        android:textSize="60sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@id/progressText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/zipcode"
+        android:layout_alignParentLeft="true"
+        android:gravity="bottom|left|center"
+        android:textColor="#ff008080"
+        android:textSize="60sp"
+        android:textStyle="bold" />
+
+</RelativeLayout>

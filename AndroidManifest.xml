@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest android:versionCode="1" android:versionName="1.0" package="com.pmrodrigues.android.allinshopping"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-sdk android:minSdkVersion="15" android:targetSdkVersion="19" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <application android:theme="@style/AppTheme" android:label="@string/app_name" android:icon="@drawable/ic_launcher" android:hardwareAccelerated="true" android:allowBackup="false">
+        <activity android:label="@string/app_name" android:name="com.pmrodrigues.android.allinshopping.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:label="@string/app_name" android:name="com.pmrodrigues.android.allinshopping.HomeActivity" />
+        <activity android:label="@string/shopping_cart" android:name="com.pmrodrigues.android.allinshopping.ShoppingCartActivity" />
+        <activity android:label="@string/cliente" android:name="com.pmrodrigues.android.allinshopping.ClienteActivity" />
+        <activity android:label="@string/pagamento" android:name="com.pmrodrigues.android.allinshopping.PagamentoActivity" />
+        <activity android:label="@string/clientes" android:name="com.pmrodrigues.android.allinshopping.ListClientesActivity" />
+        <activity android:label="@string/app_name" android:name="com.pmrodrigues.android.allinshopping.LogarActivity" />
+        <activity android:label="@string/title_activity_cartao_credito" android:name="com.pmrodrigues.android.allinshopping.CartaoCreditoActivity" />
+        <activity android:label="@string/title_activity_conta_bancaria" android:name="com.pmrodrigues.android.allinshopping.ContaBancariaActivity" />
+        <activity android:label="@string/title_activity_configuration" android:name="com.pmrodrigues.android.allinshopping.ConfigurationActivity" />
+    </application>
+</manifest>
