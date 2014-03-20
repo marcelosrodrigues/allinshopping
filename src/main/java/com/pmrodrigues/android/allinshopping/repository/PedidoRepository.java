@@ -12,16 +12,12 @@ import android.util.Log;
 
 import com.j256.ormlite.dao.Dao;
 import com.pmrodrigues.android.allinshopping.exceptions.InitializationDbException;
-import com.pmrodrigues.android.allinshopping.models.DadosPagamento;
 import com.pmrodrigues.android.allinshopping.models.ItemPedido;
 import com.pmrodrigues.android.allinshopping.models.Pedido;
 
 
 public class PedidoRepository extends AbstractRepository<Pedido,Long>
 {
-
-    private final Dao<ItemPedido,Long> ITEM_DAO;
-    private final Dao<DadosPagamento, Long> PAGTO_DAO;
     private final Dao<Pedido,Long> PEDIDO_DAO;
 
     public PedidoRepository(Context context)
@@ -29,9 +25,7 @@ public class PedidoRepository extends AbstractRepository<Pedido,Long>
         super(context);
         try
         {
-            ITEM_DAO = getDatabase().getItemDao();
-            PEDIDO_DAO = getDatabase().getPedidoDao();
-            PAGTO_DAO = getDatabase().getDadosPagamento();
+			PEDIDO_DAO = getDatabase().getPedidoDao();
             return;
         }
         catch (SQLException sqlexception)
@@ -40,48 +34,16 @@ public class PedidoRepository extends AbstractRepository<Pedido,Long>
         }
     }
 
-    public void insert(DadosPagamento dadospagamento)
-    {
-        try
-        {
-            Log.i("com.pmrodrigues.android.allinshopping", String.format("Salvando os dados de pagamento %s",dadospagamento));
-            PAGTO_DAO.createIfNotExists(dadospagamento);
-            Log.i("com.pmrodrigues.android.allinshopping", String.format("Dados de pagamento %s salvo com sucesso",dadospagamento));
-        }
-        catch (SQLException sqlexception)
-        {
-            Log.e("com.pmrodrigues.android.allinshopping", "erro ao salvar o pedido " + sqlexception.getMessage(), sqlexception);
-            throw new RuntimeException(sqlexception);
-        }
-    }
 
-    public void insert(ItemPedido itempedido)
-    {
-        try
-        {
-            Log.i("com.pmrodrigues.android.allinshopping", String.format("Salvando o item %s",itempedido));
-            ITEM_DAO.createIfNotExists(itempedido);
-            Log.i("com.pmrodrigues.android.allinshopping", String.format("Item %s salvo com sucesso",itempedido));
-            return;
-        }
-        catch (SQLException sqlexception)
-        {
-            Log.e("com.pmrodrigues.android.allinshopping", "erro ao salvar o item " + sqlexception.getMessage(), sqlexception);
-            throw new RuntimeException(sqlexception);
-        }
-    }
-
-    public void insert(Pedido pedido)
+    @Override
+	public void insert(Pedido pedido)
     {
         try
         {
             Log.i("com.pmrodrigues.android.allinshopping", String.format("Salvando o pedido %s",pedido));
             this.getDao().create(pedido);
-            Log.i("com.pmrodrigues.android.allinshopping", String.format("Pedido %s salvo",pedido));
-            for(ItemPedido item : pedido.getItens()) {
-            	item.setPedido(pedido);
-            	insert(item);
-            }
+			Log.i("com.pmrodrigues.android.allinshopping",
+					String.format("Pedido %s salvo", pedido));
             
         }
         catch (SQLException sqlexception)

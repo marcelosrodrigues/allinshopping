@@ -2,6 +2,7 @@ package com.pmrodrigues.android.allinshopping.models;
 
 import java.io.Serializable;
 
+import com.google.gson.annotations.SerializedName;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -21,10 +22,15 @@ public class FaixaEntrega
     @DatabaseField(id=true,columnName=FaixaEntrega.ID_FIELD)
     private Long id;
     
+	@SerializedName("id_faixa_preco")
     @DatabaseField(columnName=FaixaEntrega.ID_FAIXA_FIELD)
     private Long idFaixa;
+
+	@SerializedName("uf_destino")
     @DatabaseField(columnName=FaixaEntrega.UF_DESTINO_FIELD)
     private String ufDestino;
+
+	@SerializedName("uf_origem")
     @DatabaseField(columnName=FaixaEntrega.UF_ORIGEM_FIELD)
     private String ufOrigem;
 

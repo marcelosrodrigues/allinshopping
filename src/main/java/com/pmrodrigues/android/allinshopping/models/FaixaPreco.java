@@ -3,6 +3,7 @@ package com.pmrodrigues.android.allinshopping.models;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import com.google.gson.annotations.SerializedName;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable
@@ -21,12 +22,20 @@ public class FaixaPreco
     
     @DatabaseField(id=true,columnName=FaixaPreco.ID_FIELD)
     private Long id;
+
+	@SerializedName("id_faixa")
     @DatabaseField(columnName=FaixaPreco.ID_FAIXA_FIELD)
     private Long idFaixa;
+
+	@SerializedName("peso_final")
     @DatabaseField(columnName=FaixaPreco.PESO_FINAL_FIELD)
     private Long pesoFinal;
+
+	@SerializedName("peso_inicial")
     @DatabaseField(columnName=FaixaPreco.PESO_INICIAL_FIELD)
     private Long pesoInicial;
+
+	@SerializedName("preco")
     @DatabaseField(columnName=FaixaPreco.PRECO_FIELD)
     private BigDecimal preco;
 

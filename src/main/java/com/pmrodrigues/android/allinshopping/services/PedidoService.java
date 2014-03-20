@@ -21,16 +21,22 @@ import com.pmrodrigues.android.allinshopping.integration.IntegrationFactory;
 import com.pmrodrigues.android.allinshopping.models.DadosPagamento;
 import com.pmrodrigues.android.allinshopping.models.ItemPedido;
 import com.pmrodrigues.android.allinshopping.models.Pedido;
+import com.pmrodrigues.android.allinshopping.repository.DadosPagamentoRepository;
+import com.pmrodrigues.android.allinshopping.repository.ItemPedidoRepository;
 import com.pmrodrigues.android.allinshopping.repository.PedidoRepository;
 
 public class PedidoService
 {
 
-    private final PedidoRepository CART_REPOSITORY;
+    private final PedidoRepository PEDIDO_REPOSITORY;
+	private final ItemPedidoRepository ITEM_PEDIDO_REPOSITORY;
+	private final DadosPagamentoRepository DADO_PAGTO_REPOSITORY;
 
     public PedidoService(Context context)
     {
-        CART_REPOSITORY = new PedidoRepository(context);
+        PEDIDO_REPOSITORY = new PedidoRepository(context);
+		ITEM_PEDIDO_REPOSITORY = new ItemPedidoRepository(context);
+		DADO_PAGTO_REPOSITORY = new DadosPagamentoRepository(context);
     }
 
     private JSONObject createJSON(Long idShop, Pedido pedido, BigDecimal totalvenda, BigDecimal totalliquido, List<ItemPedido> itens)
@@ -86,14 +92,14 @@ public class PedidoService
     public void save(final DadosPagamento dadospagamento)
     {
         try {
-			TransactionManager.callInTransaction(CART_REPOSITORY.getConnectionSource(), new Callable<Void>(){
+			TransactionManager.callInTransaction(PEDIDO_REPOSITORY.getConnectionSource(), new Callable<Void>(){
 
 				@Override
 				public Void call() throws Exception {
-					CART_REPOSITORY.insert(dadospagamento);
+							DADO_PAGTO_REPOSITORY.insert(dadospagamento);
 					Pedido pedido = dadospagamento.getPedido();
 					pedido.setDadosPagamento(dadospagamento);
-					CART_REPOSITORY.update(dadospagamento.getPedido());
+					PEDIDO_REPOSITORY.update(dadospagamento.getPedido());
 					return null;
 				}
 			});
@@ -107,15 +113,19 @@ public class PedidoService
     {
         
         try {
-			TransactionManager.callInTransaction(CART_REPOSITORY.getConnectionSource(), new Callable<Void>() {
+			TransactionManager.callInTransaction(PEDIDO_REPOSITORY.getConnectionSource(), new Callable<Void>() {
 
 				@Override
 				public Void call() throws Exception {
 					
 					if( pedido.getId() != null && pedido.getId() > 0L) {
-						CART_REPOSITORY.update(pedido);
+						PEDIDO_REPOSITORY.update(pedido);
 					} else {
-						CART_REPOSITORY.insert(pedido);
+						PEDIDO_REPOSITORY.insert(pedido);
+								for (ItemPedido item : pedido.getItens()) {
+									item.setPedido(pedido);
+									ITEM_PEDIDO_REPOSITORY.insert(item);
+								}
 					}
 					
 					return null;
@@ -131,7 +141,7 @@ public class PedidoService
         throws Exception
     {
     	
-    	List<Pedido> pedidos = CART_REPOSITORY.listToBackoffice();
+    	List<Pedido> pedidos = PEDIDO_REPOSITORY.listToBackoffice();
     	List<ItemPedido> itens = new ArrayList<ItemPedido>();
 		BigDecimal totalvenda = BigDecimal.ZERO;
 		BigDecimal totalvendaliquida = BigDecimal.ZERO;
@@ -165,7 +175,7 @@ public class PedidoService
 				totalvendaliquida = BigDecimal.ZERO;
 		    	idShop = 0L;
 		    	pedido.enviado();
-		    	CART_REPOSITORY.update(pedido);
+		    	PEDIDO_REPOSITORY.update(pedido);
 	    	
     		}
     		

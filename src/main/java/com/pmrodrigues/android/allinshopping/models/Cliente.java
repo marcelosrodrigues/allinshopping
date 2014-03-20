@@ -22,26 +22,50 @@ public class Cliente extends ValidationConstraint
 {
 
     private static final long serialVersionUID = 1L;
+
+	private static final String BAIRRO_FIELD_NAME = "bairro";
+
+	private static final String CEP_FIELD_NAME = "cep";
+
+	private static final String CIDADE_FIELD_NAME = "cidade";
+
+	private static final String COMPLEMENTO_FIELD_NAME = "complemento";
+
+	private static final String DATA_NASCIMENTO_FIELD_NAME = "datanascimento";
+
+	private static final String EMAIL_FIELD_NAME = "email";
+
+	private static final String ESTADO_FIELD_NAME = "estado";
+
+	private static final String LOGRADOURO_FIELD_NAME = "logradouro";
+
+	private static final String NOME_FIELD_NAME = "nome";
+
+	private static final String NUMERO_FIELD_NAME = "numero";
+
+	private static final String TELEFONE_FIELD_NAME = "telefone";
+
+	private static final String CELULAR_FIELD_NAME = "celular";
     
-    @DatabaseField
+	@DatabaseField(columnName = Cliente.BAIRRO_FIELD_NAME)
     private String bairro;
     
-    @DatabaseField
+	@DatabaseField(columnName = Cliente.CEP_FIELD_NAME)
     private String cep;
     
-    @DatabaseField
+	@DatabaseField(columnName = Cliente.CIDADE_FIELD_NAME)
     private String cidade;
     
-    @DatabaseField
+	@DatabaseField(columnName = Cliente.COMPLEMENTO_FIELD_NAME)
     private String complemento;
         
-    @DatabaseField
+	@DatabaseField(columnName = Cliente.DATA_NASCIMENTO_FIELD_NAME)
     private Date dataNascimento;
     
-    @DatabaseField
+	@DatabaseField(columnName = Cliente.EMAIL_FIELD_NAME)
     private String email;
     
-    @DatabaseField(foreign=true,foreignAutoRefresh=true)
+	@DatabaseField(columnName = Cliente.ESTADO_FIELD_NAME, foreign = true, foreignAutoRefresh = true)
     private Estado estado;
     
     @DatabaseField(generatedId=true)
@@ -53,19 +77,19 @@ public class Cliente extends ValidationConstraint
     @DatabaseField
     private Long id_prestashop;
     
-    @DatabaseField
+	@DatabaseField(columnName = Cliente.LOGRADOURO_FIELD_NAME)
     private String logradouro;
     
-    @DatabaseField
+	@DatabaseField(columnName = Cliente.NOME_FIELD_NAME)
     private String nome;
     
-    @DatabaseField
+	@DatabaseField(columnName = Cliente.NUMERO_FIELD_NAME)
     private String numero;
     
-    @DatabaseField
+	@DatabaseField(columnName = Cliente.TELEFONE_FIELD_NAME)
     private String telefone;
     
-    @DatabaseField
+	@DatabaseField(columnName = Cliente.CELULAR_FIELD_NAME)
     private String celular;
     
     public Payer toPayer() {

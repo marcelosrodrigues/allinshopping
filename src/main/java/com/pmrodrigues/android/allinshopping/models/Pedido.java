@@ -126,8 +126,7 @@ public class Pedido
     }
 
     public void add(Produto produto, String s)
-    {
-    	
+ {
     	for( ItemPedido item : itens ) {
     		if (item.getProduto().equals(produto) && item.getTamanho().equals(s)) {
     			item.aumentar();

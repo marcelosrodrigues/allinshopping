@@ -14,27 +14,41 @@ public class Produto
 {
 
 	private static final long serialVersionUID = 1L;
+	private static final String ID_CATEGORIA_PRESTASHOP_FIELD_NAME = "idcategoria_prestashop";
+	private static final String ID_LOJA_PRESTASHOP_FIELD_NAME = "id_loja";
+	private static final String IMAGE_URL_FIELD_NAME = "imageurl";
+	private static final String NOME_FIELD_NAME = "nome";
+	private static final String PRECO_FIELD_NAME = "preco";
+	private static final String SECAO_FIELD_NAME = "secao";
+	private static final String DESCRICAO_FIELD_NAME = "descricao";
+	private static final String DESCRICAO_BREVE_FIELD_NAME = "descricaobreve";
     private FaixaPreco faixaPreco;
     
     @DatabaseField(id=true)
     private Long id;
     
-    @DatabaseField()
+	@DatabaseField(columnName = Produto.ID_CATEGORIA_PRESTASHOP_FIELD_NAME)
     private Long idCategoriaPrestashop;
     
-    @DatabaseField()
+	@DatabaseField(columnName = Produto.ID_LOJA_PRESTASHOP_FIELD_NAME)
     private Long idLoja;
-    @DatabaseField()
+
+	@DatabaseField(columnName = Produto.IMAGE_URL_FIELD_NAME)
     private String imageUrl;
-    @DatabaseField()
+
+	@DatabaseField(columnName = Produto.NOME_FIELD_NAME)
     private String nome;
-    @DatabaseField()
+
+	@DatabaseField(columnName = Produto.PRECO_FIELD_NAME)
     private BigDecimal preco;
-    @DatabaseField(foreign=true,foreignAutoRefresh=true)
+
+	@DatabaseField(columnName = Produto.SECAO_FIELD_NAME, foreign = true, foreignAutoRefresh = true)
     private Secao secao;
-    @DatabaseField()
+
+	@DatabaseField(columnName = Produto.DESCRICAO_FIELD_NAME)
 	private String descricao;
-    @DatabaseField()
+
+	@DatabaseField(columnName = Produto.DESCRICAO_BREVE_FIELD_NAME)
 	private String descricaoCurto;
 
     public Produto()
