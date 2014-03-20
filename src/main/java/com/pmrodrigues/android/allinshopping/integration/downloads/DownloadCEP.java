@@ -1,13 +1,13 @@
 package com.pmrodrigues.android.allinshopping.integration.downloads;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.google.gson.Gson;
 import com.pmrodrigues.android.allinshopping.exceptions.IntegrationException;
 import com.pmrodrigues.android.allinshopping.integration.rest.GetResource;
 import com.pmrodrigues.android.allinshopping.models.CEP;
@@ -26,20 +26,13 @@ public class DownloadCEP
         try {
 			String json = new GetResource(LISTAR_CEP).getJSON();
 			JSONObject jsonobject = new JSONObject(json);
-			List<CEP> ceps = new ArrayList<CEP>();
-			JSONArray jsonarray = jsonobject.getJSONObject("ceps").getJSONArray("cep");
-			for(int i = 0 , j = jsonarray.length() ; i < j ; i++ ) {
-			
-				Long id = Long.valueOf(jsonarray.getJSONObject(i).getLong("id"));
-			    String uf = jsonarray.getJSONObject(i).getString("uf");
-			    Long inicial = Long.valueOf(jsonarray.getJSONObject(i).getLong("inicial"));
-			    Long fim = Long.valueOf(jsonarray.getJSONObject(i).getLong("final"));
-			    CEP cep = new CEP(id, uf, inicial, fim);
-			    ceps.add(cep);
-				
-			}
-			
-			return ceps;
+			Gson gson = new Gson();
+			CEP[] ceps = gson.fromJson(
+					jsonobject.getJSONObject("ceps").get("cep")
+					.toString(),
+					CEP[].class);
+			return Arrays.asList(ceps);
+
 		} catch (JSONException e) {
 			throw new IntegrationException("Ocorreu um erro para converter a resposta do servidor " + e.getMessage(), e);
 		}

@@ -1,13 +1,13 @@
 package com.pmrodrigues.android.allinshopping.integration.downloads;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.google.gson.Gson;
 import com.pmrodrigues.android.allinshopping.exceptions.IntegrationException;
 import com.pmrodrigues.android.allinshopping.integration.rest.GetResource;
 import com.pmrodrigues.android.allinshopping.models.Estado;
@@ -26,15 +26,13 @@ public class DownloadEstado
         try {
 			String json = new GetResource(LISTAR_ESTADOS).getJSON();
 			JSONObject jsonobject = new JSONObject(json);
-			List<Estado> estados = new ArrayList<Estado>();
-			JSONArray jsonarray = jsonobject.getJSONObject("estados").getJSONArray("estado");
-			for(int i = 0 , j = jsonarray.length() ; i < j ; i++ ) {
 			
-				estados.add(new Estado(jsonarray.getJSONObject(i).getString("uf"), jsonarray.getJSONObject(i).getString("nome")));				
-				
-			}
+			Gson gson = new Gson();
+			Estado[] estados = gson.fromJson(jsonobject
+					.getJSONObject("estados").get("estado").toString(),
+					Estado[].class);
+			return Arrays.asList(estados);
 			
-			return estados;
 		} catch (JSONException e) {
 			throw new IntegrationException("Ocorreu um erro para converter a resposta do servidor " + e.getMessage(), e);
 		}
