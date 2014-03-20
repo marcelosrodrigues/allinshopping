@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import com.google.gson.annotations.SerializedName;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
@@ -16,20 +17,23 @@ public class Secao
 
     private static final long serialVersionUID = 1L;
     
+	@SerializedName("id_secao")
     @DatabaseField(id=true)
     private Long id;
     
+	@SerializedName("secao")
     @DatabaseField
     private String nome;
     
     @ForeignCollectionField
-    private Collection<Produto> produtos = new ArrayList<Produto>();
+    private final Collection<Produto> produtos = new ArrayList<Produto>();
 
+	@SerializedName("pai")
     @DatabaseField(foreign=true,foreignAutoRefresh=true)
     private Secao secaoPai;
     
     @ForeignCollectionField(eager=true)
-    private Collection<Secao> subsecoes = new ArrayList<Secao>();
+    private final Collection<Secao> subsecoes = new ArrayList<Secao>();
 
     public Secao()
     {
