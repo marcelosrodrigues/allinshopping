@@ -5,6 +5,7 @@ import java.io.UnsupportedEncodingException;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -24,66 +25,76 @@ public class PostResource extends Resource
     private final HttpPost POST;
     private final String URL;
 
-    public PostResource(String URL)
+	public PostResource(final String URL)
     {
+		super();
     	this.CLIENT = new DefaultHttpClient();
     	this.URL = URL;
     	this.POST = new HttpPost(URL);
     }
 
-    public String sendJSON(JSONObject jsonobject)
+	public String sendJSON(final JSONObject jsonobject)
         throws IntegrationException
     {
-        HttpResponse httpresponse = null ;
+		HttpResponse httpresponse = null; // NOPMD
         try
         {
-            String s = jsonobject.toString();
-            StringEntity stringentity = new StringEntity(s);
-            BasicHeader basicheader = new BasicHeader("Content-Type", "application/json");
+			final String json = jsonobject.toString();
+			final StringEntity stringentity = new StringEntity(json);
+			final BasicHeader basicheader = new BasicHeader("Content-Type",
+					"application/json");
             stringentity.setContentType(basicheader);
             POST.setEntity(stringentity);
             httpresponse = CLIENT.execute(POST);
             
-            if (httpresponse.getStatusLine().getStatusCode() == 200)
+			if (httpresponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK)
             {
-                HttpEntity httpentity = httpresponse.getEntity();
-                if (httpentity != null)
+				final HttpEntity httpentity = httpresponse.getEntity();
+				if (httpentity == null)
                 {   
-                    return toString(httpentity.getContent());
+					throw new IntegrationException(String.format(
+							"Ocorreu um erro no processamento no endereço %s",
+							URL));
+
                 } else
                 {
-                    throw new IntegrationException(String.format("Ocorreu um erro no processamento no endereço %s", URL));
+					return toString(httpentity.getContent());
                 }
-            } else if (httpresponse.getStatusLine().getStatusCode() == 404)
+			} else if (httpresponse.getStatusLine().getStatusCode() == HttpStatus.SC_NOT_FOUND)
             {
                 throw new PageNotFoundException(String.format("endereço %s não encontrado ou errado", URL));
                 
-            } else if (httpresponse.getStatusLine().getStatusCode() == 500)
+			} else if (httpresponse.getStatusLine().getStatusCode() == HttpStatus.SC_INTERNAL_SERVER_ERROR)
             {
                 throw new InternalServerException(String.format("Ocorreu um erro no processamento no endereço %s", URL));
             } else {
-	            Object aobj3[] = new Object[1];
-	            String s13 = URL;
-	            aobj3[0] = s13;
-	            String s14 = String.format("Ocorreu um erro não documentado no endereço %s", aobj3);
-	            throw new IntegrationException(s14);
+				throw new IntegrationException(String.format(
+						"Ocorreu um erro não documentado no endereço %s", URL));
             }
         }
         catch (UnsupportedEncodingException e)
         {
-            throw new IntegrationException("Ocorreu um erro no envio para o backoffice "+ e.getMessage(),e);
+			throw new IntegrationException(
+					"Ocorreu um erro no envio para o backoffice " // NOPMD
+							+ e.getMessage(), e); // NOPMD
         }
         catch (ClientProtocolException e)
         {
-        	throw new IntegrationException("Ocorreu um erro no envio para o backoffice "+ e.getMessage(),e);
+			throw new IntegrationException(
+					"Ocorreu um erro no envio para o backoffice "
+							+ e.getMessage(), e);// NOPMD
         }
         catch (IllegalStateException e)
         {
-        	throw new IntegrationException("Ocorreu um erro no envio para o backoffice "+ e.getMessage(),e);
+			throw new IntegrationException(
+					"Ocorreu um erro no envio para o backoffice "
+							+ e.getMessage(), e);// NOPMD
         }
         catch (IOException e)
         {
-        	throw new IntegrationException("Ocorreu um erro no envio para o backoffice "+ e.getMessage(),e);
+			throw new IntegrationException(
+					"Ocorreu um erro no envio para o backoffice "
+							+ e.getMessage(), e);// NOPMD
         }
         
     }

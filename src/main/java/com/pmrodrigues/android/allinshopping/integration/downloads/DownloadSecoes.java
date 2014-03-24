@@ -15,11 +15,7 @@ public class DownloadSecoes
     implements Download
 {
 
-	private final String LISTA_SESSOES = "http://store.allinshopp.com.br/custom/list_sessoes.php";
-
-    public DownloadSecoes()
-    {
-    }
+	private final String LISTA_SESSOES = "http://store.allinshopp.com.br/custom/list_sessoes.php"; // NOPMD
 
     @Override
 	public List<Secao> getAll()
@@ -28,11 +24,12 @@ public class DownloadSecoes
         try
         {
         	
-        	String json = new GetResource(LISTA_SESSOES).getJSON();
-			JSONObject jsonobject = new JSONObject(json);
+			final String json = new GetResource(LISTA_SESSOES).getJSON();
+			final JSONObject jsonobject = new JSONObject(json);
 
-			Gson gson = new Gson();
-			Secao[] secoes = gson.fromJson(jsonobject.getJSONObject("sessoes")
+			final Gson gson = new Gson();
+			final Secao[] secoes = gson.fromJson(
+					jsonobject.getJSONObject("sessoes")
 					.getJSONArray("sessao").toString(), Secao[].class);
 			return Arrays.asList(secoes);
 

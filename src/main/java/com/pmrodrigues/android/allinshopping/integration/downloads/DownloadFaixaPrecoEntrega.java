@@ -13,20 +13,17 @@ import com.pmrodrigues.android.allinshopping.models.FaixaPreco;
 
 public class DownloadFaixaPrecoEntrega implements Download {
 
-	private static final String LISTAR_FAIXA_ENTREGA = "http://store.allinshopp.com.br/custom/listar_preco_frete.php";
-
-	public DownloadFaixaPrecoEntrega() {
-	}
+	private static final String LISTAR_FAIXA_ENTREGA = "http://store.allinshopp.com.br/custom/listar_preco_frete.php"; // NOPMD
 
 	@Override
 	public List<FaixaPreco> getAll() throws IntegrationException {
 
 		try {
-			String json = new GetResource(LISTAR_FAIXA_ENTREGA).getJSON();
-			JSONObject jsonobject = new JSONObject(json);
+			final String json = new GetResource(LISTAR_FAIXA_ENTREGA).getJSON();
+			final JSONObject jsonobject = new JSONObject(json);
 
-			Gson gson = new Gson();
-			FaixaPreco[] faixas = gson.fromJson(
+			final Gson gson = new Gson();
+			final FaixaPreco[] faixas = gson.fromJson(
 					jsonobject.getJSONObject("tabela_preco")
 							.getJSONArray("faixa_preco").toString(),
 					FaixaPreco[].class);

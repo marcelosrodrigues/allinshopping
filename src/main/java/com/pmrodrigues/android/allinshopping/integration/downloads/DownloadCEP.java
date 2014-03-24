@@ -15,7 +15,7 @@ public class DownloadCEP
     implements Download
 {
 
-	private final String LISTAR_CEP = "http://store.allinshopp.com.br/custom/listar_cep.php";
+	private final static String LISTAR_CEP = "http://store.allinshopp.com.br/custom/listar_cep.php";
 
     @Override
 	public List<CEP> getAll()
@@ -23,10 +23,11 @@ public class DownloadCEP
     {
         
         try {
-			String json = new GetResource(LISTAR_CEP).getJSON();
-			JSONObject jsonobject = new JSONObject(json);
-			Gson gson = new Gson();
-			CEP[] ceps = gson.fromJson(
+			final String json = new GetResource(DownloadCEP.LISTAR_CEP)
+					.getJSON();
+			final JSONObject jsonobject = new JSONObject(json);
+			final Gson gson = new Gson();
+			final CEP[] ceps = gson.fromJson(
 					jsonobject.getJSONObject("ceps").get("cep")
 					.toString(),
 					CEP[].class);

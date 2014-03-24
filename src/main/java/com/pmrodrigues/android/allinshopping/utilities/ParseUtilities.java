@@ -15,35 +15,35 @@ public final class ParseUtilities
     {
     }
 
-    public static String formatDate(Date date)
+	public static String formatDate(final Date toFormat)
     {
-        return formatDate(date, "dd/MM/yyyy");
+        return formatDate(toFormat, "dd/MM/yyyy");
     }
 
-    public static String formatDate(Date date, String format)
+	public static String formatDate(final Date toFormat, final String format)
     {   
-		return new SimpleDateFormat(format, Constante.PT_BR).format(date);
+		return new SimpleDateFormat(format, Constante.PT_BR).format(toFormat);
     }
 
-    public static String formatMoney(Number number)
+	public static String formatMoney(final Number money)
     {
-        DecimalFormat decimalformat = (DecimalFormat) DecimalFormat.getCurrencyInstance(Constante.PT_BR);
+		final DecimalFormat decimalformat = (DecimalFormat) DecimalFormat
+				.getCurrencyInstance(Constante.PT_BR);
         decimalformat.setRoundingMode(RoundingMode.HALF_UP);
-        return decimalformat.format(number);
+		return decimalformat.format(money);
     }
 
-    public static Date toDate(String value, String format)
+	public static Date toDate(final String toParse, final String format)
     {
-        Date date;
         try
         {   
-            date = new SimpleDateFormat(format, Constante.PT_BR).parse(value);
+			return new SimpleDateFormat(format, Constante.PT_BR).parse(toParse);
         }
         catch (ParseException parseexception)
         {   
             Log.e("com.pmrodrigues.android.allinshopping", parseexception.getMessage(), parseexception);
             throw new RuntimeException(parseexception);
         }
-        return date;
+
     }
 }

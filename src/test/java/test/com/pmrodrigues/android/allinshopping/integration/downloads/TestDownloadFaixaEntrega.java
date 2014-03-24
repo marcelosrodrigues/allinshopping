@@ -9,7 +9,7 @@ import com.pmrodrigues.android.allinshopping.exceptions.IntegrationException;
 import com.pmrodrigues.android.allinshopping.integration.downloads.DownloadFaixaEntrega;
 import com.pmrodrigues.android.allinshopping.models.FaixaEntrega;
 
-public class TestDownloadFaixaEntrega {
+public class TestDownloadFaixaEntrega extends TestDownloadProcesses {
 
 	@Test
 	public void testGetAll() throws IntegrationException {

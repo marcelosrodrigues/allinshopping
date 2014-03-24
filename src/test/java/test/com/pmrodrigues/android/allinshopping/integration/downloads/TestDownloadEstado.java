@@ -10,7 +10,7 @@ import com.pmrodrigues.android.allinshopping.exceptions.IntegrationException;
 import com.pmrodrigues.android.allinshopping.integration.downloads.DownloadEstado;
 import com.pmrodrigues.android.allinshopping.models.Estado;
 
-public class TestDownloadEstado {
+public class TestDownloadEstado extends TestDownloadProcesses {
 
 	@Test
 	public void testGetAll() throws IntegrationException {

@@ -11,7 +11,7 @@ import com.pmrodrigues.android.allinshopping.integration.downloads.DownloadProdu
 import com.pmrodrigues.android.allinshopping.models.Produto;
 
 
-public class TestDownloadProduto {
+public class TestDownloadProduto extends TestDownloadProcesses {
 
 
 	@Test

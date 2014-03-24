@@ -10,7 +10,7 @@ import com.pmrodrigues.android.allinshopping.exceptions.IntegrationException;
 import com.pmrodrigues.android.allinshopping.integration.downloads.DownloadCEP;
 import com.pmrodrigues.android.allinshopping.models.CEP;
 
-public class TestDownloadCEP {
+public class TestDownloadCEP extends TestDownloadProcesses {
 
 	@Test
 	public void testGetAll() throws IntegrationException {

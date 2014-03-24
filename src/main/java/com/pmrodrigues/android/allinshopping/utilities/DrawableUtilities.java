@@ -7,7 +7,10 @@ import android.util.Log;
 public final class DrawableUtilities
 {
 
-    public static Drawable getImage(Activity activity, String image)
+	private DrawableUtilities() {
+	}
+
+	public static Drawable getImage(final Activity activity, final String image)
     {
         Log.i("com.pmrodrigues.android.allinshopping", "Gerando a imagem em formato drawable");        
         return Drawable.createFromPath(image);

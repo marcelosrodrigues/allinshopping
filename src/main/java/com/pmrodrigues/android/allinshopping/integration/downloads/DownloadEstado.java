@@ -15,7 +15,7 @@ public class DownloadEstado
     implements Download
 {
 
-	private final String LISTAR_ESTADOS = "http://store.allinshopp.com.br/custom/list_estado.php";
+	private final static String LISTAR_ESTADOS = "http://store.allinshopp.com.br/custom/list_estado.php";
 
     @Override
 	public List<Estado> getAll()
@@ -23,11 +23,13 @@ public class DownloadEstado
     {
         
         try {
-			String json = new GetResource(LISTAR_ESTADOS).getJSON();
-			JSONObject jsonobject = new JSONObject(json);
+			final String json = new GetResource(DownloadEstado.LISTAR_ESTADOS)
+					.getJSON();
+			final JSONObject jsonobject = new JSONObject(json);
 			
-			Gson gson = new Gson();
-			Estado[] estados = gson.fromJson(jsonobject
+			final Gson gson = new Gson();
+			final Estado[] estados = gson.fromJson(
+					jsonobject
 					.getJSONObject("estados").get("estado").toString(),
 					Estado[].class);
 			return Arrays.asList(estados);

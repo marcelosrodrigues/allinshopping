@@ -15,7 +15,7 @@ public class DownloadProdutos
     implements Download
 {
 	// TODO Lembrar de alterar a URL para a URL definitiva
-	private final String LIST_PRODUTOS = "http://store.allinshopp.com.br/custom/list_produtos_novo.php";
+	private final String LIST_PRODUTOS = "http://store.allinshopp.com.br/custom/list_produtos_novo.php"; // NOPMD
 
     @Override
 	public List<Produto> getAll()
@@ -23,11 +23,11 @@ public class DownloadProdutos
     {
     	
     	 try {
- 			String json = new GetResource(LIST_PRODUTOS).getJSON();
-			JSONObject jsonobject = new JSONObject(json);
+			final String json = new GetResource(LIST_PRODUTOS).getJSON();
+			final JSONObject jsonobject = new JSONObject(json);
 
-			Gson gson = new Gson();
-			Produto[] produtos = gson.fromJson(
+			final Gson gson = new Gson();
+			final Produto[] produtos = gson.fromJson(
 					jsonobject.getJSONObject("produtos").get("produto")
 							.toString(), Produto[].class);
 			return Arrays.asList(produtos);

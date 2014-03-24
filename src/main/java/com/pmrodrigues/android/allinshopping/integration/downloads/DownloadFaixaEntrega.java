@@ -15,24 +15,19 @@ public class DownloadFaixaEntrega
     implements Download
 {
 
-	private static final String LISTAR_FAIXA_ENTREGA = "http://store.allinshopp.com.br/custom/listar_de_para.php";
-
-    public DownloadFaixaEntrega()
-    {
-    }
+	private static final String LISTAR_FAIXA_ENTREGA = "http://store.allinshopp.com.br/custom/listar_de_para.php"; // NOPMD
 
     @Override
 	public List<FaixaEntrega> getAll()
         throws IntegrationException
     {
-        
 	
     try {
-			String json = new GetResource(LISTAR_FAIXA_ENTREGA).getJSON();
-			JSONObject jsonobject = new JSONObject(json);
+			final String json = new GetResource(LISTAR_FAIXA_ENTREGA).getJSON();
+			final JSONObject jsonobject = new JSONObject(json);
 			
-			Gson gson = new Gson();
-			FaixaEntrega[] faixas = gson.fromJson(
+			final Gson gson = new Gson();
+			final FaixaEntrega[] faixas = gson.fromJson(
 					jsonobject.getJSONObject("configuracao").get("de_para")
 							.toString(), FaixaEntrega[].class);
 			return Arrays.asList(faixas);

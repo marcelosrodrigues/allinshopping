@@ -10,7 +10,7 @@ import com.pmrodrigues.android.allinshopping.exceptions.IntegrationException;
 import com.pmrodrigues.android.allinshopping.integration.downloads.DownloadSecoes;
 import com.pmrodrigues.android.allinshopping.models.Secao;
 
-public class TestDownloadSecao {
+public class TestDownloadSecao extends TestDownloadProcesses {
 
 	@Test
 	public void test() throws IntegrationException {

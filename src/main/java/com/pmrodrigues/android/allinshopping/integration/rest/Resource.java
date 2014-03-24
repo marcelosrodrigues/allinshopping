@@ -7,19 +7,19 @@ import java.io.InputStreamReader;
 
 public class Resource
 {
-    protected String toString(InputStream stream)
+	protected String toString(final InputStream stream)
         throws IOException
     {
-        BufferedReader bufferedreader = null;
+		BufferedReader bufferedreader = null; // NOPMD
         try {
 			bufferedreader = new BufferedReader(new InputStreamReader(stream));
-			StringBuffer json = new StringBuffer();
-			String s = null;
-			while((s = bufferedreader.readLine())!=null) {
-				json.append(s);
+			final StringBuffer buffer = new StringBuffer();
+			String partial = null; // NOPMD
+			while ((partial = bufferedreader.readLine()) != null) { // NOPMD
+				buffer.append(partial);
 			}
 
-			return json.substring(json.indexOf("{")).toString();
+			return buffer.substring(buffer.indexOf("{")).toString();
 
 		} finally {
 			if( bufferedreader != null ) {

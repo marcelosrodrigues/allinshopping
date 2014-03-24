@@ -16,6 +16,7 @@ import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.ByteArrayBuffer;
 
+import com.pmrodrigues.android.allinshopping.exceptions.IntegrationException;
 import com.pmrodrigues.android.allinshopping.models.Produto;
 import com.pmrodrigues.android.allinshopping.utilities.Constante;
 
@@ -23,69 +24,67 @@ public class DownloadResource {
 
 	private CredentialsProvider getCredential() {
 
-		BasicCredentialsProvider provider = new BasicCredentialsProvider();
-		AuthScope authscope = new AuthScope(AuthScope.ANY_HOST,
+		final BasicCredentialsProvider provider = new BasicCredentialsProvider();
+		final AuthScope authscope = new AuthScope(AuthScope.ANY_HOST,
 				AuthScope.ANY_PORT);
-		UsernamePasswordCredentials credential = new UsernamePasswordCredentials(
+		final UsernamePasswordCredentials credential = new UsernamePasswordCredentials(
 				Constante.CREDENTIALS, "");
 		provider.setCredentials(authscope, credential);
 		return provider;
 
 	}
 
-	public String getResourceByProduto(Produto produto) {
-		FileOutputStream output = null;
-		BufferedInputStream buffer = null;
+	public String getResourceByProduto(final Produto produto)
+			throws IntegrationException {
+		FileOutputStream output = null; // NOPMD
+		BufferedInputStream buffer = null; // NOPMD
+		String absolutImagePath = null; // NOPMD
 		try {
 
-			DefaultHttpClient client = new DefaultHttpClient();
+			final DefaultHttpClient client = new DefaultHttpClient();
 			client.setCredentialsProvider(this.getCredential());
 
 			final HttpGet GET = new HttpGet(produto.getImage());
-			HttpEntity httpentity = client.execute(GET).getEntity();
+			final HttpEntity httpentity = client.execute(GET).getEntity();
 
 			if (httpentity != null) {
 
 				buffer = new BufferedInputStream(httpentity.getContent());
-				File directory = new File(Constante.SDCARD_ALLINSHOPP_IMAGES);
+				final File directory = getImageDirectort();
 
-				if (!directory.exists()) {
-					directory.mkdirs();
-				}
-
-				File image = new File(directory.getAbsolutePath(),
+				final File image = new File(directory.getAbsolutePath(),
 						String.format("%s.jpg", produto.getId()));
 				image.createNewFile();
 				output = new FileOutputStream(image);
-				ByteArrayBuffer bab = new ByteArrayBuffer(1024);
-				int i = 0;
-				while ((i = buffer.read()) != -1) {
+				final ByteArrayBuffer bab = new ByteArrayBuffer(1024);
+				int i = 0; // NOPMD
+				while ((i = buffer.read()) != -1) { // NOPMD
 					bab.append(i);
 				}
-				byte b[] = bab.toByteArray();
+				final byte b[] = bab.toByteArray(); // NOPMD
 				output.write(b);
 				output.flush();
 
-				return image.getAbsoluteFile().getAbsolutePath();
+				absolutImagePath = image.getAbsoluteFile().getAbsolutePath();
 
 			}
 
-			return null;
+			return absolutImagePath;
 		} catch (ClientProtocolException e) {
-			throw new RuntimeException(
-					"Ocorreu um erro para converter a resposta do servidor "
+			throw new IntegrationException(
+					"Ocorreu um erro para converter a resposta do servidor " // NOPMD
 							+ e.getMessage(), e);
 		} catch (IllegalStateException e) {
-			throw new RuntimeException(
-					"Ocorreu um erro para converter a resposta do servidor "
+			throw new IntegrationException(
+					"Ocorreu um erro para converter a resposta do servidor " // NOPMD
 							+ e.getMessage(), e);
 		} catch (FileNotFoundException e) {
-			throw new RuntimeException(
-					"Ocorreu um erro para converter a resposta do servidor "
+			throw new IntegrationException(
+					"Ocorreu um erro para converter a resposta do servidor " // NOPMD
 							+ e.getMessage(), e);
 		} catch (IOException e) {
-			throw new RuntimeException(
-					"Ocorreu um erro para converter a resposta do servidor "
+			throw new IntegrationException(
+					"Ocorreu um erro para converter a resposta do servidor " // NOPMD
 							+ e.getMessage(), e);
 		} finally {
 			try {
@@ -96,9 +95,18 @@ public class DownloadResource {
 				if (buffer != null) {
 					buffer.close();
 				}
-			} catch (IOException e) {
+			} catch (IOException e) { // NOPMD
 			}
 		}
+	}
+
+	private File getImageDirectort() {
+		final File directory = new File(Constante.SDCARD_ALLINSHOPP_IMAGES);
+
+		if (!directory.exists()) {
+			directory.mkdirs();
+		}
+		return directory;
 	}
 
 }

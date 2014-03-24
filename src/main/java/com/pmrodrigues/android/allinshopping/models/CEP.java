@@ -41,15 +41,6 @@ public class CEP
     {
     }
 
-    public CEP(Long id, String uf, Long inicio, Long fim)
-    {
-        this();
-        this.id = id;
-        this.uf = uf;
-        this.inicio = inicio;
-        this.fim = fim;
-    }
-
     public Long getFim()
     {
         return fim;
