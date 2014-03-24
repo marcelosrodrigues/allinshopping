@@ -29,7 +29,7 @@ public class DownloadSecoes
         {
         	
         	String json = new GetResource(LISTA_SESSOES).getJSON();
-			JSONObject jsonobject = new JSONObject(json.substring(1));
+			JSONObject jsonobject = new JSONObject(json);
 
 			Gson gson = new Gson();
 			Secao[] secoes = gson.fromJson(jsonobject.getJSONObject("sessoes")

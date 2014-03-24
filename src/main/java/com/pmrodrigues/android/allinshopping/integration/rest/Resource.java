@@ -18,7 +18,9 @@ public class Resource
 			while((s = bufferedreader.readLine())!=null) {
 				json.append(s);
 			}
-			return json.toString();
+
+			return json.substring(json.indexOf("{")).toString();
+
 		} finally {
 			if( bufferedreader != null ) {
 				bufferedreader.close();

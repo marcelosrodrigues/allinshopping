@@ -24,7 +24,7 @@ public class DownloadProdutos
     	
     	 try {
  			String json = new GetResource(LIST_PRODUTOS).getJSON();
-			JSONObject jsonobject = new JSONObject(json.substring(1));
+			JSONObject jsonobject = new JSONObject(json);
 
 			Gson gson = new Gson();
 			Produto[] produtos = gson.fromJson(
