@@ -1,6 +1,5 @@
 package com.pmrodrigues.android.allinshopping.integration.downloads;
 
-import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
@@ -39,9 +38,4 @@ public class DownloadEstado
         
     }
 
-    @Override
-	public List<Estado> getBy(Serializable serializable)
-    {
-        return null;
-    }
 }

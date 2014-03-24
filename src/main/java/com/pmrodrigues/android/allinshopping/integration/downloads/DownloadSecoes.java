@@ -1,6 +1,5 @@
 package com.pmrodrigues.android.allinshopping.integration.downloads;
 
-import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
@@ -44,9 +43,4 @@ public class DownloadSecoes
 		}
     }
 
-    @Override
-	public List<Secao> getBy(Serializable serializable)
-    {
-        return null;
-    }
 }

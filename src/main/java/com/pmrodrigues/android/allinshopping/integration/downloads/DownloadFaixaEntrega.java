@@ -1,6 +1,5 @@
 package com.pmrodrigues.android.allinshopping.integration.downloads;
 
-import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
@@ -42,10 +41,5 @@ public class DownloadFaixaEntrega
 			throw new IntegrationException("Ocorreu um erro para converter a resposta do servidor " + e.getMessage(), e);
 		}
     }
-    	
-    @Override
-	public List<FaixaEntrega> getBy(Serializable serializable)
-    {
-        return null;
-    }
+
 }

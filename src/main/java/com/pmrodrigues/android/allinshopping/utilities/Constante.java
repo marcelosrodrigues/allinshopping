@@ -35,6 +35,7 @@ public interface Constante
 	String ERROR = "erro";
 	String CLIENTE = "cliente";
 	
+	String CREDENTIALS = "KIGDS4I9RGFKHW48673LEOLYHMH5S0EN";
 	
 
 }

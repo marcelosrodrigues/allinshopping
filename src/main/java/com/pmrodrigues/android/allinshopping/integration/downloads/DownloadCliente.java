@@ -1,6 +1,5 @@
 package com.pmrodrigues.android.allinshopping.integration.downloads;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -69,9 +68,4 @@ public class DownloadCliente
     	
     }
 
-    @Override
-	public List<Cliente> getBy(Serializable serializable)
-    {
-        return null;
-    }
 }

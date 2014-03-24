@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import com.google.gson.annotations.SerializedName;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import com.pmrodrigues.android.allinshopping.utilities.Constante;
@@ -22,32 +23,46 @@ public class Produto
 	private static final String SECAO_FIELD_NAME = "secao";
 	private static final String DESCRICAO_FIELD_NAME = "descricao";
 	private static final String DESCRICAO_BREVE_FIELD_NAME = "descricaobreve";
+	private static final String PESO_FIELD_NAME = "peso";
     private FaixaPreco faixaPreco;
     
+	@SerializedName("id_product")
     @DatabaseField(id=true)
     private Long id;
     
+	@SerializedName("id_category")
 	@DatabaseField(columnName = Produto.ID_CATEGORIA_PRESTASHOP_FIELD_NAME)
     private Long idCategoriaPrestashop;
     
+	@SerializedName("id_shop")
 	@DatabaseField(columnName = Produto.ID_LOJA_PRESTASHOP_FIELD_NAME)
     private Long idLoja;
 
+	@SerializedName("image")
 	@DatabaseField(columnName = Produto.IMAGE_URL_FIELD_NAME)
     private String imageUrl;
 
+	@SerializedName("name")
 	@DatabaseField(columnName = Produto.NOME_FIELD_NAME)
     private String nome;
 
+	@SerializedName("price")
 	@DatabaseField(columnName = Produto.PRECO_FIELD_NAME)
     private BigDecimal preco;
 
+	@SerializedName("peso")
+	@DatabaseField(columnName = Produto.PESO_FIELD_NAME)
+	private BigDecimal peso;
+
+	@SerializedName("secao")
 	@DatabaseField(columnName = Produto.SECAO_FIELD_NAME, foreign = true, foreignAutoRefresh = true)
     private Secao secao;
 
+	@SerializedName("description")
 	@DatabaseField(columnName = Produto.DESCRICAO_FIELD_NAME)
 	private String descricao;
 
+	@SerializedName("description_short")
 	@DatabaseField(columnName = Produto.DESCRICAO_BREVE_FIELD_NAME)
 	private String descricaoCurto;
 

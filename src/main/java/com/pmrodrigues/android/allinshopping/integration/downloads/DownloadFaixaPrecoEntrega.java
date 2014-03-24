@@ -1,6 +1,5 @@
 package com.pmrodrigues.android.allinshopping.integration.downloads;
 
-import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
@@ -41,8 +40,4 @@ public class DownloadFaixaPrecoEntrega implements Download {
 
 	}
 
-	@Override
-	public List<FaixaPreco> getBy(Serializable serializable) {
-		return null;
-	}
 }
