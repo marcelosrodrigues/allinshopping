@@ -11,6 +11,7 @@ import com.akatus.connect.api.v1.entity.Address;
 import com.akatus.connect.api.v1.entity.Payer;
 import com.akatus.connect.api.v1.entity.Phone;
 import com.akatus.connect.api.v1.entity.Phone.Type;
+import com.google.gson.annotations.SerializedName;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import com.pmrodrigues.android.allinshopping.models.constraints.ValidationConstraint;
@@ -29,76 +30,90 @@ public class Cliente extends ValidationConstraint
 
 	private static final String CIDADE_FIELD_NAME = "cidade";
 
-	private static final String COMPLEMENTO_FIELD_NAME = "complemento";
+	private static final String COMPLEMENTO_FIELD_NAME = "complemento"; // NOPMD
 
-	private static final String DATA_NASCIMENTO_FIELD_NAME = "datanascimento";
+	private static final String DATA_NASCIMENTO_FIELD_NAME = "datanascimento"; // NOPMD
 
 	private static final String EMAIL_FIELD_NAME = "email";
 
 	private static final String ESTADO_FIELD_NAME = "estado";
 
-	private static final String LOGRADOURO_FIELD_NAME = "logradouro";
+	private static final String LOGRADOURO_FIELD_NAME = "logradouro"; // NOPMD
 
 	private static final String NOME_FIELD_NAME = "nome";
 
 	private static final String NUMERO_FIELD_NAME = "numero";
 
-	private static final String TELEFONE_FIELD_NAME = "telefone";
+	private static final String TELEFONE_FIELD_NAME = "telefone"; // NOPMD
 
-	private static final String CELULAR_FIELD_NAME = "celular";
+	private static final String CELULAR_FIELD_NAME = "celular"; // NOPMD
     
+	@SerializedName("bairro")
 	@DatabaseField(columnName = Cliente.BAIRRO_FIELD_NAME)
     private String bairro;
     
+	@SerializedName("cep")
 	@DatabaseField(columnName = Cliente.CEP_FIELD_NAME)
     private String cep;
     
+	@SerializedName("cidade")
 	@DatabaseField(columnName = Cliente.CIDADE_FIELD_NAME)
     private String cidade;
     
+	@SerializedName("complemento")
 	@DatabaseField(columnName = Cliente.COMPLEMENTO_FIELD_NAME)
     private String complemento;
-        
+
+	@SerializedName("nascimento")
 	@DatabaseField(columnName = Cliente.DATA_NASCIMENTO_FIELD_NAME)
     private Date dataNascimento;
     
+	@SerializedName("email")
 	@DatabaseField(columnName = Cliente.EMAIL_FIELD_NAME)
     private String email;
     
+	@SerializedName("estado")
 	@DatabaseField(columnName = Cliente.ESTADO_FIELD_NAME, foreign = true, foreignAutoRefresh = true)
     private Estado estado;
     
     @DatabaseField(generatedId=true)
-    private Long id;
+	private Long id; // NOPMD
     
+	@SerializedName("id_address")
     @DatabaseField
-    private Long id_address;
+	private Long id_address; // NOPMD
     
+	@SerializedName("id_prestashop")
     @DatabaseField
-    private Long id_prestashop;
+	private Long id_prestashop; // NOPMD
     
+	@SerializedName("logradouro")
 	@DatabaseField(columnName = Cliente.LOGRADOURO_FIELD_NAME)
     private String logradouro;
     
+	@SerializedName("nome")
 	@DatabaseField(columnName = Cliente.NOME_FIELD_NAME)
     private String nome;
     
+	@SerializedName("numero")
 	@DatabaseField(columnName = Cliente.NUMERO_FIELD_NAME)
     private String numero;
     
+	@SerializedName("telefone")
 	@DatabaseField(columnName = Cliente.TELEFONE_FIELD_NAME)
     private String telefone;
     
+	@SerializedName("celular")
 	@DatabaseField(columnName = Cliente.CELULAR_FIELD_NAME)
     private String celular;
     
     public Payer toPayer() {
     	
-    	Payer payer = new Payer();
+		final Payer payer = new Payer();
     	payer.setName(this.getNome());
     	payer.setEmail(this.getEmail());
     	
-    	Address address = payer.newAddress();
+		final Address address = payer.newAddress();
     	address.setStreet(this.getLogradouro());
     	if( !GenericValidator.isBlankOrNull(this.getNumero()) && GenericValidator.isInt(this.getNumero()) ){
     		address.setNumber(Integer.parseInt(this.getNumero()));
@@ -115,14 +130,14 @@ public class Cliente extends ValidationConstraint
                 
         
         if( !GenericValidator.isBlankOrNull(this.telefone)  && !"{}".equalsIgnoreCase(this.telefone) ) {
-        	Phone phone = new Phone();
+			final Phone phone = new Phone();
         	phone.setNumber(this.telefone);
         	phone.setType(Type.RESIDENTIAL);
         	payer.addPhone(phone);
         }
         
         if( !GenericValidator.isBlankOrNull(this.celular) && !"{}".equalsIgnoreCase(this.celular)) {
-        	Phone phone = new Phone();
+			final Phone phone = new Phone();
         	phone.setNumber(this.celular);
         	phone.setType(Type.CELLPHONE);
         	payer.addPhone(phone);
@@ -133,9 +148,11 @@ public class Cliente extends ValidationConstraint
 
     public Cliente()
     {
+		super();
     }
 
-    public Cliente(String nome, Date dataNascimento, String email, Estado estado, String cidade, String bairro, 
+	public Cliente(String nome, Date dataNascimento, String email,
+			Estado estado, String cidade, String bairro,
             String logradouro, String numero, String complemento, String cep)
     {
         this();
@@ -150,7 +167,7 @@ public class Cliente extends ValidationConstraint
         this.complemento = complemento;
         this.cep = cep;
         validate();
-    }
+	}
 
     public String getBairro()
     {
@@ -217,17 +234,17 @@ public class Cliente extends ValidationConstraint
         return numero;
     }
 
-    public void setEstado(Estado estado1)
+	public void setEstado(final Estado estado)
     {
-        estado = estado1;
+		this.estado = estado;
     }
 
-    public void setIdAddress(Long id_address)
+	public void setIdAddress(final Long id_address)
     {
         this.id_address = id_address;
     }
 
-    public void setIdPrestashop(Long id_prestashop)
+	public void setIdPrestashop(final Long id_prestashop)
     {
         this.id_prestashop = id_prestashop;
     }
@@ -235,7 +252,7 @@ public class Cliente extends ValidationConstraint
     public JSONObject toJSON()
         throws JSONException
     {
-        JSONObject jsonobject = new JSONObject();
+		final JSONObject jsonobject = new JSONObject();
         jsonobject.put("nome", getNome());
         jsonobject.put("sobrenome", getNome());
         jsonobject.put("email", getEmail());
@@ -291,15 +308,15 @@ public class Cliente extends ValidationConstraint
         }
     }
 
-	public void setTelefone(String telefone) {
+	public void setTelefone(final String telefone) {
 		this.telefone = telefone;		
 	}
 
-	public void setCelular(String celular) {
+	public void setCelular(final String celular) {
 		this.celular = celular;		
 	}
 
-	public void setId(Long id) {
+	public void setId(final Long id) {
 		this.id = id;
 	}
 }

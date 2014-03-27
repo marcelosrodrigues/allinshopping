@@ -9,6 +9,8 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.pmrodrigues.android.allinshopping.exceptions.IntegrationException;
 import com.pmrodrigues.android.allinshopping.exceptions.InternalServerException;
@@ -29,7 +31,7 @@ public class GetResource extends Resource
         GET = new HttpGet(URL);
     }
 
-    public String getJSON()
+	public JSONObject getJSON()
         throws IntegrationException
     {
         HttpResponse httpresponse;
@@ -45,7 +47,7 @@ public class GetResource extends Resource
 							"Ocorreu um erro no processamento no endereço %s",
 							URL));
 				} else {
-					return toString(httpentity.getContent());
+					return new JSONObject(toString(httpentity.getContent()));
 
                 }
 			} else if (httpresponse.getStatusLine().getStatusCode() == HttpStatus.SC_NOT_FOUND) {
@@ -68,7 +70,11 @@ public class GetResource extends Resource
         catch (IOException e)
         {
         	throw new IntegrationException(e.getMessage(), e);
-        }
+		} catch (JSONException e) {
+			throw new IntegrationException(
+					"Ocorreu um erro para converter a resposta do servidor "
+							+ e.getMessage(), e);
+		}
         
         
     }

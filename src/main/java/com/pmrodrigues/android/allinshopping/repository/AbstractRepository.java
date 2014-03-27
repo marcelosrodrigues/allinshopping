@@ -13,7 +13,7 @@ import com.pmrodrigues.android.allinshopping.exceptions.DatabaseOperationExcepti
 public abstract class AbstractRepository<E,T>
 {
 
-    private DbHelper helper;
+    private final DbHelper helper;
 
     public AbstractRepository(Context context)
     {

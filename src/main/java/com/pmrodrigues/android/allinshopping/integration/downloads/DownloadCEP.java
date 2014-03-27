@@ -1,19 +1,15 @@
 package com.pmrodrigues.android.allinshopping.integration.downloads;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.google.gson.Gson;
 import com.pmrodrigues.android.allinshopping.exceptions.IntegrationException;
 import com.pmrodrigues.android.allinshopping.integration.rest.GetResource;
 import com.pmrodrigues.android.allinshopping.models.CEP;
 
-public class DownloadCEP
-    implements Download
-{
+public class DownloadCEP extends AbstractDownload<CEP> {
 
 	private final static String LISTAR_CEP = "http://store.allinshopp.com.br/custom/listar_cep.php";
 
@@ -23,15 +19,10 @@ public class DownloadCEP
     {
         
         try {
-			final String json = new GetResource(DownloadCEP.LISTAR_CEP)
+			final JSONObject json = new GetResource(DownloadCEP.LISTAR_CEP)
 					.getJSON();
-			final JSONObject jsonobject = new JSONObject(json);
-			final Gson gson = new Gson();
-			final CEP[] ceps = gson.fromJson(
-					jsonobject.getJSONObject("ceps").get("cep")
-					.toString(),
-					CEP[].class);
-			return Arrays.asList(ceps);
+
+			return toList(json.getJSONObject("ceps").get("cep"));
 
 		} catch (JSONException e) {
 			throw new IntegrationException("Ocorreu um erro para converter a resposta do servidor " + e.getMessage(), e);

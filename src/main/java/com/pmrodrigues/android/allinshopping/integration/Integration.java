@@ -7,6 +7,7 @@ import com.pmrodrigues.android.allinshopping.integration.upload.Upload;
 public interface Integration
 {
 
+	@SuppressWarnings("rawtypes")
 	Download getDownload(ResourceType resourcetype);
 
 	Upload getUpload(ResourceType resourcetype);

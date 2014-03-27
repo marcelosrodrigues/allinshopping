@@ -1,6 +1,10 @@
 package com.pmrodrigues.android.allinshopping.async;
 
 import java.util.List;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,7 +25,7 @@ import com.pmrodrigues.android.allinshopping.models.FaixaEntrega;
 import com.pmrodrigues.android.allinshopping.models.FaixaPreco;
 import com.pmrodrigues.android.allinshopping.models.Produto;
 import com.pmrodrigues.android.allinshopping.models.Secao;
-import com.pmrodrigues.android.allinshopping.repository.CEPRepository;
+import com.pmrodrigues.android.allinshopping.services.CEPService;
 import com.pmrodrigues.android.allinshopping.services.ClienteService;
 import com.pmrodrigues.android.allinshopping.services.EstadoService;
 import com.pmrodrigues.android.allinshopping.services.PedidoService;
@@ -29,24 +33,27 @@ import com.pmrodrigues.android.allinshopping.services.ProdutoService;
 import com.pmrodrigues.android.allinshopping.services.SecaoService;
 
 public class IntegrationProcess {
-	
+
+	private final Context context;
+	private final Integration integration;
+
 	public Context getContext() {
 		return context;
 	}
 
-	private Context context;
-	private Integration integration;
-
-	public IntegrationProcess(Context context) {
-		integration = IntegrationFactory.getInstance().getIntegration(
+	public IntegrationProcess(final Context context) {
+		this.integration = IntegrationFactory.getInstance().getIntegration(
 				IntegrationType.PRESTASHOP);
-		this.context = context;		
+		this.context = context;
 	}
-	
-	public void importarEstado() throws IntegrationException {
-		EstadoService service = new EstadoService(context);
-		List<Estado> estados = integration.getDownload(ResourceType.ESTADOS).getAll();
-		for(Estado estado : estados) {
+
+	@SuppressWarnings("unchecked")
+	// NOPMD
+	public void importarEstado() throws IntegrationException { // NOPMD
+		final EstadoService service = new EstadoService(context); // NOPMD
+		final List<Estado> estados = integration.getDownload(
+				ResourceType.ESTADOS).getAll();
+		for (final Estado estado : estados) {
 			service.save(estado);
 		}
 	}
@@ -70,67 +77,83 @@ public class IntegrationProcess {
 		(new PedidoService(context)).sendToBackoffice();
 	}
 
-	public void importarCEP() throws IntegrationException {
-		CEPRepository ceprepository = new CEPRepository(context);
-		List<CEP> ceps = integration.getDownload(ResourceType.CEP).getAll();
-		for (CEP cep : ceps) {
-			if( !ceprepository.exists(cep) ) {
-				ceprepository.insert(cep);
-			} else {
-				ceprepository.update(cep);
-			} 
-		}
-	}
+	@SuppressWarnings("unchecked")
+	public void importarCEP() throws IntegrationException { // NOPMD
 
-	public void importarCliente() throws IntegrationException,
-			NoUniqueRegistryException {
-		ClienteService clienteservice = new ClienteService(context);
-		List<Cliente> clientes = integration.getDownload(ResourceType.CLIENTE)
+		final List<CEP> ceps = integration.getDownload(ResourceType.CEP)
 				.getAll();
-		for (Cliente cliente : clientes) {
-			if (!clienteservice.exists(cliente)) {
-				clienteservice.save(cliente);
-			} else {
-				clienteservice.update(cliente);
-			}
+		final CEPService service = new CEPService(context); // NOPMD
+		for (CEP cep : ceps) { // NOPMD
+			service.save(cep);
 		}
 	}
 
-	public void importarFaixaEntrega() throws IntegrationException {
+	@SuppressWarnings("unchecked")
+	public void importarCliente() throws IntegrationException,
+			NoUniqueRegistryException { // NOPMD
+		final ClienteService clienteservice = new ClienteService(context); // NOPMD
+		final List<Cliente> clientes = integration.getDownload(
+				ResourceType.CLIENTE).getAll();
 
-		CEPRepository ceprepository = new CEPRepository(context);
-		List<FaixaEntrega> faixas = integration.getDownload(
+		for (final Cliente cliente : clientes) {
+			clienteservice.save(cliente);
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public void importarFaixaEntrega() throws IntegrationException { // NOPMD
+		final CEPService service = new CEPService(context); // NOPMD
+		final List<FaixaEntrega> faixas = integration.getDownload(
 				ResourceType.FAIXA_ENTREGA).getAll();
-		for (FaixaEntrega faixa : faixas) {
-			ceprepository.insert(faixa);
+		for (final FaixaEntrega faixa : faixas) {
+			service.save(faixa);
 		}
 
 	}
 
-	public void importarFaixaPreco() throws IntegrationException {
-		CEPRepository ceprepository = new CEPRepository(context);
-		List<FaixaPreco> faixas = integration.getDownload(
+	@SuppressWarnings("unchecked")
+	public void importarFaixaPreco() throws IntegrationException { // NOPMD
+		final CEPService service = new CEPService(context); // NOPMD
+		final List<FaixaPreco> faixas = integration.getDownload(
 				ResourceType.FAIXA_PRECO).getAll();
-		for (FaixaPreco faixa : faixas) {
-			ceprepository.insert(faixa);
+		for (final FaixaPreco faixa : faixas) {
+			service.save(faixa);
 		}
 	}
 
-	public void importarProdutos() throws IntegrationException {
-		ProdutoService produtoservice = new ProdutoService(context);
+	@SuppressWarnings("unchecked")
+	public void importarProdutos() throws IntegrationException { // NOPMD
+		final ProdutoService produtoservice = new ProdutoService(context);
 		produtoservice.removeAll();
-		List<Produto> produtos = integration.getDownload(ResourceType.PRODUTOS).getAll();
-		for(Produto produto : produtos ) {
-			produtoservice.save(produto);
+
+		final List<Produto> produtos = integration.getDownload(
+				ResourceType.PRODUTOS).getAll();
+
+		final BlockingQueue<Runnable> blockingQueue = new LinkedBlockingQueue<Runnable>();
+		final ThreadPoolExecutor t = new ThreadPoolExecutor(15, 15, 1,
+				TimeUnit.SECONDS, blockingQueue);
+		
+		for (final Produto produto : produtos) {
+			t.execute(new IntegrationProdutoRunnable(produto, produtoservice));
 		}
+
+		do {
+			if (t.getActiveCount() == 0
+					&& t.getCompletedTaskCount() == produtos.size()) {
+				t.shutdown();
+				break;
+			}
+		} while (true);
+
 	}
 
-	public void importarSecao() throws IntegrationException {
-		
-		SecaoService secaoservice = new SecaoService(context);
-		
-		List<Secao> secoes = integration.getDownload(ResourceType.SECOES).getAll();
-		for(Secao secao : secoes ){
+	@SuppressWarnings("unchecked")
+	public void importarSecao() throws IntegrationException { // NOPMD
+
+		final SecaoService secaoservice = new SecaoService(context); // NOPMD
+		final List<Secao> secoes = integration.getDownload(ResourceType.SECOES)
+				.getAll();
+		for (final Secao secao : secoes) {
 			secaoservice.save(secao);
 		}
 	}

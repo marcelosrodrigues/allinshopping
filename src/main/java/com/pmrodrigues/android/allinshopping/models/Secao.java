@@ -35,17 +35,15 @@ public class Secao
     @ForeignCollectionField(eager=true)
     private final Collection<Secao> subsecoes = new ArrayList<Secao>();
 
-    public Secao()
-    {
-    	
-    }
+	public Secao() {
+		super();
+	}
 
-    public Secao(Long id, String nome)
-    {
-        this();
-        this.id = id;
-        this.nome = nome;
-    }
+	public Secao(final String nome) {
+		this();
+		this.id = 0L;
+		this.nome = nome;
+	}
     
     public boolean isVestuario() {
     	Secao secao = this;
@@ -83,31 +81,13 @@ public class Secao
         return isvestuario;
     }
     
-
-    public Secao(Long long1, String s, Secao secao)
-    {
-        this(long1, s);
-        secaoPai = secao;
-    }
-
-    public Secao(String s)
-    {
-        this(0L, s);
-    }
-
-    public void add(Secao secao)
-    {
-        subsecoes.add(secao);
-    }
-
-    public void addProdutos(Collection<Produto> produtos)
+	public void addProdutos(Collection<Produto> produtos)
     {
     	for(Produto produto : produtos) {
     		produto.setSecao(this);
     		this.produtos.add(produto);
     	}
-        
-    }
+	}
 
     public void addSecoes(Collection<Secao> secoes)
     {
@@ -126,8 +106,8 @@ public class Secao
 
     public List<Produto> getProdutos()
     {
-    	List<Produto> produtos = new ArrayList<Produto>();
-        for(Secao secao : subsecoes ) {
+		final List<Produto> produtos = new ArrayList<Produto>();
+		for (final Secao secao : subsecoes) {
         	produtos.addAll(secao.getProdutos());
         }
         produtos.addAll(this.produtos);
@@ -141,8 +121,8 @@ public class Secao
 
     public Collection<Secao> getSubSecoes()
     {
-    	Collection<Secao> subsecoes = new ArrayList<Secao>();
-    	for( Secao secao : this.subsecoes ) {
+    	final Collection<Secao> subsecoes = new ArrayList<Secao>();
+		for (final Secao secao : this.subsecoes) {
     		if( secao.temProduto() ) {
     			subsecoes.add(secao);
     		}
@@ -161,14 +141,14 @@ public class Secao
         return titulo;
     }
 
-    public void setNome(String s)
+	public void setNome(final String nome)
     {
-        nome = s;
+		this.nome = nome;
     }
 
-    public void setSecaoPai(Secao secao)
+	public void setSecaoPai(final Secao secao)
     {
-        secaoPai = secao;
+		this.secaoPai = secao;
     }
 
 	public boolean temProduto() {

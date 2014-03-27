@@ -4,10 +4,10 @@ import java.util.List;
 
 import com.pmrodrigues.android.allinshopping.exceptions.IntegrationException;
 
-public interface Download
+public interface Download<E>
 {
 
-	List getAll()
+	List<E> getAll()
         throws IntegrationException;
 
 }

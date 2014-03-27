@@ -43,24 +43,24 @@ public class DownloadResource {
 
 			final DefaultHttpClient client = new DefaultHttpClient();
 			client.setCredentialsProvider(this.getCredential());
-
 			final HttpGet GET = new HttpGet(produto.getImage());
+
 			final HttpEntity httpentity = client.execute(GET).getEntity();
 
 			if (httpentity != null) {
 
 				buffer = new BufferedInputStream(httpentity.getContent());
 				final File directory = getImageDirectort();
+				final File image = createImageFile(produto, directory);
 
-				final File image = new File(directory.getAbsolutePath(),
-						String.format("%s.jpg", produto.getId()));
-				image.createNewFile();
 				output = new FileOutputStream(image);
 				final ByteArrayBuffer bab = new ByteArrayBuffer(1024);
+
 				int i = 0; // NOPMD
 				while ((i = buffer.read()) != -1) { // NOPMD
 					bab.append(i);
 				}
+
 				final byte b[] = bab.toByteArray(); // NOPMD
 				output.write(b);
 				output.flush();
@@ -96,8 +96,17 @@ public class DownloadResource {
 					buffer.close();
 				}
 			} catch (IOException e) { // NOPMD
+				System.out.println(e);
 			}
 		}
+	}
+
+	private File createImageFile(final Produto produto, final File directory)
+			throws IOException {
+		final File image = new File(directory.getAbsolutePath(),
+				String.format("%s.png", produto.getId()));
+		image.createNewFile();
+		return image;
 	}
 
 	private File getImageDirectort() {

@@ -11,8 +11,8 @@ import com.androidquery.AQuery;
 import com.pmrodrigues.android.allinshopping.alerts.ErrorAlert;
 import com.pmrodrigues.android.allinshopping.models.Configuracao;
 import com.pmrodrigues.android.allinshopping.models.FaixaEntrega;
-import com.pmrodrigues.android.allinshopping.repository.CEPRepository;
 import com.pmrodrigues.android.allinshopping.services.AtualizacaoService;
+import com.pmrodrigues.android.allinshopping.services.CEPService;
 import com.pmrodrigues.android.allinshopping.utilities.Constante;
 import com.pmrodrigues.android.allinshopping.utilities.PriceUtilities;
 
@@ -21,12 +21,8 @@ public class MainActivity extends AbstractActivity
 {
 
     private AQuery aq;
-    private CEPRepository repository;
+	private CEPService cepservice;
     private AtualizacaoService service;
-
-    public MainActivity()
-    {
-    }
 
     @Override
 	public void onClick(View view)
@@ -40,7 +36,7 @@ public class MainActivity extends AbstractActivity
 					.toString())) {
 				Long cep = Long.parseLong(aq.id(R.id.zipcode).getText()
 						.toString().substring(0, 5));
-				FaixaEntrega faixaentrega = repository.getFaixaEntrega(cep);
+				FaixaEntrega faixaentrega = cepservice.findByCEPCode(cep);
 				PriceUtilities.setFaixaEntrega(faixaentrega);
 				intent.putExtra(Constante.FAIXA_ENTREGA, faixaentrega);
 			}
@@ -58,7 +54,7 @@ public class MainActivity extends AbstractActivity
 	protected void onCreate(Bundle bundle)
     {	
         super.onCreate(bundle);
-        repository = new CEPRepository(this);
+		cepservice = new CEPService(this);
         service = new AtualizacaoService(this);
         if( service.precisaAtualizar() ) {
         	Intent intent = new Intent(this,ConfigurationActivity.class);

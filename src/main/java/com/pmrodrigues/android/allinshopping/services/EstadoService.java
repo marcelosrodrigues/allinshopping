@@ -7,17 +7,18 @@ import com.pmrodrigues.android.allinshopping.repository.EstadoRepository;
 
 public class EstadoService {
 
-	private EstadoRepository repository;
+	private final EstadoRepository repository;
 
-	public EstadoService(Context context) {
+	public EstadoService(final Context context) {
 		repository = new EstadoRepository(context);
 	}
-	
-	public void save(Estado estado) {
-		Estado saved = repository.getById(estado.getUf());
-		if(saved == null){
+
+	public void save(final Estado estado) {
+
+		final Estado saved = repository.getById(estado.getUf());
+		if (saved == null) {
 			repository.insert(estado);
-		}else{
+		} else {
 			repository.update(estado);
 		}
 	}

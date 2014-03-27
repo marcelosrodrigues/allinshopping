@@ -11,18 +11,16 @@ public class Configuracao implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@DatabaseField(generatedId=true)
-	private Long id;
+	private Long id; // NOPMD
 	
 	@DatabaseField(canBeNull=true)
-	private String nomeLoja;
-	
-	public Configuracao() {}
+	private String nomeLoja; // NOPMD
 
 	public Long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(final Long id) { // NOPMD
 		this.id = id;
 	}
 
@@ -30,7 +28,7 @@ public class Configuracao implements Serializable{
 		return nomeLoja;
 	}
 
-	public void setNomeLoja(String nomeLoja) {
+	public void setNomeLoja(final String nomeLoja) {
 		this.nomeLoja = nomeLoja;
 	}
 	
