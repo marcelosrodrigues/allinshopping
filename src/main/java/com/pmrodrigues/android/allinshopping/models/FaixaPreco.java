@@ -14,38 +14,42 @@ public class FaixaPreco
 	private static final long serialVersionUID = 1L;
 	
 	public static final String ID_FIELD = "id";
-	public static final String ID_FAIXA_FIELD = "idfaixa";
+	public static final String CEP_FIELD_NAME = "cep_id";
 	public static final String PESO_INICIAL_FIELD = "pesoinicial";
 	public static final String PESO_FINAL_FIELD = "pesofinal";
 	public static final String PRECO_FIELD = "preco";
+	public static final String UF_FIELD_NAME = "uf";
 	
     
     @DatabaseField(id=true,columnName=FaixaPreco.ID_FIELD)
     private Long id;
+	
+    @DatabaseField(columnName=FaixaPreco.CEP_FIELD_NAME)
+    private CEP cep;
 
-	@SerializedName("id_faixa")
-    @DatabaseField(columnName=FaixaPreco.ID_FAIXA_FIELD)
-    private Long idFaixa;
-
-	@SerializedName("peso_final")
+	@SerializedName("inicial")
     @DatabaseField(columnName=FaixaPreco.PESO_FINAL_FIELD)
     private Long pesoFinal;
 
-	@SerializedName("peso_inicial")
+	@SerializedName("termino")
     @DatabaseField(columnName=FaixaPreco.PESO_INICIAL_FIELD)
     private Long pesoInicial;
 
 	@SerializedName("preco")
     @DatabaseField(columnName=FaixaPreco.PRECO_FIELD)
     private BigDecimal preco;
+	
+	@SerializedName("destino")
+	@DatabaseField(columnName = FaixaPreco.UF_FIELD_NAME, foreign = true, foreignAutoRefresh = true)
+	private Estado estado; // NOPMD
 
     public FaixaPreco()
     {
     }
 
-    public FaixaPreco(Long idfaixa, Long pesoInicial, Long pesoFinal, BigDecimal preco)
+    public FaixaPreco(Long pesoInicial, Long pesoFinal, BigDecimal preco)
     {
-        this.idFaixa = idfaixa;
+    
         this.pesoInicial = pesoInicial;
         this.pesoFinal = pesoFinal;
         this.preco = preco;
@@ -54,11 +58,6 @@ public class FaixaPreco
     public Long getId()
     {
         return id;
-    }
-
-    public Long getIdFaixa()
-    {
-        return idFaixa;
     }
 
     public Long getPesoFinal()
@@ -75,4 +74,12 @@ public class FaixaPreco
     {
         return preco;
     }
+
+	public Estado getDestino() {
+		return estado;
+	}
+
+	public void setCEP(final CEP cep) {
+		this.cep = cep;		
+	}
 }

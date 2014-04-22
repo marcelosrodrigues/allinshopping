@@ -21,8 +21,6 @@ import com.pmrodrigues.android.allinshopping.integration.upload.Upload;
 import com.pmrodrigues.android.allinshopping.models.CEP;
 import com.pmrodrigues.android.allinshopping.models.Cliente;
 import com.pmrodrigues.android.allinshopping.models.Estado;
-import com.pmrodrigues.android.allinshopping.models.FaixaEntrega;
-import com.pmrodrigues.android.allinshopping.models.FaixaPreco;
 import com.pmrodrigues.android.allinshopping.models.Produto;
 import com.pmrodrigues.android.allinshopping.models.Secao;
 import com.pmrodrigues.android.allinshopping.services.CEPService;
@@ -97,27 +95,6 @@ public class IntegrationProcess {
 
 		for (final Cliente cliente : clientes) {
 			clienteservice.save(cliente);
-		}
-	}
-
-	@SuppressWarnings("unchecked")
-	public void importarFaixaEntrega() throws IntegrationException { // NOPMD
-		final CEPService service = new CEPService(context); // NOPMD
-		final List<FaixaEntrega> faixas = integration.getDownload(
-				ResourceType.FAIXA_ENTREGA).getAll();
-		for (final FaixaEntrega faixa : faixas) {
-			service.save(faixa);
-		}
-
-	}
-
-	@SuppressWarnings("unchecked")
-	public void importarFaixaPreco() throws IntegrationException { // NOPMD
-		final CEPService service = new CEPService(context); // NOPMD
-		final List<FaixaPreco> faixas = integration.getDownload(
-				ResourceType.FAIXA_PRECO).getAll();
-		for (final FaixaPreco faixa : faixas) {
-			service.save(faixa);
 		}
 	}
 

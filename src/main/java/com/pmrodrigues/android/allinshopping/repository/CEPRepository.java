@@ -39,7 +39,7 @@ public class CEPRepository extends AbstractRepository<CEP, Long>
 		try {
 			return this.getDao().queryBuilder()
 								.where()
-								.eq("uf", cep.getUf()).countOf() > 0;
+								.eq("uf", cep.getEstado().getUf()).countOf() > 0;
 		} catch (SQLException e) {
 			Log.e("com.pmrodrigues.android.allinshopping", e.getMessage(), e);
             throw new RuntimeException(e);

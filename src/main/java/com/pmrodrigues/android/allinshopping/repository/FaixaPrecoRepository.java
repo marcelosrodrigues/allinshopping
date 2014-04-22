@@ -21,7 +21,7 @@ public class FaixaPrecoRepository extends AbstractRepository<FaixaPreco, Long> {
 		return getDao().queryBuilder().where()
 				.le(FaixaPreco.PESO_INICIAL_FIELD, peso).and()
 				.ge(FaixaPreco.PESO_FINAL_FIELD, peso).and()
-				.eq(FaixaPreco.ID_FAIXA_FIELD, faixaentrega.getIdFaixa())
+				.eq(FaixaPreco.CEP_FIELD_NAME, faixaentrega.getIdFaixa())
 				.queryForFirst();
 	}
 
@@ -58,7 +58,7 @@ public class FaixaPrecoRepository extends AbstractRepository<FaixaPreco, Long> {
 	public FaixaPreco findByFaixaPreco(final FaixaPreco faixapreco)
 			throws SQLException {
 		FaixaPreco founded = getDao().queryBuilder().where()
-				.eq(FaixaPreco.ID_FAIXA_FIELD, faixapreco.getIdFaixa()).and()
+				.eq(FaixaPreco.UF_FIELD_NAME, faixapreco.getDestino().getUf()).and()
 				.ge(FaixaPreco.PESO_INICIAL_FIELD, faixapreco.getPesoInicial())
 				.and()
 				.le(FaixaPreco.PESO_FINAL_FIELD, faixapreco.getPesoFinal())

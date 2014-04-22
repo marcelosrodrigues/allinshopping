@@ -34,17 +34,7 @@ public class TestIntegrationProcesses {
 	public void testImportarCEP() throws IntegrationException {
 		process.importarCEP();
 	}
-
-	@Test
-	public void testImportarFaixaPreco() throws IntegrationException {
-		process.importarFaixaPreco();
-	}
-
-	@Test
-	public void testImportarFaixaEntrega() throws IntegrationException {
-		process.importarFaixaEntrega();
-	}
-
+	
 	@Test
 	public void testImportarCliente() throws IntegrationException,
 			NoUniqueRegistryException {

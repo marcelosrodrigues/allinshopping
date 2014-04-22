@@ -12,19 +12,16 @@ import com.pmrodrigues.android.allinshopping.models.Estado;
 public class DownloadEstado extends AbstractDownload<Estado>
 {
 
-	private final static String LISTAR_ESTADOS = "http://store.allinshopp.com.br/custom/list_estado.php";
-
     @Override
 	public List<Estado> getAll()
         throws IntegrationException
     {
         
         try {
-			final JSONObject json = new GetResource(
-					DownloadEstado.LISTAR_ESTADOS)
+			final JSONObject json = new GetResource(this.getURL())
 					.getJSON();
 			
-			return toList(json.getJSONObject("estados").get("estado"));
+			return toList(json.get("list"));
 			
 		} catch (JSONException e) {
 			throw new IntegrationException("Ocorreu um erro para converter a resposta do servidor " + e.getMessage(), e);

@@ -30,7 +30,7 @@ public class FaixaEntregaRepository
 				faixaentrega = getDatabase().getFaixaEntregaDao()
 						.queryBuilder().where()
 						.eq(FaixaEntrega.UF_ORIGEM_FIELD, "RJ").and()
-						.eq(FaixaEntrega.UF_DESTINO_FIELD, cep.getUf())
+						.eq(FaixaEntrega.UF_DESTINO_FIELD, cep.getEstado().getUf())
 						.queryForFirst();
 			}
 

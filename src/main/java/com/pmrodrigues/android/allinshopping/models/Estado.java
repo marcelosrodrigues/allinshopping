@@ -13,8 +13,11 @@ public class Estado
     private static final long serialVersionUID = 1L;
     @DatabaseField
     private String nome;
-    @DatabaseField(id=true)
+    @DatabaseField()
     private String uf;
+    
+    @DatabaseField(id=true)
+    private Long id;
 
     public Estado()
     {
@@ -47,7 +50,8 @@ public class Estado
         uf = s;
     }
 
-    public String toString()
+    @Override
+	public String toString()
     {
         return nome;
     }

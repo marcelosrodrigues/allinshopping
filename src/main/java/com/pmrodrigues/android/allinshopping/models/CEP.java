@@ -1,9 +1,12 @@
 package com.pmrodrigues.android.allinshopping.models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import com.google.gson.annotations.SerializedName;
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable
@@ -19,25 +22,25 @@ public class CEP implements Serializable { // NOPMD
 
 	public static final String UF_FIELD_NAME = "uf";
 
-	@SerializedName("final")
+	@SerializedName("fim")
 	@DatabaseField(columnName = CEP.FIM_FIELD_NAME)
 	private Long fim;
 
 	@SerializedName("id")
 	@DatabaseField(id = true, columnName = CEP.ID_FIELD_NAME)
-	private Long id; //NOPMD
+	private Long id; // NOPMD
 
 	@SerializedName("inicial")
 	@DatabaseField(columnName = CEP.INICIO_FIELD_NAME)
 	private Long inicio;
 
-	@SerializedName("uf")
-	@DatabaseField(columnName = CEP.UF_FIELD_NAME)
-	private String uf; // NOPMD
-
-	public CEP() {
-		super();
-	}
+	@SerializedName("estado")
+	@DatabaseField(columnName = CEP.UF_FIELD_NAME, foreign = true, foreignAutoRefresh = true)
+	private Estado estado; // NOPMD
+	
+	@SerializedName("faixas")
+    @ForeignCollectionField(eager=true)
+    private final Collection<FaixaPreco> faixas = new ArrayList<FaixaPreco>();
 
 	public Long getFim() {
 		return fim;
@@ -51,7 +54,11 @@ public class CEP implements Serializable { // NOPMD
 		return inicio;
 	}
 
-	public String getUf() {
-		return uf;
+	public Estado getEstado() {
+		return estado;
+	}
+
+	public Collection<FaixaPreco>  getFaixas() {
+		return faixas;
 	}
 }

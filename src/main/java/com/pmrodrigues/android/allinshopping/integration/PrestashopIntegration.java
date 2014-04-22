@@ -5,8 +5,6 @@ import com.pmrodrigues.android.allinshopping.integration.downloads.Download;
 import com.pmrodrigues.android.allinshopping.integration.downloads.DownloadCEP;
 import com.pmrodrigues.android.allinshopping.integration.downloads.DownloadCliente;
 import com.pmrodrigues.android.allinshopping.integration.downloads.DownloadEstado;
-import com.pmrodrigues.android.allinshopping.integration.downloads.DownloadFaixaEntrega;
-import com.pmrodrigues.android.allinshopping.integration.downloads.DownloadFaixaPrecoEntrega;
 import com.pmrodrigues.android.allinshopping.integration.downloads.DownloadProdutos;
 import com.pmrodrigues.android.allinshopping.integration.downloads.DownloadSecoes;
 import com.pmrodrigues.android.allinshopping.integration.upload.Upload;
@@ -17,7 +15,8 @@ class PrestashopIntegration
     implements Integration
 {
 
-     public Download getDownload(ResourceType resourcetype)
+     @Override
+	public Download getDownload(ResourceType resourcetype)
     {
         
         Object obj = null;
@@ -27,10 +26,6 @@ class PrestashopIntegration
            obj = new DownloadSecoes();
         } else if (resourcetype == ResourceType.CLIENTE) {
            obj = new DownloadCliente();
-        } else if (resourcetype == ResourceType.FAIXA_ENTREGA){
-           obj = new DownloadFaixaEntrega();
-        } else if (resourcetype ==  ResourceType.FAIXA_PRECO){
-           obj = new DownloadFaixaPrecoEntrega();
         } else if (resourcetype == ResourceType.PRODUTOS){
            obj = new DownloadProdutos();
         } else if( resourcetype == ResourceType.ESTADOS ) {
@@ -40,7 +35,8 @@ class PrestashopIntegration
         return ((Download) (obj));
     }
 
-    public Upload getUpload(ResourceType resourcetype)
+    @Override
+	public Upload getUpload(ResourceType resourcetype)
     {   
         Object obj = null;
         if (resourcetype == ResourceType.CLIENTE){  

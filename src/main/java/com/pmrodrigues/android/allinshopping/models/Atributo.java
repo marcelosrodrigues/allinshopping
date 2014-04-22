@@ -18,11 +18,11 @@ public class Atributo implements Serializable {
 	private static final String PRODUTO_FIELD_NAME = "produto_id";
 	
 	@DatabaseField(generatedId = true)
-	private Long id;
+	private Long id_attribute;
 	
 	@SerializedName("id")
 	@DatabaseField(columnName = Atributo.ID_PRESTASHOP_FIELD_NAME)
-	private Long id_atributo;
+	private Long id;
 	
 	@SerializedName("descricao")
 	@DatabaseField(columnName = Atributo.DESCRICAO_FIELD_NAME)

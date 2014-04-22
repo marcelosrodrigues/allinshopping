@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 import org.json.JSONArray;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public abstract class AbstractDownload<E> implements Download<E> {
 
@@ -25,7 +26,8 @@ public abstract class AbstractDownload<E> implements Download<E> {
 	}
 
 	protected List<E> toList(final Object json) {
-		return this.toList(new Gson(), json);
+		final Gson gson = new GsonBuilder().create();
+		return this.toList(gson, json);
 	}
 	
 	protected String getURL() {

@@ -14,7 +14,7 @@ public class FaixaEntrega
     private static final long serialVersionUID = 1L;
     
     public static final String ID_FIELD = "id";
-	public static final String ID_FAIXA_FIELD = FaixaPreco.ID_FAIXA_FIELD;
+	public static final String ID_FAIXA_FIELD = FaixaPreco.CEP_FIELD_NAME;
 	public static final String UF_ORIGEM_FIELD = "uforigem";
 	public static final String UF_DESTINO_FIELD = "ufdestino";
     

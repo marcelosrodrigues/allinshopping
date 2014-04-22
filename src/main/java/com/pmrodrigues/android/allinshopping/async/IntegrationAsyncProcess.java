@@ -44,8 +44,6 @@ public class IntegrationAsyncProcess extends AsyncTask<Void, String, String> {
 			integration.importarProdutos();
 			integration.importarCliente();
 			integration.importarCEP();
-			integration.importarFaixaEntrega();
-			integration.importarFaixaPreco();
 			
 			service.atualizar();
 			
