@@ -11,14 +11,12 @@ import com.pmrodrigues.android.allinshopping.models.Secao;
 
 public class DownloadSecoes extends AbstractDownload<Secao> {
 
-	private final String LISTA_SESSOES = "http://store.allinshopp.com.br/custom/list_sessoes.php"; // NOPMD
-
 	@Override
 	public List<Secao> getAll() throws IntegrationException {
 		try {
 
-			final JSONObject json = new GetResource(LISTA_SESSOES).getJSON();
-			return toList(json.getJSONObject("sessoes").get("sessao"));
+			final JSONObject json = new GetResource(this.getURL()).getJSON();
+			return toList(json.get("list"));
 
 		} catch (JSONException jsonexception) {
 			throw new IntegrationException(

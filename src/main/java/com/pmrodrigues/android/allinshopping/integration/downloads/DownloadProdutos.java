@@ -7,19 +7,30 @@ import org.json.JSONObject;
 
 import com.pmrodrigues.android.allinshopping.exceptions.IntegrationException;
 import com.pmrodrigues.android.allinshopping.integration.rest.GetResource;
+import com.pmrodrigues.android.allinshopping.models.Atributo;
+import com.pmrodrigues.android.allinshopping.models.Imagem;
 import com.pmrodrigues.android.allinshopping.models.Produto;
 
 public class DownloadProdutos extends AbstractDownload<Produto> {
-	// TODO Lembrar de alterar a URL para a URL definitiva
-	private final String LIST_PRODUTOS = "http://store.allinshopp.com.br/custom/list_produtos_novo.php"; // NOPMD
-
+	
 	@Override
 	public List<Produto> getAll() throws IntegrationException {
 
 		try {
-			final JSONObject json = new GetResource(LIST_PRODUTOS).getJSON();
+			final JSONObject json = new GetResource(this.getURL()).getJSON();
 
-			return toList(json.getJSONObject("produtos").get("produto"));
+			List<Produto> produtos =  toList(json.get("list"));
+			
+			for(Produto produto : produtos){
+				for( Imagem imagem : produto.getImagens() ) {
+					imagem.setProduto(produto);
+				}
+				for( Atributo atributo : produto.getAtributos() ){
+					atributo.setProduto(produto);
+				}
+			}
+			
+			return produtos;
 
 		} catch (JSONException e) {
 			throw new IntegrationException(

@@ -17,11 +17,11 @@ public class Secao
 
     private static final long serialVersionUID = 1L;
     
-	@SerializedName("id_secao")
+	@SerializedName("id")
     @DatabaseField(id=true)
     private Long id;
     
-	@SerializedName("secao")
+	@SerializedName("nome")
     @DatabaseField
     private String nome;
     

@@ -5,6 +5,7 @@ import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import org.json.JSONArray;
 
@@ -13,6 +14,8 @@ import com.google.gson.Gson;
 public abstract class AbstractDownload<E> implements Download<E> {
 
 	private final Class<E> persistentClass;
+	
+	private final ResourceBundle bundle = ResourceBundle.getBundle("integration");
 
 	@SuppressWarnings("unchecked")
 	public AbstractDownload() {
@@ -23,6 +26,10 @@ public abstract class AbstractDownload<E> implements Download<E> {
 
 	protected List<E> toList(final Object json) {
 		return this.toList(new Gson(), json);
+	}
+	
+	protected String getURL() {
+		return bundle.getString(this.persistentClass.getSimpleName().toLowerCase());
 	}
 
 	@SuppressWarnings("unchecked")

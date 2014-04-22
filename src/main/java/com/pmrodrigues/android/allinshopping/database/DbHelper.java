@@ -19,6 +19,7 @@ import com.pmrodrigues.android.allinshopping.models.Estado;
 import com.pmrodrigues.android.allinshopping.models.FaixaEntrega;
 import com.pmrodrigues.android.allinshopping.models.FaixaPreco;
 import com.pmrodrigues.android.allinshopping.models.FormaPagamento;
+import com.pmrodrigues.android.allinshopping.models.Imagem;
 import com.pmrodrigues.android.allinshopping.models.ItemPedido;
 import com.pmrodrigues.android.allinshopping.models.Pedido;
 import com.pmrodrigues.android.allinshopping.models.Produto;
@@ -45,12 +46,12 @@ public class DbHelper extends OrmLiteSqliteOpenHelper
     private Dao<Atualizacao, Long> atualizacaoDao;
     private Dao<Configuracao, Long> configuracaoDao;
 
-    public DbHelper(Context context)
+	public DbHelper(final Context context)
     {   
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    private void createDatabase(ConnectionSource connectionsource)
+	private void createDatabase(final ConnectionSource connectionsource)
     {
         try
         {
@@ -69,6 +70,7 @@ public class DbHelper extends OrmLiteSqliteOpenHelper
             TableUtils.createTable(connectionsource, FaixaPreco.class);
             TableUtils.createTable(connectionsource, Atualizacao.class);
             TableUtils.createTable(connectionsource, Configuracao.class);
+            TableUtils.createTable(connectionsource, Imagem.class);
             return;
         }
         catch (SQLException sqlexception)
@@ -78,7 +80,8 @@ public class DbHelper extends OrmLiteSqliteOpenHelper
         }
     }
 
-    public void close()
+    @Override
+	public void close()
     {
         super.close();
         estadoDao = null;
@@ -231,12 +234,17 @@ public class DbHelper extends OrmLiteSqliteOpenHelper
     	return configuracaoDao;
     }
 
-    public void onCreate(SQLiteDatabase sqlitedatabase, ConnectionSource connectionsource)
+    @Override
+	public void onCreate(final SQLiteDatabase sqlitedatabase,
+			final ConnectionSource connectionsource)
     {
         createDatabase(connectionsource);
     }
 
-    public void onUpgrade(SQLiteDatabase sqlitedatabase, ConnectionSource connectionsource, int i, int j)
+    @Override
+	public void onUpgrade(final SQLiteDatabase sqlitedatabase,
+			final ConnectionSource connectionsource, final int oldversion,
+			final int newversion)
     {
     }
 

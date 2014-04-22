@@ -3,9 +3,12 @@ package com.pmrodrigues.android.allinshopping.models;
 import java.io.File;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import com.google.gson.annotations.SerializedName;
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 import com.pmrodrigues.android.allinshopping.utilities.Constante;
 
@@ -13,7 +16,6 @@ import com.pmrodrigues.android.allinshopping.utilities.Constante;
 public class Produto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private static final String ID_CATEGORIA_PRESTASHOP_FIELD_NAME = "idcategoria_prestashop"; // NOPMD
 	private static final String ID_LOJA_PRESTASHOP_FIELD_NAME = "id_loja"; // NOPMD
 	private static final String IMAGE_URL_FIELD_NAME = "imageurl"; // NOPMD
 	private static final String NOME_FIELD_NAME = "nome";
@@ -24,15 +26,11 @@ public class Produto implements Serializable {
 	private static final String PESO_FIELD_NAME = "peso";
 	private FaixaPreco faixaPreco;
 
-	@SerializedName("id_product")
+	@SerializedName("id")
 	@DatabaseField(id = true)
 	private Long id; // NOPMD
 
-	@SerializedName("id_category")
-	@DatabaseField(columnName = Produto.ID_CATEGORIA_PRESTASHOP_FIELD_NAME)
-	private Long idCategoriaPrestashop; // NOPMD
-
-	@SerializedName("id_shop")
+	@SerializedName("shop_id")
 	@DatabaseField(columnName = Produto.ID_LOJA_PRESTASHOP_FIELD_NAME)
 	private Long idLoja;
 
@@ -40,11 +38,11 @@ public class Produto implements Serializable {
 	@DatabaseField(columnName = Produto.IMAGE_URL_FIELD_NAME)
 	private String imageUrl;
 
-	@SerializedName("name")
+	@SerializedName("nome")
 	@DatabaseField(columnName = Produto.NOME_FIELD_NAME)
 	private String nome;
 
-	@SerializedName("price")
+	@SerializedName("preco")
 	@DatabaseField(columnName = Produto.PRECO_FIELD_NAME)
 	private BigDecimal preco;
 
@@ -56,26 +54,33 @@ public class Produto implements Serializable {
 	@DatabaseField(columnName = Produto.SECAO_FIELD_NAME, foreign = true, foreignAutoRefresh = true)
 	private Secao secao;
 
-	@SerializedName("description")
+	@SerializedName("descricao")
 	@DatabaseField(columnName = Produto.DESCRICAO_FIELD_NAME)
 	private String descricao;
 
-	@SerializedName("description_short")
+	@SerializedName("descricaoBreve")
 	@DatabaseField(columnName = Produto.DESCRICAO_BREVE_FIELD_NAME)
 	private String descricaoCurto;
+	
+	@SerializedName("imagens")
+	@ForeignCollectionField(eager=true)
+    private final Collection<Imagem> imagens = new ArrayList<Imagem>();
+ 	
+	@SerializedName("atributos")
+	@ForeignCollectionField(eager=true)
+	private final Collection<Atributo> atributos = new ArrayList<Atributo>();
 
 	public Produto() {
 		super();
 	}
 
 	public Produto(final Long id, final String nome, final BigDecimal preco,
-			final Long idLoja, final Long idCategoriaPrestashop) { // NOPMD
+			final Long idLoja) { // NOPMD
 		this();
 		this.id = id;
 		this.nome = nome;
 		this.preco = preco;
 		this.idLoja = idLoja;
-		this.idCategoriaPrestashop = idCategoriaPrestashop;
 	}
 
 	public Produto(final Long id, final String nome, final String imageUrl,
@@ -113,10 +118,6 @@ public class Produto implements Serializable {
 
 	public Long getId() {
 		return id;
-	}
-
-	public Long getIdCategoriaPrestashop() {
-		return idCategoriaPrestashop;
 	}
 
 	public Long getIdLoja() {
@@ -187,24 +188,16 @@ public class Produto implements Serializable {
 		faixaPreco = faixapreco;
 	}
 
-	public void setId(Long long1) {
-		id = long1;
-	}
-
-	public void setIdCategoriaPrestashop(Long long1) {
-		idCategoriaPrestashop = long1;
-	}
-
-	public void setIdLoja(Long long1) {
-		idLoja = long1;
+	public void setId(final Long id) {
+		this.id = id;
 	}
 
 	public void setImage(String s) {
 		imageUrl = s;
 	}
 
-	public void setSecao(Secao secao1) {
-		secao = secao1;
+	public void setSecao(Secao secao) {
+		this.secao = secao;
 	}
 
 	public BigDecimal getFrete() {
@@ -241,5 +234,13 @@ public class Produto implements Serializable {
 	public boolean apagarImagem() {
 		File image = new File(this.imageUrl);
 		return image.delete();
+	}
+
+	public Collection<Imagem> getImagens() {
+		return this.imagens;
+	}
+
+	public Collection<Atributo> getAtributos() {
+		return this.atributos;
 	}
 }

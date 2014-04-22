@@ -15,23 +15,31 @@ import com.pmrodrigues.android.allinshopping.services.AtualizacaoService;
 public class IntegrationAsyncProcess extends AsyncTask<Void, String, String> {
 
 	private final IntegrationProcess integration;
-	private AQuery aq;
+	private final AtualizacaoService service;
+	private final AQuery aq;
 	
 
-	public IntegrationAsyncProcess(Context context1) {
+	public IntegrationAsyncProcess(Context context) {
 
-		integration = new IntegrationProcess(context1);
-		this.aq = new AQuery(context1);
+		integration = new IntegrationProcess(context);
+		service = new AtualizacaoService(integration.getContext());
+		this.aq = new AQuery(context);
 		
 	}
 	
+	@Override
+	protected void onPreExecute() {
+		publishProgress("Iniciando a carga do tablet");
+	}
 	
+	@Override
 	protected String doInBackground(Void... avoid)
     {
         try {
-			integration.importarEstado();
+
 			integration.enviarCliente();
 			integration.enviarPedido();
+			integration.importarEstado();
 			integration.importarSecao();
 			integration.importarProdutos();
 			integration.importarCliente();
@@ -39,7 +47,6 @@ public class IntegrationAsyncProcess extends AsyncTask<Void, String, String> {
 			integration.importarFaixaEntrega();
 			integration.importarFaixaPreco();
 			
-			AtualizacaoService service = new AtualizacaoService(this.integration.getContext());
 			service.atualizar();
 			
 			
@@ -56,6 +63,7 @@ public class IntegrationAsyncProcess extends AsyncTask<Void, String, String> {
 		}
     }
 
+	@Override
 	protected void onPostExecute(String s) {
 		super.onPostExecute(s);
 		this.aq.id(R.id.progressText).text(s);

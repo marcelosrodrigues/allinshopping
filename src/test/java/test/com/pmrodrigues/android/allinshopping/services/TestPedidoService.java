@@ -67,7 +67,7 @@ public class TestPedidoService {
 
 		for (long i = 1L; i <= 10L; i++) {
 			Produto produto = new Produto(i, String.format("produto %d", i),
-					BigDecimal.TEN.multiply(new BigDecimal(i)), i, i);
+					BigDecimal.TEN.multiply(new BigDecimal(i)), i);
 			PRODUTO_REPOSITORY.insert(produto);
 		}
 
