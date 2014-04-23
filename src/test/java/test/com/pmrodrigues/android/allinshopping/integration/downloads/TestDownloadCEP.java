@@ -14,8 +14,8 @@ public class TestDownloadCEP extends TestDownloadProcesses {
 
 	@Test
 	public void testDeCarregamentoDeLista() throws IntegrationException {
-		DownloadCEP download = new DownloadCEP();
-		List<CEP> ceps = download.getAll();
+		final DownloadCEP download = new DownloadCEP();
+		final List<CEP> ceps = download.getAll();
 
 		Assert.assertFalse(ceps.isEmpty());
 	}
