@@ -17,6 +17,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.ByteArrayBuffer;
 
 import com.pmrodrigues.android.allinshopping.exceptions.IntegrationException;
+import com.pmrodrigues.android.allinshopping.models.Imagem;
 import com.pmrodrigues.android.allinshopping.models.Produto;
 import com.pmrodrigues.android.allinshopping.utilities.Constante;
 
@@ -34,16 +35,30 @@ public class DownloadResource {
 
 	}
 
-	public String getResourceByProduto(final Produto produto)
+	public void getResourceByProduto(final Produto produto)
+			throws IntegrationException {
+		
+		for( Imagem imagem : produto.getImagens() ) {
+			String imagepath = getResourceByImage(imagem);
+			imagem.setFileName(imagepath);
+		}
+		
+		
+		
+	}
+
+	private String getResourceByImage(final Imagem imagem)
 			throws IntegrationException {
 		FileOutputStream output = null; // NOPMD
 		BufferedInputStream buffer = null; // NOPMD
 		String absolutImagePath = null; // NOPMD
+		
+		
 		try {
 
 			final DefaultHttpClient client = new DefaultHttpClient();
 			client.setCredentialsProvider(this.getCredential());
-			final HttpGet GET = new HttpGet(produto.getImage());
+			final HttpGet GET = new HttpGet(imagem.getURL());
 
 			final HttpEntity httpentity = client.execute(GET).getEntity();
 
@@ -51,7 +66,7 @@ public class DownloadResource {
 
 				buffer = new BufferedInputStream(httpentity.getContent());
 				final File directory = getImageDirectort();
-				final File image = createImageFile(produto, directory);
+				final File image = createImageFile(imagem, directory);
 
 				output = new FileOutputStream(image);
 				final ByteArrayBuffer bab = new ByteArrayBuffer(1024);
@@ -68,8 +83,9 @@ public class DownloadResource {
 				absolutImagePath = image.getAbsoluteFile().getAbsolutePath();
 
 			}
-
+			
 			return absolutImagePath;
+			
 		} catch (ClientProtocolException e) {
 			throw new IntegrationException(
 					"Ocorreu um erro para converter a resposta do servidor " // NOPMD
@@ -101,10 +117,10 @@ public class DownloadResource {
 		}
 	}
 
-	private File createImageFile(final Produto produto, final File directory)
+	private File createImageFile(final Imagem imagem, final File directory)
 			throws IOException {
 		final File image = new File(directory.getAbsolutePath(),
-				String.format("%s.png", produto.getId()));
+				String.format("%s-%s.png", imagem.getProduto().getId(),imagem.getId()));
 		image.createNewFile();
 		return image;
 	}

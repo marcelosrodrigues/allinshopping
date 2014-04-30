@@ -20,7 +20,6 @@ import com.pmrodrigues.android.allinshopping.ShoppingCartActivity;
 import com.pmrodrigues.android.allinshopping.alerts.ErrorAlert;
 import com.pmrodrigues.android.allinshopping.events.AbrirImagemOnClickEvent;
 import com.pmrodrigues.android.allinshopping.events.ChangeRadioButtonEventListener;
-import com.pmrodrigues.android.allinshopping.models.FaixaPreco;
 import com.pmrodrigues.android.allinshopping.models.Pedido;
 import com.pmrodrigues.android.allinshopping.models.Produto;
 import com.pmrodrigues.android.allinshopping.services.CEPService;
@@ -56,12 +55,12 @@ public class ProdutoAdapter extends ArrayAdapter<Produto>
         }
         aq = new AQuery(view);
         Produto produto = products.get(i);
-        if (PriceUtilities.getFaixaEntrega() != null)
-        {
-            Long peso = produto.getPeso();
-            FaixaPreco faixapreco = service.getFaixaPreco(PriceUtilities.getFaixaEntrega(), peso);
-            produto.setFaixaPreco(faixapreco);
-        }
+//        if (PriceUtilities.getFaixaEntrega() != null)
+//        {
+//            Long peso = produto.getPeso();
+//            FaixaPreco faixapreco = service.getFaixaPreco(PriceUtilities.getFaixaEntrega(), peso);
+//            produto.setFaixaPreco(faixapreco);
+//        }
         aq.id(R.id.imagem).image(DrawableUtilities.getImage(activity, produto.getImage()));
         aq.id(R.id.imagem).tag(produto.getImage());
         aq.id(R.id.imagem).clicked(new AbrirImagemOnClickEvent());

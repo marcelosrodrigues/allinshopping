@@ -22,7 +22,6 @@ import com.j256.ormlite.table.DatabaseTable;
 import com.pmrodrigues.android.allinshopping.exceptions.IntegrationException;
 import com.pmrodrigues.android.allinshopping.utilities.Constante;
 import com.pmrodrigues.android.allinshopping.utilities.ParseUtilities;
-import com.pmrodrigues.android.allinshopping.utilities.PriceUtilities;
 
 @DatabaseTable
 public class Pedido
@@ -173,9 +172,9 @@ public class Pedido
         	total = total.add(item.getTotal());
         }
 
-		if (PriceUtilities.getFaixaEntrega() == null) {
+/*		if (PriceUtilities.getFaixaEntrega() == null) {
 			total = total.add(new BigDecimal(2));
-		}
+		}*/
 
         return total;
     }

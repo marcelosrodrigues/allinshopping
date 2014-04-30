@@ -20,8 +20,7 @@ public class IntegrationProdutoRunnable implements Runnable {
 	@Override
 	public void run() {
 		try {
-			final String imageURL = download.getResourceByProduto(produto);
-			produto.setImage(imageURL);
+			download.getResourceByProduto(produto);
 			service.save(produto);
 		} catch (IntegrationException e) {
 			throw new RuntimeException(e);

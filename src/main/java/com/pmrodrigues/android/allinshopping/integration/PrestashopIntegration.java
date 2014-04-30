@@ -5,6 +5,7 @@ import com.pmrodrigues.android.allinshopping.integration.downloads.Download;
 import com.pmrodrigues.android.allinshopping.integration.downloads.DownloadCEP;
 import com.pmrodrigues.android.allinshopping.integration.downloads.DownloadCliente;
 import com.pmrodrigues.android.allinshopping.integration.downloads.DownloadEstado;
+import com.pmrodrigues.android.allinshopping.integration.downloads.DownloadFaixaPreco;
 import com.pmrodrigues.android.allinshopping.integration.downloads.DownloadProdutos;
 import com.pmrodrigues.android.allinshopping.integration.downloads.DownloadSecoes;
 import com.pmrodrigues.android.allinshopping.integration.upload.Upload;
@@ -30,6 +31,8 @@ class PrestashopIntegration
            obj = new DownloadProdutos();
         } else if( resourcetype == ResourceType.ESTADOS ) {
         	obj = new DownloadEstado();
+        } else if ( resourcetype == ResourceType.FAIXA_PRECO ){
+        	obj = new DownloadFaixaPreco();
         }
         
         return ((Download) (obj));

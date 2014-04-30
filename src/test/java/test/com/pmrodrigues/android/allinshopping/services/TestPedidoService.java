@@ -8,6 +8,8 @@ import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.Robolectric;
+import org.robolectric.RobolectricTestRunner;
 
 import com.pmrodrigues.android.allinshopping.models.Cliente;
 import com.pmrodrigues.android.allinshopping.models.Estado;
@@ -16,8 +18,6 @@ import com.pmrodrigues.android.allinshopping.models.Produto;
 import com.pmrodrigues.android.allinshopping.repository.ClienteRepository;
 import com.pmrodrigues.android.allinshopping.repository.ProductRepository;
 import com.pmrodrigues.android.allinshopping.services.PedidoService;
-import com.xtremelabs.robolectric.Robolectric;
-import com.xtremelabs.robolectric.RobolectricTestRunner;
 
 @RunWith(RobolectricTestRunner.class)
 public class TestPedidoService {

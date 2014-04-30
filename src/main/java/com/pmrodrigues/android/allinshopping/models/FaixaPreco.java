@@ -14,18 +14,15 @@ public class FaixaPreco
 	private static final long serialVersionUID = 1L;
 	
 	public static final String ID_FIELD = "id";
-	public static final String CEP_FIELD_NAME = "cep_id";
 	public static final String PESO_INICIAL_FIELD = "pesoinicial";
 	public static final String PESO_FINAL_FIELD = "pesofinal";
 	public static final String PRECO_FIELD = "preco";
-	public static final String UF_FIELD_NAME = "uf";
+	public static final String DESTINO_FIELD_NAME = "destino";
+	public static final String ORIGEM_FIELD_NAME = "origem";
 	
     
     @DatabaseField(id=true,columnName=FaixaPreco.ID_FIELD)
     private Long id;
-	
-    @DatabaseField(columnName=FaixaPreco.CEP_FIELD_NAME)
-    private CEP cep;
 
 	@SerializedName("inicial")
     @DatabaseField(columnName=FaixaPreco.PESO_FINAL_FIELD)
@@ -40,8 +37,12 @@ public class FaixaPreco
     private BigDecimal preco;
 	
 	@SerializedName("destino")
-	@DatabaseField(columnName = FaixaPreco.UF_FIELD_NAME, foreign = true, foreignAutoRefresh = true)
-	private Estado estado; // NOPMD
+	@DatabaseField(columnName = FaixaPreco.DESTINO_FIELD_NAME, foreign = true, foreignAutoRefresh = true)
+	private Estado destino; // NOPMD
+	
+	@SerializedName("origem")
+	@DatabaseField(columnName = FaixaPreco.ORIGEM_FIELD_NAME, foreign = true, foreignAutoRefresh = true)
+	private Estado origem; // NOPMD
 
     public FaixaPreco()
     {
@@ -76,10 +77,11 @@ public class FaixaPreco
     }
 
 	public Estado getDestino() {
-		return estado;
+		return destino;
 	}
-
-	public void setCEP(final CEP cep) {
-		this.cep = cep;		
+	
+	public Estado getOrigem() {
+		return origem;
 	}
+	
 }

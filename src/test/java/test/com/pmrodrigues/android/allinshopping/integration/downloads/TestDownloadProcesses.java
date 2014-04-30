@@ -2,9 +2,8 @@ package test.com.pmrodrigues.android.allinshopping.integration.downloads;
 
 import org.junit.Before;
 import org.junit.runner.RunWith;
-
-import com.xtremelabs.robolectric.Robolectric;
-import com.xtremelabs.robolectric.RobolectricTestRunner;
+import org.robolectric.Robolectric;
+import org.robolectric.RobolectricTestRunner;
 
 @RunWith(RobolectricTestRunner.class)
 public abstract class TestDownloadProcesses {

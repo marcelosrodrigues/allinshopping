@@ -21,11 +21,16 @@ public class CEPRepository extends AbstractRepository<CEP, Long>
 		return getDatabase().getCEPDao();
 	}
 
-	public CEP findCepByCepCode(final Long cepcode) {
+	public CEP findCepByZipCode(final Long cepcode) {
 		try {
-			CEP cep = getDatabase().getCEPDao().queryBuilder().where()
-					.le("inicio", cepcode).and().ge("fim", cepcode)
-					.queryForFirst();
+			
+			final CEP cep = getDatabase().getCEPDao()
+								   .queryBuilder()
+								   .where()
+								   .le(CEP.INICIO_FIELD_NAME, cepcode)
+								   .and()
+								   .ge(CEP.FIM_FIELD_NAME, cepcode)
+								   .queryForFirst();
 
 			return cep;
 
@@ -39,7 +44,7 @@ public class CEPRepository extends AbstractRepository<CEP, Long>
 		try {
 			return this.getDao().queryBuilder()
 								.where()
-								.eq("uf", cep.getEstado().getUf()).countOf() > 0;
+								.eq(CEP.ID_FIELD_NAME, cep.getId()).countOf() > 0;
 		} catch (SQLException e) {
 			Log.e("com.pmrodrigues.android.allinshopping", e.getMessage(), e);
             throw new RuntimeException(e);

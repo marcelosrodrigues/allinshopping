@@ -20,7 +20,7 @@ public class CEP implements Serializable { // NOPMD
 
 	public static final String INICIO_FIELD_NAME = "inicio";
 
-	public static final String UF_FIELD_NAME = "uf";
+	public static final String UF_FIELD_NAME = "estado_id";
 
 	@SerializedName("fim")
 	@DatabaseField(columnName = CEP.FIM_FIELD_NAME)
@@ -35,7 +35,7 @@ public class CEP implements Serializable { // NOPMD
 	private Long inicio;
 
 	@SerializedName("estado")
-	@DatabaseField(columnName = CEP.UF_FIELD_NAME, foreign = true, foreignAutoRefresh = true)
+	@DatabaseField(columnName = CEP.UF_FIELD_NAME, foreign = true, foreignAutoRefresh = true )
 	private Estado estado; // NOPMD
 	
 	@SerializedName("faixas")
@@ -57,8 +57,23 @@ public class CEP implements Serializable { // NOPMD
 	public Estado getEstado() {
 		return estado;
 	}
-
+	
 	public Collection<FaixaPreco>  getFaixas() {
 		return faixas;
+	}
+	
+	@Override
+	public boolean equals(final Object obj) {
+		boolean isEquals = false;
+		if( obj instanceof CEP ){
+			final CEP other = (CEP) obj;
+			isEquals = other.id == this.id;
+		}
+		return isEquals;
+	}
+	
+	@Override
+	public int hashCode() {
+		return ((this.inicio.hashCode() * 32) >> 4) + ((this.fim.hashCode() * 32) >> 4) >> 5;
 	}
 }

@@ -7,12 +7,12 @@ import org.json.JSONObject;
 
 import com.pmrodrigues.android.allinshopping.exceptions.IntegrationException;
 import com.pmrodrigues.android.allinshopping.integration.rest.GetResource;
-import com.pmrodrigues.android.allinshopping.models.CEP;
+import com.pmrodrigues.android.allinshopping.models.FaixaPreco;
 
-public class DownloadCEP extends AbstractDownload<CEP> {
+public class DownloadFaixaPreco extends AbstractDownload<FaixaPreco> {
 
     @Override
-	public List<CEP> getAll()
+	public List<FaixaPreco> getAll()
         throws IntegrationException
     {
         

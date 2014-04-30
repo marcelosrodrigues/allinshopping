@@ -3,14 +3,14 @@ package test.com.pmrodrigues.android.allinshopping.async;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.Robolectric;
+import org.robolectric.RobolectricTestRunner;
 
 import android.content.Context;
 
 import com.pmrodrigues.android.allinshopping.async.IntegrationProcess;
 import com.pmrodrigues.android.allinshopping.exceptions.IntegrationException;
 import com.pmrodrigues.android.allinshopping.exceptions.NoUniqueRegistryException;
-import com.xtremelabs.robolectric.Robolectric;
-import com.xtremelabs.robolectric.RobolectricTestRunner;
 
 @RunWith(RobolectricTestRunner.class)
 public class TestIntegrationProcesses {
@@ -33,6 +33,11 @@ public class TestIntegrationProcesses {
 	@Test
 	public void testImportarCEP() throws IntegrationException {
 		process.importarCEP();
+	}
+	
+	@Test
+	public void testImportarFaixaPreco() throws IntegrationException {
+		process.importarFaixaPreco();
 	}
 	
 	@Test

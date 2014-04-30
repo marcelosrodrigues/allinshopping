@@ -10,11 +10,8 @@ import android.view.View.OnClickListener;
 import com.androidquery.AQuery;
 import com.pmrodrigues.android.allinshopping.alerts.ErrorAlert;
 import com.pmrodrigues.android.allinshopping.models.Configuracao;
-import com.pmrodrigues.android.allinshopping.models.FaixaEntrega;
 import com.pmrodrigues.android.allinshopping.services.AtualizacaoService;
 import com.pmrodrigues.android.allinshopping.services.CEPService;
-import com.pmrodrigues.android.allinshopping.utilities.Constante;
-import com.pmrodrigues.android.allinshopping.utilities.PriceUtilities;
 
 public class MainActivity extends AbstractActivity
  implements OnClickListener
@@ -36,9 +33,9 @@ public class MainActivity extends AbstractActivity
 					.toString())) {
 				Long cep = Long.parseLong(aq.id(R.id.zipcode).getText()
 						.toString().substring(0, 5));
-				FaixaEntrega faixaentrega = cepservice.findByCEPCode(cep);
-				PriceUtilities.setFaixaEntrega(faixaentrega);
-				intent.putExtra(Constante.FAIXA_ENTREGA, faixaentrega);
+//				FaixaEntrega faixaentrega = cepservice.findByCEPCode(cep);
+//				PriceUtilities.setFaixaEntrega(faixaentrega);
+//				intent.putExtra(Constante.FAIXA_ENTREGA, faixaentrega);
 			}
 
             startActivity(intent);

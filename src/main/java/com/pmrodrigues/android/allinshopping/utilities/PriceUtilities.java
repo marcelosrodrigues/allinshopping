@@ -1,22 +1,15 @@
 package com.pmrodrigues.android.allinshopping.utilities;
 
-import com.pmrodrigues.android.allinshopping.models.FaixaEntrega;
 import com.pmrodrigues.android.allinshopping.models.Pedido;
 
 public final class PriceUtilities {
 
-	private static FaixaEntrega faixaentrega;
+	
 	private static Pedido pedido;
 	
 	private PriceUtilities() {}
 
-	public static void setFaixaEntrega(final FaixaEntrega faixaentrega) {
-		PriceUtilities.faixaentrega = faixaentrega;		
-	}
 	
-	public static FaixaEntrega getFaixaEntrega() {
-		return PriceUtilities.faixaentrega;
-	}
 
 	public static Pedido getPedido() {
 		

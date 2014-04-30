@@ -8,7 +8,7 @@ import android.content.Context;
 import com.j256.ormlite.dao.Dao;
 import com.pmrodrigues.android.allinshopping.models.Estado;
 
-public class EstadoRepository extends AbstractRepository<Estado,String>
+public class EstadoRepository extends AbstractRepository<Estado,Long>
 {
 
     public EstadoRepository(Context context)
@@ -16,12 +16,17 @@ public class EstadoRepository extends AbstractRepository<Estado,String>
         super(context);
     }
 
-    public Estado findByUF(String s)
+    public Estado findByUF(String uf)
     {
         Estado estado;
         try
         {
-            estado = (Estado)super.getDatabase().getEstadoDao().queryForId(s);
+            estado = super.getDatabase()
+            			  .getEstadoDao()
+            			  .queryBuilder()
+            			  .where()
+            			  .eq(Estado.UF_FIELD_NAME , uf)
+            			  .queryForFirst();
         }
         catch (SQLException sqlexception)
         {
@@ -44,7 +49,7 @@ public class EstadoRepository extends AbstractRepository<Estado,String>
     }
 
 	@Override
-	protected Dao<Estado, String> getDao() throws SQLException {
+	protected Dao<Estado, Long> getDao() throws SQLException {
 		return getDatabase().getEstadoDao();
 	}
 }

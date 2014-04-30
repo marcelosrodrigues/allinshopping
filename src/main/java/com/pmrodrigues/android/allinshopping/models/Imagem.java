@@ -27,12 +27,28 @@ public class Imagem implements Serializable {
 	private String url;
 	
 	@DatabaseField(columnName = Imagem.FILENAME_FIELD_NAME)
-	private final String fileName = null;
+	private String fileName = null;
 	
 	@DatabaseField(columnName = Imagem.PRODUTO_FIELD_NAME, foreign = true, foreignAutoRefresh = true)
 	private Produto produto;
 
 	public void setProduto(final Produto produto) {
 		this.produto = produto;
+	}
+
+	public String getURL() {
+		return this.url;
+	}
+
+	public Produto getProduto() {
+		return produto;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setFileName(final String imagepath) {
+		this.fileName = imagepath;
 	}
 }

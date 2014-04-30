@@ -3,10 +3,10 @@ package test.com.pmrodrigues.android.allinshopping.repository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.Robolectric;
+import org.robolectric.RobolectricTestRunner;
 
 import com.pmrodrigues.android.allinshopping.repository.ClienteRepository;
-import com.xtremelabs.robolectric.Robolectric;
-import com.xtremelabs.robolectric.RobolectricTestRunner;
 
 @RunWith(RobolectricTestRunner.class)
 public class TestClienteRepository {

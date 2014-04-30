@@ -1,6 +1,7 @@
 package com.pmrodrigues.android.allinshopping.repository;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import android.content.Context;
 
@@ -66,6 +67,14 @@ public abstract class AbstractRepository<E,T>
     		
 		} catch (SQLException sqlexp) {
 			throw new DatabaseOperationException("Falha ao pesquisar o id " + id + " no banco de dados", sqlexp);
+		}
+    }
+    
+    public List<E> list() {
+    	try {
+			return this.getDao().queryForAll();
+		} catch (SQLException sqlexp) {
+			throw new DatabaseOperationException("Falha ao listar os valores do banco de dados", sqlexp);
 		}
     }
     

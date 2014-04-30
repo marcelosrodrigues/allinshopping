@@ -15,7 +15,7 @@ public class EstadoService {
 
 	public void save(final Estado estado) {
 
-		final Estado saved = repository.getById(estado.getUf());
+		final Estado saved = repository.findByUF(estado.getUf());
 		if (saved == null) {
 			repository.insert(estado);
 		} else {

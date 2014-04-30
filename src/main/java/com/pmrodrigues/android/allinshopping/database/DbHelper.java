@@ -16,7 +16,6 @@ import com.pmrodrigues.android.allinshopping.models.Cliente;
 import com.pmrodrigues.android.allinshopping.models.Configuracao;
 import com.pmrodrigues.android.allinshopping.models.DadosPagamento;
 import com.pmrodrigues.android.allinshopping.models.Estado;
-import com.pmrodrigues.android.allinshopping.models.FaixaEntrega;
 import com.pmrodrigues.android.allinshopping.models.FaixaPreco;
 import com.pmrodrigues.android.allinshopping.models.FormaPagamento;
 import com.pmrodrigues.android.allinshopping.models.Imagem;
@@ -33,15 +32,13 @@ public class DbHelper extends OrmLiteSqliteOpenHelper
     private static final Integer DATABASE_VERSION = 1;
     private Dao<CEP, Long> cepDAO;
     private Dao<Cliente, Long> clienteDao;
-    private Dao<Estado, String> estadoDao;
-    private Dao<FaixaEntrega, Long> faixaDao;
+    private Dao<Estado, Long> estadoDao;
     private Dao<FaixaPreco, Long> faixaPrecoDao;
     private Dao<FormaPagamento, Long> formaPagamentoDao;
     private Dao<ItemPedido, Long> itemDao;
     private Dao<DadosPagamento, Long> pagtoDao;
     private Dao<Pedido, Long> pedidoDao;
-    private Dao<Produto, Long> produtoDao;
-    private Dao<Promocao, Long> promocaoDao;
+    private Dao<Produto, Long> produtoDao;    
     private Dao<Secao, Long> secaoDao;
     private Dao<Atualizacao, Long> atualizacaoDao;
     private Dao<Configuracao, Long> configuracaoDao;
@@ -66,7 +63,6 @@ public class DbHelper extends OrmLiteSqliteOpenHelper
             TableUtils.createTable(connectionsource, ItemPedido.class);
             TableUtils.createTable(connectionsource, DadosPagamento.class);
             TableUtils.createTable(connectionsource, CEP.class);
-            TableUtils.createTable(connectionsource, FaixaEntrega.class);
             TableUtils.createTable(connectionsource, FaixaPreco.class);
             TableUtils.createTable(connectionsource, Atualizacao.class);
             TableUtils.createTable(connectionsource, Configuracao.class);
@@ -90,11 +86,9 @@ public class DbHelper extends OrmLiteSqliteOpenHelper
         pedidoDao = null;
         secaoDao = null;
         produtoDao = null;
-        promocaoDao = null;
         itemDao = null;
         pagtoDao = null;
         cepDAO = null;
-        faixaDao = null;
         faixaPrecoDao = null;
         atualizacaoDao = null;
         
@@ -130,7 +124,7 @@ public class DbHelper extends OrmLiteSqliteOpenHelper
         return pagtoDao;
     }
 
-    public Dao<Estado,String> getEstadoDao()
+    public Dao<Estado,Long> getEstadoDao()
         throws SQLException
     {
         if (estadoDao == null)
@@ -138,16 +132,6 @@ public class DbHelper extends OrmLiteSqliteOpenHelper
             estadoDao = getDao(Estado.class);
         }
         return estadoDao;
-    }
-
-    public Dao<FaixaEntrega,Long> getFaixaEntregaDao()
-        throws SQLException
-    {
-        if (faixaDao == null)
-        {
-            faixaDao = getDao(FaixaEntrega.class);
-        }
-        return faixaDao;
     }
 
     public Dao<FaixaPreco,Long> getFaixaPrecoDao()
@@ -198,16 +182,6 @@ public class DbHelper extends OrmLiteSqliteOpenHelper
             produtoDao = getDao(Produto.class);
         }
         return produtoDao;
-    }
-
-    public Dao<Promocao,Long> getPromocaoDao()
-        throws SQLException
-    {
-        if (promocaoDao == null)
-        {
-            promocaoDao = getDao(Promocao.class);
-        }
-        return promocaoDao;
     }
 
     public Dao<Secao, Long> getSecaoDao()
