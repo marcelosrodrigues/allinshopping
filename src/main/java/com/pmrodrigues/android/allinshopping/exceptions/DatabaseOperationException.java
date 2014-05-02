@@ -9,6 +9,10 @@ public class DatabaseOperationException extends RuntimeException {
 		super(message ,throwable);
 	}
 
+	public DatabaseOperationException(String message) {
+		super(message);
+	}
+
 	
 
 }

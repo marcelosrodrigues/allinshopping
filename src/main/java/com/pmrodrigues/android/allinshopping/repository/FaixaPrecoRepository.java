@@ -20,13 +20,13 @@ public class FaixaPrecoRepository extends AbstractRepository<FaixaPreco, Long> {
 		
 		return getDao().queryBuilder()
 				.where()
-				.eq(FaixaPreco.ORIGEM_FIELD_NAME , origem.getEstado())
+				.eq(FaixaPreco.ORIGEM_FIELD_NAME , origem.getEstado().getId())
 				.and()
 				.le(FaixaPreco.PESO_INICIAL_FIELD, peso)
 				.and()
 				.ge(FaixaPreco.PESO_FINAL_FIELD, peso)
 				.and()
-				.eq(FaixaPreco.DESTINO_FIELD_NAME, destino.getEstado())
+				.eq(FaixaPreco.DESTINO_FIELD_NAME, destino.getEstado().getId())
 				.queryForFirst();
 	}
 
@@ -70,5 +70,7 @@ public class FaixaPrecoRepository extends AbstractRepository<FaixaPreco, Long> {
 	protected Dao<FaixaPreco, Long> getDao() throws SQLException {
 		return this.getDatabase().getFaixaPrecoDao();
 	}
+
+	
 
 }

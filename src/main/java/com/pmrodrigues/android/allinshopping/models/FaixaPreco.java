@@ -24,11 +24,11 @@ public class FaixaPreco
     @DatabaseField(id=true,columnName=FaixaPreco.ID_FIELD)
     private Long id;
 
-	@SerializedName("inicial")
+	@SerializedName("termino")
     @DatabaseField(columnName=FaixaPreco.PESO_FINAL_FIELD)
     private Long pesoFinal;
 
-	@SerializedName("termino")
+	@SerializedName("inicial")
     @DatabaseField(columnName=FaixaPreco.PESO_INICIAL_FIELD)
     private Long pesoInicial;
 

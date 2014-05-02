@@ -2,6 +2,8 @@ package test.com.pmrodrigues.android.allinshopping.repository;
 
 import static org.junit.Assert.assertNotNull;
 
+import java.util.ResourceBundle;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,10 +25,19 @@ public class TestFaixaPrecoRepository {
 	private FaixaPrecoRepository repository;
 	
 	private CEPRepository ceprepository;
-
+	
+	private final ResourceBundle integration = ResourceBundle
+			.getBundle("integration");
+	
+	private final ResourceBundle response = ResourceBundle.getBundle("json_message");
+	
 	@Before
 	public void setup() throws Exception {
-		Robolectric.getFakeHttpLayer().interceptHttpRequests(false);
+		
+		Robolectric.getFakeHttpLayer().addHttpResponseRule(integration.getString("estado"),response.getString("estado"));
+		Robolectric.getFakeHttpLayer().addHttpResponseRule(integration.getString("cep"),response.getString("cep"));
+		Robolectric.getFakeHttpLayer().addHttpResponseRule(integration.getString("faixapreco"),response.getString("faixa"));
+		
 		final Context context = Robolectric.application.getApplicationContext();
 		repository = new FaixaPrecoRepository(context);
 		ceprepository = new CEPRepository(context);
@@ -40,8 +51,8 @@ public class TestFaixaPrecoRepository {
 	@Test
 	public void pesquisarFaixaPrecoPorCEP() throws Exception {
 		
-		final CEP origem = ceprepository.findCepByZipCode(20775L);
-		final CEP destino = ceprepository.findCepByZipCode(22745L);
+		final CEP origem = ceprepository.findCepByZipCode(69900L);
+		final CEP destino = ceprepository.findCepByZipCode(69999L);
 		final FaixaPreco faixa = repository.findFaixaPrecoByCEPAndPeso(origem , destino, 500L);
 		assertNotNull(faixa);
 		

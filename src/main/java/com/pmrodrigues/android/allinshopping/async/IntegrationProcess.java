@@ -93,9 +93,10 @@ public class IntegrationProcess {
 		final List<FaixaPreco> faixas = integration.getDownload(ResourceType.FAIXA_PRECO)
 				.getAll();
 		final CEPService service = new CEPService(context); // NOPMD
-		for (FaixaPreco faixa : faixas) { // NOPMD
+		for (final FaixaPreco faixa : faixas) { // NOPMD
 			service.save(faixa);
 		}
+		
 	}
 
 	@SuppressWarnings("unchecked")

@@ -78,5 +78,13 @@ public abstract class AbstractRepository<E,T>
 		}
     }
     
+    public long count() {
+		try {
+			return this.getDao().countOf();
+		} catch (SQLException e) {
+			throw new DatabaseOperationException("Falha ao listar os valores do banco de dados", e);
+		}		
+	}
+    
     protected abstract Dao<E,T> getDao() throws SQLException;
 }
