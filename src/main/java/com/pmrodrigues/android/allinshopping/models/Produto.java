@@ -243,4 +243,9 @@ public class Produto implements Serializable {
 	public Collection<Atributo> getAtributos() {
 		return this.atributos;
 	}
+	
+	@Override
+	public String toString() {
+		return String.format("[id:%s nome:%s]",this.id,this.nome);
+	}
 }

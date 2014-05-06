@@ -39,16 +39,16 @@ public class ClienteActivity extends AbstractActivity
     private void loadFromCliente(Cliente cliente) {
     	
     	this.setId(cliente.getId());
-    	this.setNome(cliente.getNome());
+    	this.setNome(cliente.getNomeCompleto());
     	this.setDataNascimento(cliente.getDataNascimento());
     	this.setEmail(cliente.getEmail());
-    	this.setCidade(cliente.getCidade());
-    	this.setBairro(cliente.getBairro());
-    	this.setEndereco(cliente.getLogradouro());
-    	this.setCep(cliente.getCep());    	
-    	setEstado(cliente.getEstado());
-    	this.setTelefone(cliente.getTelefone());
-    	this.setCelular(cliente.getCelular());
+    	this.setCidade(cliente.getEndereco().getCidade());
+    	this.setBairro(cliente.getEndereco().getBairro());
+    	this.setEndereco(cliente.getEndereco().getLogradouro());
+    	this.setCep(cliente.getEndereco().getCep());    	
+    	setEstado(cliente.getEndereco().getEstado());
+    	this.setTelefone(cliente.getEndereco().getTelefone());
+    	this.setCelular(cliente.getEndereco().getCelular());
     	
     }
 
@@ -121,10 +121,10 @@ public class ClienteActivity extends AbstractActivity
         String cep = getCep();
         String telefone = getTelefone();
         String celular = getCelular();
-        Cliente cliente =  new Cliente(nome, dataNascimento, email, estado, cidade, bairro, endereco, null, null , cep );
+        Cliente cliente =  new Cliente();
         cliente.setId(this.id);
-        cliente.setTelefone(telefone);
-        cliente.setCelular(celular);
+        cliente.getEndereco().setTelefone(telefone);
+        cliente.getEndereco().setCelular(celular);
         return cliente;
         
      }

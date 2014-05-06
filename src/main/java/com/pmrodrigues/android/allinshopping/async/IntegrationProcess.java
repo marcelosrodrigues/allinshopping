@@ -1,6 +1,7 @@
 package com.pmrodrigues.android.allinshopping.async;
 
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -35,6 +36,8 @@ public class IntegrationProcess {
 
 	private final Context context;
 	private final Integration integration;
+	private final ResourceBundle bundle = ResourceBundle
+			.getBundle("configuration");
 
 	public Context getContext() {
 		return context;
@@ -63,10 +66,9 @@ public class IntegrationProcess {
 		List<Cliente> clientes = clienteservice.listToBeSend();
 		for (Cliente cliente : clientes) {
 			JSONObject jsonobject = upload.sendTo(cliente.toJSON());
-			cliente.setIdPrestashop(jsonobject.getJSONObject("cliente")
-					.getLong("id"));
-			cliente.setIdAddress(jsonobject.getJSONObject("cliente").getLong(
-					"address"));
+			cliente.setId(jsonobject.getJSONObject("cliente").getLong("id"));
+			cliente.getEndereco().setId(
+					jsonobject.getJSONObject("cliente").getLong("address"));
 			clienteservice.update(cliente);
 		}
 
@@ -86,17 +88,17 @@ public class IntegrationProcess {
 			service.save(cep);
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public void importarFaixaPreco() throws IntegrationException { // NOPMD
 
-		final List<FaixaPreco> faixas = integration.getDownload(ResourceType.FAIXA_PRECO)
-				.getAll();
+		final List<FaixaPreco> faixas = integration.getDownload(
+				ResourceType.FAIXA_PRECO).getAll();
 		final CEPService service = new CEPService(context); // NOPMD
 		for (final FaixaPreco faixa : faixas) { // NOPMD
 			service.save(faixa);
 		}
-		
+
 	}
 
 	@SuppressWarnings("unchecked")
@@ -120,9 +122,13 @@ public class IntegrationProcess {
 				ResourceType.PRODUTOS).getAll();
 
 		final BlockingQueue<Runnable> blockingQueue = new LinkedBlockingQueue<Runnable>();
-		final ThreadPoolExecutor t = new ThreadPoolExecutor(15, 15, 1,
-				TimeUnit.SECONDS, blockingQueue);
-		
+		final ThreadPoolExecutor t = new ThreadPoolExecutor(
+											Integer.valueOf(bundle.getString("initial-pool-size")), 
+											Integer.valueOf(bundle.getString("max-pool-size")), 
+											1,
+											TimeUnit.SECONDS, 
+											blockingQueue);
+
 		for (final Produto produto : produtos) {
 			t.execute(new IntegrationProdutoRunnable(produto, produtoservice));
 		}

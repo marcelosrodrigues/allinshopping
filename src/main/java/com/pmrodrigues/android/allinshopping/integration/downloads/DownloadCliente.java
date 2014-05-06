@@ -12,26 +12,22 @@ import com.pmrodrigues.android.allinshopping.integration.rest.GetResource;
 import com.pmrodrigues.android.allinshopping.models.Cliente;
 
 public class DownloadCliente extends AbstractDownload<Cliente> {
-
-	private static final String LISTAR_CLIENTES = "http://store.allinshopp.com.br/custom/listar_clientes_novo.php";
-
+	
 	@Override
 	public List<Cliente> getAll() throws IntegrationException {
 
 		try {
-
-			final JSONObject json = new GetResource(LISTAR_CLIENTES).getJSON();
+			final JSONObject json = new GetResource(this.getURL()).getJSON();
 			final Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd")
 					.create();
-
-			return toList(gson, json.getJSONObject("clientes").get("cliente"));
-
+			
+			return toList(gson, json.get("list"));
+			
 		} catch (JSONException e) {
 			throw new IntegrationException(
 					"Ocorreu um erro para converter a resposta do servidor "
 							+ e.getMessage(), e);
 		}
 
-	}
-
+	}	
 }

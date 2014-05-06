@@ -89,12 +89,12 @@ public class Pedido
     	trans.getHolder().setDocument(dadosPagamento.getCPF());
     	trans.getHolder().setName(dadosPagamento.getNome());
     	
-    	if( !GenericValidator.isBlankOrNull(cliente.getTelefone()) && !"{}".equalsIgnoreCase(cliente.getTelefone()) ) {
-    		trans.getHolder().setPhone(cliente.getTelefone());
+    	if( !GenericValidator.isBlankOrNull(cliente.getEndereco().getTelefone()) && !"{}".equalsIgnoreCase(cliente.getEndereco().getTelefone()) ) {
+    		trans.getHolder().setPhone(cliente.getEndereco().getTelefone());
         }
         
-        if( !GenericValidator.isBlankOrNull(cliente.getCelular())  && !"{}".equalsIgnoreCase(cliente.getCelular())) {
-        	trans.getHolder().setPhone(cliente.getCelular());
+        if( !GenericValidator.isBlankOrNull(cliente.getEndereco().getCelular())  && !"{}".equalsIgnoreCase(cliente.getEndereco().getCelular())) {
+        	trans.getHolder().setPhone(cliente.getEndereco().getCelular());
         }
     	
     	

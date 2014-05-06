@@ -10,11 +10,13 @@ import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
+import com.pmrodrigues.android.allinshopping.models.Atributo;
 import com.pmrodrigues.android.allinshopping.models.Atualizacao;
 import com.pmrodrigues.android.allinshopping.models.CEP;
 import com.pmrodrigues.android.allinshopping.models.Cliente;
 import com.pmrodrigues.android.allinshopping.models.Configuracao;
 import com.pmrodrigues.android.allinshopping.models.DadosPagamento;
+import com.pmrodrigues.android.allinshopping.models.Endereco;
 import com.pmrodrigues.android.allinshopping.models.Estado;
 import com.pmrodrigues.android.allinshopping.models.FaixaPreco;
 import com.pmrodrigues.android.allinshopping.models.FormaPagamento;
@@ -25,201 +27,194 @@ import com.pmrodrigues.android.allinshopping.models.Produto;
 import com.pmrodrigues.android.allinshopping.models.Promocao;
 import com.pmrodrigues.android.allinshopping.models.Secao;
 
-public class DbHelper extends OrmLiteSqliteOpenHelper
-{
+public class DbHelper extends OrmLiteSqliteOpenHelper {
 
-    private static final String DATABASE_NAME = "allinshopping.db";
-    private static final Integer DATABASE_VERSION = 1;
-    private Dao<CEP, Long> cepDAO;
-    private Dao<Cliente, Long> clienteDao;
-    private Dao<Estado, Long> estadoDao;
-    private Dao<FaixaPreco, Long> faixaPrecoDao;
-    private Dao<FormaPagamento, Long> formaPagamentoDao;
-    private Dao<ItemPedido, Long> itemDao;
-    private Dao<DadosPagamento, Long> pagtoDao;
-    private Dao<Pedido, Long> pedidoDao;
-    private Dao<Produto, Long> produtoDao;    
-    private Dao<Secao, Long> secaoDao;
-    private Dao<Atualizacao, Long> atualizacaoDao;
-    private Dao<Configuracao, Long> configuracaoDao;
+	private static final String DATABASE_NAME = "allinshopping.db";
+	private static final Integer DATABASE_VERSION = 1;
+	private Dao<CEP, Long> cepDAO;
+	private Dao<Endereco, Long> enderecoDAO;
+	private Dao<Cliente, Long> clienteDao;
+	private Dao<Estado, Long> estadoDao;
+	private Dao<FaixaPreco, Long> faixaPrecoDao;
+	private Dao<FormaPagamento, Long> formaPagamentoDao;
+	private Dao<ItemPedido, Long> itemDao;
+	private Dao<DadosPagamento, Long> pagtoDao;
+	private Dao<Pedido, Long> pedidoDao;
+	private Dao<Produto, Long> produtoDao;
+	private Dao<Secao, Long> secaoDao;
+	private Dao<Atualizacao, Long> atualizacaoDao;
+	private Dao<Configuracao, Long> configuracaoDao;
+	private Dao<Imagem, Long> imagemDao;
+	private Dao<Atributo, Long> atributoDao;
 
-	public DbHelper(final Context context)
-    {   
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
-    }
+	public DbHelper(final Context context) {
+		super(context, DATABASE_NAME, null, DATABASE_VERSION);
+	}
 
-	private void createDatabase(final ConnectionSource connectionsource)
-    {
-        try
-        {
-            Log.i("com.pmrodrigues.android.allinshopping", "gerando banco de dados do projeto");
-            TableUtils.createTable(connectionsource, Estado.class);
-            TableUtils.createTable(connectionsource, Cliente.class);
-            TableUtils.createTable(connectionsource, FormaPagamento.class);
-            TableUtils.createTable(connectionsource, Pedido.class);
-            TableUtils.createTable(connectionsource, Secao.class);
-            TableUtils.createTable(connectionsource, Produto.class);
-            TableUtils.createTable(connectionsource, Promocao.class);
-            TableUtils.createTable(connectionsource, ItemPedido.class);
-            TableUtils.createTable(connectionsource, DadosPagamento.class);
-            TableUtils.createTable(connectionsource, CEP.class);
-            TableUtils.createTable(connectionsource, FaixaPreco.class);
-            TableUtils.createTable(connectionsource, Atualizacao.class);
-            TableUtils.createTable(connectionsource, Configuracao.class);
-            TableUtils.createTable(connectionsource, Imagem.class);
-            return;
-        }
-        catch (SQLException sqlexception)
-        {   
-            Log.e("com.pmrodrigues.android.allinshopping", sqlexception.getMessage());
-            throw new RuntimeException(sqlexception);
-        }
-    }
+	private void createDatabase(final ConnectionSource connectionsource) {
+		try {
+			Log.i("com.pmrodrigues.android.allinshopping",
+					"gerando banco de dados do projeto");
+			TableUtils.createTable(connectionsource, Estado.class);
+			TableUtils.createTable(connectionsource, Cliente.class);
+			TableUtils.createTable(connectionsource, Endereco.class);
+			TableUtils.createTable(connectionsource, FormaPagamento.class);
+			TableUtils.createTable(connectionsource, Pedido.class);
+			TableUtils.createTable(connectionsource, Secao.class);
+			TableUtils.createTable(connectionsource, Produto.class);
+			TableUtils.createTable(connectionsource, Imagem.class);
+			TableUtils.createTable(connectionsource, Atributo.class);
+			TableUtils.createTable(connectionsource, Promocao.class);
+			TableUtils.createTable(connectionsource, ItemPedido.class);
+			TableUtils.createTable(connectionsource, DadosPagamento.class);
+			TableUtils.createTable(connectionsource, CEP.class);
+			TableUtils.createTable(connectionsource, FaixaPreco.class);
+			TableUtils.createTable(connectionsource, Atualizacao.class);
+			TableUtils.createTable(connectionsource, Configuracao.class);
+			
+			return;
+		} catch (SQLException sqlexception) {
+			Log.e("com.pmrodrigues.android.allinshopping",
+					sqlexception.getMessage());
+			throw new RuntimeException(sqlexception);
+		}
+	}
 
-    @Override
-	public void close()
-    {
-        super.close();
-        estadoDao = null;
-        clienteDao = null;
-        formaPagamentoDao = null;
-        pedidoDao = null;
-        secaoDao = null;
-        produtoDao = null;
-        itemDao = null;
-        pagtoDao = null;
-        cepDAO = null;
-        faixaPrecoDao = null;
-        atualizacaoDao = null;
-        
-    }
+	@Override
+	public void close() {
+		super.close();
+		estadoDao = null;
+		enderecoDAO = null;
+		clienteDao = null;
+		formaPagamentoDao = null;
+		pedidoDao = null;
+		secaoDao = null;
+		produtoDao = null;
+		itemDao = null;
+		pagtoDao = null;
+		cepDAO = null;
+		faixaPrecoDao = null;
+		atualizacaoDao = null;
+		imagemDao = null;
+		atributoDao = null;
 
-    public Dao<CEP, Long> getCEPDao()
-        throws SQLException
-    {
-        if (cepDAO == null)
-        {
-            cepDAO = getDao(CEP.class);
-        }
-        return cepDAO;
-    }
+	}
 
-    public Dao<Cliente,Long> getClienteDao()
-        throws SQLException
-    {
-        if (clienteDao == null)
-        {
-            clienteDao = getDao(Cliente.class);
-        }
-        return clienteDao;
-    }
+	public Dao<CEP, Long> getCEPDao() throws SQLException {
+		if (cepDAO == null) {
+			cepDAO = getDao(CEP.class);
+		}
+		return cepDAO;
+	}
 
-    public Dao<DadosPagamento,Long> getDadosPagamento()
-        throws SQLException
-    {
-        if (pagtoDao == null)
-        {
-            pagtoDao = getDao(DadosPagamento.class);
-        }
-        return pagtoDao;
-    }
+	public Dao<Cliente, Long> getClienteDao() throws SQLException {
+		if (clienteDao == null) {
+			clienteDao = getDao(Cliente.class);
+		}
+		return clienteDao;
+	}
 
-    public Dao<Estado,Long> getEstadoDao()
-        throws SQLException
-    {
-        if (estadoDao == null)
-        {
-            estadoDao = getDao(Estado.class);
-        }
-        return estadoDao;
-    }
+	public Dao<Endereco, Long> getEnderecoDao() throws SQLException {
+		if (enderecoDAO == null) {
+			enderecoDAO = getDao(Endereco.class);
+		}
+		return enderecoDAO;
+	}
 
-    public Dao<FaixaPreco,Long> getFaixaPrecoDao()
-        throws SQLException
-    {
-        if (faixaPrecoDao == null)
-        {   
-            faixaPrecoDao = getDao(FaixaPreco.class);
-        }
-        return faixaPrecoDao;
-    }
+	public Dao<DadosPagamento, Long> getDadosPagamento() throws SQLException {
+		if (pagtoDao == null) {
+			pagtoDao = getDao(DadosPagamento.class);
+		}
+		return pagtoDao;
+	}
 
-    public Dao<FormaPagamento,Long> getFormaPagamentoDao()
-        throws SQLException
-    {
-        if (formaPagamentoDao == null)
-        {
-            formaPagamentoDao = getDao(FormaPagamento.class);
-        }
-        return formaPagamentoDao;
-    }
+	public Dao<Estado, Long> getEstadoDao() throws SQLException {
+		if (estadoDao == null) {
+			estadoDao = getDao(Estado.class);
+		}
+		return estadoDao;
+	}
 
-    public Dao<ItemPedido,Long> getItemDao()
-        throws SQLException
-    {
-        if (itemDao == null)
-        {
-            itemDao = getDao(ItemPedido.class);
-        }
-        return itemDao;
-    }
+	public Dao<FaixaPreco, Long> getFaixaPrecoDao() throws SQLException {
+		if (faixaPrecoDao == null) {
+			faixaPrecoDao = getDao(FaixaPreco.class);
+		}
+		return faixaPrecoDao;
+	}
 
-    public Dao<Pedido,Long> getPedidoDao()
-        throws SQLException
-    {
-        if (pedidoDao == null)
-        {
-            pedidoDao = getDao(Pedido.class);
-        }
-        return pedidoDao;
-    }
+	public Dao<FormaPagamento, Long> getFormaPagamentoDao() throws SQLException {
+		if (formaPagamentoDao == null) {
+			formaPagamentoDao = getDao(FormaPagamento.class);
+		}
+		return formaPagamentoDao;
+	}
 
-    public Dao<Produto,Long> getProdutoDao()
-        throws SQLException
-    {
-        if (produtoDao == null)
-        {
-            produtoDao = getDao(Produto.class);
-        }
-        return produtoDao;
-    }
+	public Dao<ItemPedido, Long> getItemDao() throws SQLException {
+		if (itemDao == null) {
+			itemDao = getDao(ItemPedido.class);
+		}
+		return itemDao;
+	}
 
-    public Dao<Secao, Long> getSecaoDao()
-        throws SQLException
-    {
-        if (secaoDao == null)
-        {
-            secaoDao = getDao(Secao.class);
-        }
-        return secaoDao;
-    }
-    
-    public Dao<Atualizacao,Long> getAtualizacaoDao() throws SQLException {
-    	if( atualizacaoDao == null ) {
-    		atualizacaoDao = getDao(Atualizacao.class);
-    	}
-    	return atualizacaoDao;
-    }
-    
-    public Dao<Configuracao,Long> getConfiguracaoDao() throws SQLException {
-    	if( configuracaoDao == null ) {
-    		configuracaoDao = getDao(Configuracao.class);
-    	}
-    	return configuracaoDao;
-    }
+	public Dao<Pedido, Long> getPedidoDao() throws SQLException {
+		if (pedidoDao == null) {
+			pedidoDao = getDao(Pedido.class);
+		}
+		return pedidoDao;
+	}
 
-    @Override
+	public Dao<Produto, Long> getProdutoDao() throws SQLException {
+		if (produtoDao == null) {
+			produtoDao = getDao(Produto.class);
+		}
+		return produtoDao;
+	}
+
+	public Dao<Secao, Long> getSecaoDao() throws SQLException {
+		if (secaoDao == null) {
+			secaoDao = getDao(Secao.class);
+		}
+		return secaoDao;
+	}
+
+	public Dao<Atualizacao, Long> getAtualizacaoDao() throws SQLException {
+		if (atualizacaoDao == null) {
+			atualizacaoDao = getDao(Atualizacao.class);
+		}
+		return atualizacaoDao;
+	}
+
+	public Dao<Configuracao, Long> getConfiguracaoDao() throws SQLException {
+		if (configuracaoDao == null) {
+			configuracaoDao = getDao(Configuracao.class);
+		}
+		return configuracaoDao;
+	}
+
+	@Override
 	public void onCreate(final SQLiteDatabase sqlitedatabase,
-			final ConnectionSource connectionsource)
-    {
-        createDatabase(connectionsource);
-    }
+			final ConnectionSource connectionsource) {
+		createDatabase(connectionsource);
+	}
 
-    @Override
+	@Override
 	public void onUpgrade(final SQLiteDatabase sqlitedatabase,
 			final ConnectionSource connectionsource, final int oldversion,
-			final int newversion)
-    {
-    }
+			final int newversion) {
+	}
+
+	public Dao<Imagem, Long> getImagemDao() throws SQLException {
+		if (imagemDao == null) {
+			imagemDao = getDao(Imagem.class);
+		}
+		return imagemDao;
+	}
+
+	public Dao<Atributo, Long> getAtributoDao() throws SQLException {
+		if (atributoDao == null) {
+			atributoDao = getDao(Atributo.class);
+		}
+		return atributoDao;
+	}
 
 }

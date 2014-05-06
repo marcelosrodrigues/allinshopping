@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 
 import junit.framework.Assert;
 
-import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,7 +11,6 @@ import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 
 import com.pmrodrigues.android.allinshopping.models.Cliente;
-import com.pmrodrigues.android.allinshopping.models.Estado;
 import com.pmrodrigues.android.allinshopping.models.Pedido;
 import com.pmrodrigues.android.allinshopping.models.Produto;
 import com.pmrodrigues.android.allinshopping.repository.ClienteRepository;
@@ -56,10 +54,7 @@ public class TestPedidoService {
 
 	private void createClient() {
 
-		Cliente cliente = new Cliente("marcelo", DateTime.now().toDate(),
-				"marcelosrodrigues@globo.com", new Estado("RJ",
-						"Rio de Janeiro"), "Rio de Janeiro", "Pechincha",
-				"Estrada Campo da Areia", "84", "apto 206", "22743310");
+		Cliente cliente = new Cliente();
 		CLIENTE_REPOSITORY.insert(cliente);
 	}
 

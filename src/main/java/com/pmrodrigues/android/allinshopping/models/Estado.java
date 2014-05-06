@@ -72,5 +72,9 @@ public class Estado implements Serializable {
 		return (this.uf.hashCode() * 32) >> 4;
 	}
 
+	public void setId(final long id) {
+		this.id = id;
+	}
+
 	
 }

@@ -44,7 +44,7 @@ public class ClienteAdapter extends ArrayAdapter<Cliente>
         
         aq = new AQuery(view);
         Cliente cliente = clientes.get(i);
-        aq.id(R.id.cliente).text(cliente.getNome());
+        aq.id(R.id.cliente).text(cliente.getNomeCompleto());
         aq.id(R.id.cliente).tag(cliente);
         aq.id(R.id.cliente).clicked(this);
         return view;

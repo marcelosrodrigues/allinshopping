@@ -16,20 +16,26 @@ public class Secao
 {
 
     private static final long serialVersionUID = 1L;
+
+	private static final String ID_FIELD_NAME = "id";
+
+	private static final String NOME_FIELD_NAME = "nome";
+
+	private static final String SECAO_PAI_FIELD_NAME = "pai_id";
     
 	@SerializedName("id")
-    @DatabaseField(id=true)
+    @DatabaseField(id=true,columnName=Secao.ID_FIELD_NAME)
     private Long id;
     
 	@SerializedName("nome")
-    @DatabaseField
+    @DatabaseField(columnName=Secao.NOME_FIELD_NAME)
     private String nome;
     
     @ForeignCollectionField
     private final Collection<Produto> produtos = new ArrayList<Produto>();
 
 	@SerializedName("pai")
-    @DatabaseField(foreign=true,foreignAutoRefresh=true)
+    @DatabaseField(foreign=true,foreignAutoRefresh=true,columnName = Secao.SECAO_PAI_FIELD_NAME)
     private Secao secaoPai;
     
     @ForeignCollectionField(eager=true)
