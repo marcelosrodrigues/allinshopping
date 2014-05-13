@@ -30,7 +30,7 @@ public class ClienteRepository extends AbstractRepository<Cliente,Long>
             Log.i("com.pmrodrigues.android.allinshopping", String.format("Verificando se ja existe um cliente salvo com o email informado %s", cliente.getEmail()));
             Long counted = 0L;
         	counted = this.getDao().queryBuilder().where()
-        						  .eq("email", cliente.getEmail())
+        						  .eq(Cliente.EMAIL_FIELD_NAME, cliente.getEmail())
         						  .countOf();
             	
 			return counted > 0L;
@@ -43,13 +43,14 @@ public class ClienteRepository extends AbstractRepository<Cliente,Long>
     }
    
 
-    public List<Cliente> list()
+    @Override
+	public List<Cliente> list()
     {
         
         try
         {
             Log.i("com.pmrodrigues.android.allinshopping", "Listando todos os clientes cadastrados");
-            return this.getDao().queryBuilder().orderBy("nome", true).query();
+            return this.getDao().queryBuilder().orderBy(Cliente.NOME_FIELD_NAME, true).query();
         }
         catch (SQLException sqlexception)
         {
@@ -64,7 +65,7 @@ public class ClienteRepository extends AbstractRepository<Cliente,Long>
         try
         {
             Log.i("com.pmrodrigues.android.allinshopping", "Listando todos os clientes cadastrados");
-            return this.getDao().queryBuilder().where().isNull("id_prestashop").query();
+            return this.getDao().queryBuilder().where().isNull(Cliente.BACKOFFICE_ID_FIELD_NAME).query();
         }
         catch (SQLException sqlexception)
         {

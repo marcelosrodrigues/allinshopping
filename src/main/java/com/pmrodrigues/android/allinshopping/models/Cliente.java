@@ -24,17 +24,17 @@ public class Cliente extends ValidationConstraint
 
     private static final long serialVersionUID = 1L;
 
-	private static final String DATA_NASCIMENTO_FIELD_NAME = "datanascimento"; // NOPMD
+	public static final String DATA_NASCIMENTO_FIELD_NAME = "datanascimento"; // NOPMD
 
-	private static final String EMAIL_FIELD_NAME = "email";
+	public static final String EMAIL_FIELD_NAME = "email";
 	
-	private static final String NOME_FIELD_NAME = "nome";
+	public static final String NOME_FIELD_NAME = "nome";
 
-	private static final String ENDERECO_FIELD_NAME = "endereco";
+	public static final String ENDERECO_FIELD_NAME = "endereco";
 
-	private static final String BACKOFFICE_ID_FIELD_NAME = "backoffice_id";
+	public static final String BACKOFFICE_ID_FIELD_NAME = "backoffice_id";
 
-	private static final String ID_FIELD_NAME = "id";   
+	public static final String ID_FIELD_NAME = "id";   
 
 
 	@SerializedName("dataNascimento")

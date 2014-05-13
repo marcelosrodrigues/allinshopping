@@ -21,7 +21,7 @@ public class ConfigurationActivity extends AbstractActivity implements OnClickLi
     	return aq.id(R.id.nomeLoja).getText().toString();
     }
     
-    public void setNomeLoja(String nomeLoja) {
+    public void setNomeLoja(final String nomeLoja) {
 		aq.id(R.id.nomeLoja).text(nomeLoja);		
 	}
 
@@ -29,7 +29,8 @@ public class ConfigurationActivity extends AbstractActivity implements OnClickLi
 	public void onClick(final View view)
     {
         if (view.getId() == R.id.atualizar) {
-            (new UpdateApplicationDialog(this))
+            
+        	(new UpdateApplicationDialog(this))
             		.setCancelable(true)
             		.setTitle("Deseja atualizar a base de dados?")
             		.setMessage("Enviaremos suas vendas em aberto e atualizaremos o seu banco de dados")
@@ -37,8 +38,16 @@ public class ConfigurationActivity extends AbstractActivity implements OnClickLi
             
         } else if (view.getId() == R.id.salvar ){
         	
-        	if( !GenericValidator.isBlankOrNull(this.getNomeLoja()) ) {
+        	if( GenericValidator.isBlankOrNull(this.getNomeLoja()) ) {
 		    	
+        		final ErrorAlert alert = new ErrorAlert(this);
+				alert.setTitle("Erro na configuração do sistema")
+        			 .setCancelable(true)
+					 .setMessage("Nome da Loja é obrigatório")
+        			 .show();
+		    	
+        	} else {
+        		
         		final ConfigurationService service = new ConfigurationService(this);
 		    	service.setNomeLoja(this.getNomeLoja());
 		    	
@@ -49,13 +58,7 @@ public class ConfigurationActivity extends AbstractActivity implements OnClickLi
 	            		.setMessage("Enviaremos suas vendas em aberto e atualizaremos o seu banco de dados")
 	            		.show();
 		    	}
-		    	
-        	} else {
-        		final ErrorAlert alert = new ErrorAlert(this);
-				alert.setTitle("Erro na configuração do sistema")
-        			 .setCancelable(true)
-						.setMessage("Nome da Loja é obrigatório")
-        			 .show();
+        		
         	}
         	
         } else {
@@ -65,7 +68,7 @@ public class ConfigurationActivity extends AbstractActivity implements OnClickLi
     }
 
     @Override
-	protected void onCreate(Bundle bundle)
+	public void onCreate(final Bundle bundle)
     {
         super.onCreate(bundle);
         setContentView(R.layout.activity_config);
@@ -74,7 +77,7 @@ public class ConfigurationActivity extends AbstractActivity implements OnClickLi
         aq.id(R.id.salvar).clicked(this);
         aq.id(R.id.cancelar).clicked(this);
         
-        ConfigurationService service = new ConfigurationService(this);
+        final ConfigurationService service = new ConfigurationService(this);
     	
     	if( !GenericValidator.isBlankOrNull(service.getNomeLoja()) ){
     		this.setNomeLoja(service.getNomeLoja());    		

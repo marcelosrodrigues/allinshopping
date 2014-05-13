@@ -4,6 +4,7 @@ import org.json.JSONException;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.androidquery.AQuery;
 import com.pmrodrigues.android.allinshopping.R;
@@ -19,7 +20,7 @@ public class IntegrationAsyncProcess extends AsyncTask<Void, String, String> {
 	private final AQuery aq;
 	
 
-	public IntegrationAsyncProcess(Context context) {
+	public IntegrationAsyncProcess(final Context context) {
 
 		integration = new IntegrationProcess(context);
 		service = new ConfigurationService(integration.getContext());
@@ -29,6 +30,7 @@ public class IntegrationAsyncProcess extends AsyncTask<Void, String, String> {
 	
 	@Override
 	protected void onPreExecute() {
+		Log.d("com.pmrodrigues.android.allinshopping.async","Iniciando a carga do tablet");
 		publishProgress("Iniciando a carga do tablet");
 	}
 	
@@ -36,13 +38,33 @@ public class IntegrationAsyncProcess extends AsyncTask<Void, String, String> {
 	protected String doInBackground(Void... avoid)
     {
         try {
-
+        	
+        	Log.d("com.pmrodrigues.android.allinshopping.async","Enviando os novos clientes para o backoffice");
+        	publishProgress("Enviando os novos clientes para o backoffice");
 			integration.enviarCliente();
+			
+			Log.d("com.pmrodrigues.android.allinshopping.async","Enviando os novos pedidos para o backoffice");
+			publishProgress("Enviando os novos pedidos para o backoffice");
 			integration.enviarPedido();
+			
+			Log.d("com.pmrodrigues.android.allinshopping.async","Recebendo a lista de Estados do backoffice");
+			publishProgress("Recebendo a lista de Estados do backoffice");
 			integration.importarEstado();
+			
+			Log.d("com.pmrodrigues.android.allinshopping.async","Recebendo a lista de departamentos do backoffice");
+			publishProgress("Recebendo a lista de departamentos do backoffice");
 			integration.importarSecao();
-			integration.importarProdutos();
+			
+			Log.d("com.pmrodrigues.android.allinshopping.async","Recebendo a lista de produtos do backoffice");
+			publishProgress("Recebendo a lista de produtos do backoffice");
+			integration.importarProdutos();			
+			
+			Log.d("com.pmrodrigues.android.allinshopping.async","Recebendo a lista de clientes do backoffice");
+			publishProgress("Recebendo a lista de clientes do backoffice");
 			integration.importarCliente();
+			
+			Log.d("com.pmrodrigues.android.allinshopping.async","Recebendo a tabela de preços de frete do backoffice");
+			publishProgress("Recebendo a tabela de preços de frete do backoffice");
 			integration.importarCEP();
 			
 			service.atualizar();
@@ -51,25 +73,40 @@ public class IntegrationAsyncProcess extends AsyncTask<Void, String, String> {
 			return "Dados importados com sucesso";
 			
 		} catch (IntegrationException e) {
+			Log.e("com.pmrodrigues.android.allinshopping.async","Erro no carga do tablet",e);
 			return e.getMessage();
 		} catch (JSONException e) {
+			Log.e("com.pmrodrigues.android.allinshopping.async","Erro na conversão dos valores recebidos do servidor",e);
 			return e.getMessage();
 		} catch (NoUniqueRegistryException e) {
+			Log.e("com.pmrodrigues.android.allinshopping.async","Erro no salvamento dos dados no tablet",e);
 			return e.getMessage();
 		} catch (Exception e) {
+			Log.e("com.pmrodrigues.android.allinshopping.async","Erro desconhecido",e);
 			return e.getMessage();
 		}
     }
+	
+	protected void onProgressUpdate(final String message) {
+		this.setMessage(message);
+	}
 
 	@Override
-	protected void onPostExecute(String s) {
-		super.onPostExecute(s);
-		this.aq.id(R.id.progressText).text(s);
+	protected void onPostExecute(final String message) {
+		super.onPostExecute(message);
+		this.setMessage(message);
 		
 		(new ActionDialog(integration.getContext()))
 				.setTitle("Atualização da base de dados")
 				.setCancelable(false)
-				.setMessage(s).show();
+				.setMessage(message)
+				.show();
 	}
+	
+	private void setMessage(final String message) {
+		this.aq.id(R.id.progressText).text(message);
+	}
+	
+	
 
 }

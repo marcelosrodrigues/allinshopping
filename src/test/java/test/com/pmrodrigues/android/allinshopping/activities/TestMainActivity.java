@@ -1,7 +1,6 @@
 package test.com.pmrodrigues.android.allinshopping.activities;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.robolectric.Robolectric.shadowOf;
 
 import java.util.ResourceBundle;
@@ -12,33 +11,35 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.shadows.ShadowActivity;
 import org.robolectric.shadows.ShadowAlertDialog;
+import org.robolectric.shadows.ShadowIntent;
 
 import test.com.pmrodrigues.android.allinshopping.responserules.HttpEntityResponseRule;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 
 import com.pmrodrigues.android.allinshopping.ConfigurationActivity;
-import com.pmrodrigues.android.allinshopping.R;
-import com.pmrodrigues.android.allinshopping.services.ConfigurationService;
+import com.pmrodrigues.android.allinshopping.HomeActivity;
+import com.pmrodrigues.android.allinshopping.MainActivity;
+import com.pmrodrigues.android.allinshopping.async.IntegrationAsyncProcess;
 import com.pmrodrigues.android.allinshopping.utilities.Constante;
 import com.pmrodrigues.android.allinshopping.utilities.ParseUtilities;
 
 @RunWith(RobolectricTestRunner.class)
-public class TestConfigurationActivity {
+public class TestMainActivity {
 
 	private final ResourceBundle integration = ResourceBundle
 			.getBundle("integration");
 
 	private final ResourceBundle response = ResourceBundle
 			.getBundle("json_message");
+	
 
-	private ConfigurationActivity activity;
-	
-	private ConfigurationService service = null;
-	
 	@Before
 	public void setup() {
 		
@@ -55,64 +56,70 @@ public class TestConfigurationActivity {
 		editor.putString(Constante.DATA_ATUALIZACAO, null);
 		editor.commit();
 		
-		
-		this.activity = Robolectric.buildActivity(ConfigurationActivity.class).create().get();
-		
-		service = new ConfigurationService(Robolectric.application.getApplicationContext());
-		
-	}
-	
-	@Test
-	public void deveSalvarEAtualizarOBancoDeDados() {
-		
-		activity.setNomeLoja("Marcelo");
-		activity.onClick(activity.findViewById(R.id.salvar));
-		
-		final AlertDialog dialog = ShadowAlertDialog.getLatestAlertDialog();
-		dialog.getButton(AlertDialog.BUTTON_POSITIVE)
-			  .callOnClick();
 				
-		assertFalse(service.precisaAtualizar());
+	}
+	
+	
+	@Test
+	public void deveDirecionarParaTelaDeConfiguracao() {
+		
+		final MainActivity activity = Robolectric.buildActivity(MainActivity.class).create().get();
+		final ShadowActivity actual = shadowOf(activity);
+		final Intent next = actual.getNextStartedActivity();
+        final ShadowIntent shadowIntent = shadowOf(next);
+        assertEquals(ConfigurationActivity.class.getName(), shadowIntent.getComponent().getClassName());
 		
 	}
 	
 	@Test
-	public void deveApenasSalvar() {
+	public void devePesquisarOFreteEDirecionarParaTelaPrincipal() {
 		
 		final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(Robolectric.application.getApplicationContext());
 		final Editor editor = preferences.edit();
 		editor.putString(Constante.DATA_ATUALIZACAO, ParseUtilities.formatDate(DateTime.now().plusDays(1).toDate(),"yyyy-MM-dd HH:mm:ss"));
 		editor.commit();
-		activity.setNomeLoja("Marcelo");
-		activity.onClick(activity.findViewById(R.id.salvar));
 		
-		assertEquals("Marcelo",preferences.getString(Constante.NOME_LOJA, null));
+		final IntegrationAsyncProcess process = new IntegrationAsyncProcess(Robolectric.application.getApplicationContext());
+		process.execute();
+		Robolectric.runBackgroundTasks();
+		assertEquals(process.getStatus(), AsyncTask.Status.FINISHED);
 		
+		final MainActivity activity = Robolectric.buildActivity(MainActivity.class).create().get();
+		activity.setCEP("22743310");
+		activity.onClick(null);
+		
+		final ShadowActivity actual = shadowOf(activity);
+		final Intent next = actual.getNextStartedActivity();
+        final ShadowIntent shadowIntent = shadowOf(next);
+        assertEquals(HomeActivity.class.getName(), shadowIntent.getComponent().getClassName());		
 	}
 	
-	@Test
-	public void deveApenasAtualizar() {
-		
-		activity.onClick(activity.findViewById(R.id.atualizar));
-		
-		final AlertDialog dialog = ShadowAlertDialog.getLatestAlertDialog();
-		dialog.getButton(AlertDialog.BUTTON_POSITIVE)
-			  .callOnClick();
-				
-		assertFalse(service.precisaAtualizar());
-		
-	}
 	
 	@Test
-	public void naoPodeSalvarLojaSemNome() {
+	public void cepEObrigatorio() {
 		
-		activity.setNomeLoja("");
-		activity.onClick(activity.findViewById(R.id.salvar));
+		final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(Robolectric.application.getApplicationContext());
+		final Editor editor = preferences.edit();
+		editor.putString(Constante.DATA_ATUALIZACAO, ParseUtilities.formatDate(DateTime.now().plusDays(1).toDate(),"yyyy-MM-dd HH:mm:ss"));
+		editor.commit();
+		
+		final IntegrationAsyncProcess process = new IntegrationAsyncProcess(Robolectric.application.getApplicationContext());
+		process.execute();
+		Robolectric.runBackgroundTasks();
+		assertEquals(process.getStatus(), AsyncTask.Status.FINISHED);
+		
+		final MainActivity activity = Robolectric.buildActivity(MainActivity.class).create().get();
+		activity.onClick(null);
 		
 		final AlertDialog dialog = ShadowAlertDialog.getLatestAlertDialog();
 		final ShadowAlertDialog shadow = shadowOf(dialog);
-		assertEquals("Erro na configuração do sistema",shadow.getTitle().toString());
+		assertEquals("CEP é obrigatório",shadow.getTitle().toString());
 		
 	}
+	
+	
+	
+	
+
 
 }
