@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.j256.ormlite.dao.Dao;
 import com.pmrodrigues.android.allinshopping.models.CEP;
+import com.pmrodrigues.android.allinshopping.models.Estado;
 import com.pmrodrigues.android.allinshopping.models.FaixaPreco;
 
 public class FaixaPrecoRepository extends AbstractRepository<FaixaPreco, Long> {
@@ -15,20 +16,17 @@ public class FaixaPrecoRepository extends AbstractRepository<FaixaPreco, Long> {
 		super(context);
 	}
 
-	public FaixaPreco findFaixaPrecoByCEPAndPeso(final CEP origem , final CEP destino,
-			final Long peso) throws NumberFormatException, SQLException {
+	public FaixaPreco findFaixaPrecoByCEPAndPeso(final Estado origem , final CEP destino) throws SQLException {
 		
 		return getDao().queryBuilder()
 				.where()
-				.eq(FaixaPreco.ORIGEM_FIELD_NAME , origem.getEstado().getId())
-				.and()
-				.le(FaixaPreco.PESO_INICIAL_FIELD, peso)
-				.and()
-				.ge(FaixaPreco.PESO_FINAL_FIELD, peso)
+				.eq(FaixaPreco.ORIGEM_FIELD_NAME , origem.getId())
 				.and()
 				.eq(FaixaPreco.DESTINO_FIELD_NAME, destino.getEstado().getId())
 				.queryForFirst();
 	}
+	
+	
 
 	public boolean isExist(final FaixaPreco faixapreco) {
 		try {

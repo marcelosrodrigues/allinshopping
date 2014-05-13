@@ -9,64 +9,73 @@ import android.view.View.OnClickListener;
 
 import com.androidquery.AQuery;
 import com.pmrodrigues.android.allinshopping.alerts.ErrorAlert;
-import com.pmrodrigues.android.allinshopping.models.Configuracao;
-import com.pmrodrigues.android.allinshopping.services.AtualizacaoService;
+import com.pmrodrigues.android.allinshopping.models.FaixaPreco;
 import com.pmrodrigues.android.allinshopping.services.CEPService;
+import com.pmrodrigues.android.allinshopping.services.ConfigurationService;
+import com.pmrodrigues.android.allinshopping.utilities.Constante;
+import com.pmrodrigues.android.allinshopping.utilities.PriceUtilities;
 
-public class MainActivity extends AbstractActivity
- implements OnClickListener
-{
+public class MainActivity extends AbstractActivity implements OnClickListener {
 
-    private AQuery aq;
-	private CEPService cepservice;
-    private AtualizacaoService service;
-
-    @Override
-	public void onClick(View view)
-    {
-        
-        if (!GenericValidator.isBlankOrNull(aq.id(R.id.zipcode).getText().toString()))
-        {
-        	Intent intent = new Intent(this, HomeActivity.class);
-
-			if (!GenericValidator.isLong(aq.id(R.id.zipcode).getText()
-					.toString())) {
-				Long cep = Long.parseLong(aq.id(R.id.zipcode).getText()
-						.toString().substring(0, 5));
-//				FaixaEntrega faixaentrega = cepservice.findByCEPCode(cep);
-//				PriceUtilities.setFaixaEntrega(faixaentrega);
-//				intent.putExtra(Constante.FAIXA_ENTREGA, faixaentrega);
-			}
-
-            startActivity(intent);
-        } else {
-			new ErrorAlert(this).setTitle("CEP é obrigatório")
-        						.setCancelable(true)
-        						.show();
-        }
-        
-    }
-
-    @Override
-	protected void onCreate(Bundle bundle)
-    {	
-        super.onCreate(bundle);
+	private final AQuery aq;
+	private final CEPService cepservice;
+	private final ConfigurationService service;
+	
+	private static final Long UNDEFINED_ZIPCODE = 0L;
+	
+	public MainActivity() {
 		cepservice = new CEPService(this);
-        service = new AtualizacaoService(this);
-        if( service.precisaAtualizar() ) {
-        	Intent intent = new Intent(this,ConfigurationActivity.class);
-        	startActivity(intent);
-        } else {
-	        setContentView(R.layout.activity_home);
-	        aq = new AQuery(this);
-	        
-	        Configuracao configuracao = service.get();
-	        
-	        aq.id(R.id.progressText).clicked(this);
-	        aq.id(R.id.shopping).clicked(this);
-	        aq.id(R.id.progressText).text(configuracao.getNomeLoja());
-	        aq.clickable(true);
-	        
-        }
-    }
+		service = new ConfigurationService(this);
+		aq = new AQuery(this);
+	}
+
+	public void setCEP(final String cep) {
+		aq.id(R.id.zipcode).text(cep);
+	}
+	
+	public Long getCEP() {
+		final String zipcode = aq.id(R.id.zipcode).getText().toString();
+		Long cep = UNDEFINED_ZIPCODE;
+		if( !GenericValidator.isBlankOrNull(zipcode) && GenericValidator.isLong(zipcode)){
+			cep = Long.parseLong(zipcode.substring(0,5));
+		} 
+		return cep;
+	}
+
+	@Override
+	public void onClick(final View view) {
+
+		final Long cep = this.getCEP();
+		if( cep > UNDEFINED_ZIPCODE ){
+			final Intent intent = new Intent(this, HomeActivity.class);
+			final FaixaPreco frete = cepservice.getFaixaPrecoByCEPDestino(cep);
+			PriceUtilities.setFrete(frete);
+			intent.putExtra(Constante.FRETE, frete);
+			startActivity(intent);
+		} else {
+			new ErrorAlert(this)
+					.setTitle("CEP é obrigatório")
+					.setCancelable(true)
+					.show();
+		}
+
+	}
+	
+
+	@Override
+	public void onCreate(final Bundle bundle) {
+		super.onCreate(bundle);		
+		setContentView(R.layout.activity_home);
+		
+		aq.id(R.id.progressText).clicked(this);
+		aq.id(R.id.shopping).clicked(this);
+		aq.id(R.id.progressText).text(service.getNomeLoja());
+		aq.clickable(true);
+		
+		if (service.precisaAtualizar()) {
+			final Intent intent = new Intent(this, ConfigurationActivity.class);
+			startActivity(intent);
+		} 
+	}
+
 }

@@ -1,4 +1,4 @@
-package test.com.pmrodrigues.android.allinshopping.repository;
+package test.com.pmrodrigues.android.allinshopping.services;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -13,23 +13,21 @@ import org.robolectric.RobolectricTestRunner;
 import android.content.Context;
 
 import com.pmrodrigues.android.allinshopping.async.IntegrationProcess;
-import com.pmrodrigues.android.allinshopping.models.CEP;
 import com.pmrodrigues.android.allinshopping.models.FaixaPreco;
-import com.pmrodrigues.android.allinshopping.repository.CEPRepository;
-import com.pmrodrigues.android.allinshopping.repository.FaixaPrecoRepository;
-
+import com.pmrodrigues.android.allinshopping.repository.EstadoRepository;
+import com.pmrodrigues.android.allinshopping.services.CEPService;
 
 @RunWith(RobolectricTestRunner.class)
-public class TestFaixaPrecoRepository {
+public class TestCEPService {
 
-	private FaixaPrecoRepository repository;
-	
-	private CEPRepository ceprepository;
-	
 	private final ResourceBundle integration = ResourceBundle
 			.getBundle("integration");
 	
 	private final ResourceBundle response = ResourceBundle.getBundle("json_message");
+	
+	private CEPService service;
+	
+	private EstadoRepository repository;
 	
 	@Before
 	public void setup() throws Exception {
@@ -39,8 +37,8 @@ public class TestFaixaPrecoRepository {
 		Robolectric.getFakeHttpLayer().addHttpResponseRule(integration.getString("faixapreco"),response.getString("faixa"));
 		
 		final Context context = Robolectric.application.getApplicationContext();
-		repository = new FaixaPrecoRepository(context);
-		ceprepository = new CEPRepository(context);
+		service = new CEPService(context);
+		repository = new EstadoRepository(context);
 		final IntegrationProcess process = new IntegrationProcess(context);
 		process.importarEstado();
 		process.importarCEP();
@@ -49,12 +47,10 @@ public class TestFaixaPrecoRepository {
 	}
 	
 	@Test
-	public void pesquisarFaixaPrecoPorCEP() throws Exception {
-		
-		final CEP origem = ceprepository.findCepByZipCode(22745L);
-		final CEP destino = ceprepository.findCepByZipCode(20775L);
-		final FaixaPreco faixa = repository.findFaixaPrecoByCEPAndPeso(origem.getEstado() , destino);
-		assertNotNull(faixa);
+	public void pesquisarFaixaPreco() {
+				
+		final FaixaPreco faixaPreco = service.getFaixaPrecoByCEPDestino(22745L);
+		assertNotNull(faixaPreco);
 		
 	}
 

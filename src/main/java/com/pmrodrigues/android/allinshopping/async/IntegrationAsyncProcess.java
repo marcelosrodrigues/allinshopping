@@ -10,19 +10,19 @@ import com.pmrodrigues.android.allinshopping.R;
 import com.pmrodrigues.android.allinshopping.alerts.ActionDialog;
 import com.pmrodrigues.android.allinshopping.exceptions.IntegrationException;
 import com.pmrodrigues.android.allinshopping.exceptions.NoUniqueRegistryException;
-import com.pmrodrigues.android.allinshopping.services.AtualizacaoService;
+import com.pmrodrigues.android.allinshopping.services.ConfigurationService;
 
 public class IntegrationAsyncProcess extends AsyncTask<Void, String, String> {
 
 	private final IntegrationProcess integration;
-	private final AtualizacaoService service;
+	private final ConfigurationService service;
 	private final AQuery aq;
 	
 
 	public IntegrationAsyncProcess(Context context) {
 
 		integration = new IntegrationProcess(context);
-		service = new AtualizacaoService(integration.getContext());
+		service = new ConfigurationService(integration.getContext());
 		this.aq = new AQuery(context);
 		
 	}

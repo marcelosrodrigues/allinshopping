@@ -9,7 +9,7 @@ import com.akatus.connect.api.Akatus;
 
 public interface Constante { // NOPMD
 
-	String FAIXA_ENTREGA = "cep";
+	String FRETE = "cep";
 	String PEDIDO = "pedido";
 	BigDecimal PERCENTUAL_GATEWAY_PAGAMENTO = new BigDecimal("0.942"); // NOPMD
 	BigDecimal TAXA_GATEWAY_PAGAMENTO = new BigDecimal("0.39"); // NOPMD
@@ -34,5 +34,7 @@ public interface Constante { // NOPMD
 	String CLIENTE = "cliente";
 
 	String CREDENTIALS = "KIGDS4I9RGFKHW48673LEOLYHMH5S0EN";
+	String DATA_ATUALIZACAO = "dataAtualizacao";
+	String NOME_LOJA = "nomeLoja";
 
 }

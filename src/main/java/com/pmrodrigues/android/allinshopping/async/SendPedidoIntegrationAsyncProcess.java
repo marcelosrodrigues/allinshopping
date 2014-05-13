@@ -7,7 +7,7 @@ import android.os.AsyncTask;
 
 import com.pmrodrigues.android.allinshopping.exceptions.IntegrationException;
 import com.pmrodrigues.android.allinshopping.exceptions.NoUniqueRegistryException;
-import com.pmrodrigues.android.allinshopping.services.AtualizacaoService;
+import com.pmrodrigues.android.allinshopping.services.ConfigurationService;
 
 public class SendPedidoIntegrationAsyncProcess extends
 		AsyncTask<Void, String, String> {
@@ -27,7 +27,7 @@ public class SendPedidoIntegrationAsyncProcess extends
 			integration.enviarPedido();
 			
 
-			AtualizacaoService service = new AtualizacaoService(
+			ConfigurationService service = new ConfigurationService(
 					this.integration.getContext());
 			service.atualizar();
 

@@ -24,14 +24,6 @@ public class FaixaPreco
     @DatabaseField(id=true,columnName=FaixaPreco.ID_FIELD)
     private Long id;
 
-	@SerializedName("termino")
-    @DatabaseField(columnName=FaixaPreco.PESO_FINAL_FIELD)
-    private Long pesoFinal;
-
-	@SerializedName("inicial")
-    @DatabaseField(columnName=FaixaPreco.PESO_INICIAL_FIELD)
-    private Long pesoInicial;
-
 	@SerializedName("preco")
     @DatabaseField(columnName=FaixaPreco.PRECO_FIELD)
     private BigDecimal preco;
@@ -43,32 +35,10 @@ public class FaixaPreco
 	@SerializedName("origem")
 	@DatabaseField(columnName = FaixaPreco.ORIGEM_FIELD_NAME, foreign = true, foreignAutoRefresh = true)
 	private Estado origem; // NOPMD
-
-    public FaixaPreco()
-    {
-    }
-
-    public FaixaPreco(Long pesoInicial, Long pesoFinal, BigDecimal preco)
-    {
-    
-        this.pesoInicial = pesoInicial;
-        this.pesoFinal = pesoFinal;
-        this.preco = preco;
-    }
-
+   
     public Long getId()
     {
         return id;
-    }
-
-    public Long getPesoFinal()
-    {
-        return pesoFinal;
-    }
-
-    public Long getPesoInicial()
-    {
-        return pesoInicial;
     }
 
     public BigDecimal getPreco()

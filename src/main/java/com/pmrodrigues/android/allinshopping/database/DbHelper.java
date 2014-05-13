@@ -11,10 +11,8 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import com.pmrodrigues.android.allinshopping.models.Atributo;
-import com.pmrodrigues.android.allinshopping.models.Atualizacao;
 import com.pmrodrigues.android.allinshopping.models.CEP;
 import com.pmrodrigues.android.allinshopping.models.Cliente;
-import com.pmrodrigues.android.allinshopping.models.Configuracao;
 import com.pmrodrigues.android.allinshopping.models.DadosPagamento;
 import com.pmrodrigues.android.allinshopping.models.Endereco;
 import com.pmrodrigues.android.allinshopping.models.Estado;
@@ -42,8 +40,6 @@ public class DbHelper extends OrmLiteSqliteOpenHelper {
 	private Dao<Pedido, Long> pedidoDao;
 	private Dao<Produto, Long> produtoDao;
 	private Dao<Secao, Long> secaoDao;
-	private Dao<Atualizacao, Long> atualizacaoDao;
-	private Dao<Configuracao, Long> configuracaoDao;
 	private Dao<Imagem, Long> imagemDao;
 	private Dao<Atributo, Long> atributoDao;
 
@@ -69,8 +65,6 @@ public class DbHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.createTable(connectionsource, DadosPagamento.class);
 			TableUtils.createTable(connectionsource, CEP.class);
 			TableUtils.createTable(connectionsource, FaixaPreco.class);
-			TableUtils.createTable(connectionsource, Atualizacao.class);
-			TableUtils.createTable(connectionsource, Configuracao.class);
 			
 			return;
 		} catch (SQLException sqlexception) {
@@ -94,7 +88,6 @@ public class DbHelper extends OrmLiteSqliteOpenHelper {
 		pagtoDao = null;
 		cepDAO = null;
 		faixaPrecoDao = null;
-		atualizacaoDao = null;
 		imagemDao = null;
 		atributoDao = null;
 
@@ -175,20 +168,6 @@ public class DbHelper extends OrmLiteSqliteOpenHelper {
 			secaoDao = getDao(Secao.class);
 		}
 		return secaoDao;
-	}
-
-	public Dao<Atualizacao, Long> getAtualizacaoDao() throws SQLException {
-		if (atualizacaoDao == null) {
-			atualizacaoDao = getDao(Atualizacao.class);
-		}
-		return atualizacaoDao;
-	}
-
-	public Dao<Configuracao, Long> getConfiguracaoDao() throws SQLException {
-		if (configuracaoDao == null) {
-			configuracaoDao = getDao(Configuracao.class);
-		}
-		return configuracaoDao;
 	}
 
 	@Override
