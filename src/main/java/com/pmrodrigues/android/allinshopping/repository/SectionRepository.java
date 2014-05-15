@@ -12,18 +12,22 @@ import com.pmrodrigues.android.allinshopping.models.Secao;
 public class SectionRepository extends AbstractRepository<Secao, Long>
 {
 
-    public SectionRepository(Context context)
+    public SectionRepository(final Context context)
     {
         super(context);
     }
 
-    public List<Secao> getSections()
-        throws SQLException
-    {
-        List<Secao> secoes = getDatabase().getSecaoDao().queryBuilder().where().isNull("secaoPai_id").query();
-        List<Secao> comProduto = new ArrayList<Secao>();
+    public List<Secao> getSections() throws SQLException {
+    	
+        final List<Secao> secoes = getDatabase().getSecaoDao()
+					        .queryBuilder()					        
+					        .where()
+					        .isNull(Secao.SECAO_PAI_FIELD_NAME)		
+					        .query();
         
-        for( Secao secao : secoes ){
+        final List<Secao> comProduto = new ArrayList<Secao>();
+        
+        for( final Secao secao : secoes ){
         	if( secao.temProduto() ) {
         		comProduto.add(secao);
         	}

@@ -17,11 +17,11 @@ public class Secao
 
     private static final long serialVersionUID = 1L;
 
-	private static final String ID_FIELD_NAME = "id";
+	public static final String ID_FIELD_NAME = "id";
 
-	private static final String NOME_FIELD_NAME = "nome";
+	public static final String NOME_FIELD_NAME = "nome";
 
-	private static final String SECAO_PAI_FIELD_NAME = "pai_id";
+	public static final String SECAO_PAI_FIELD_NAME = "pai_id";
     
 	@SerializedName("id")
     @DatabaseField(id=true,columnName=Secao.ID_FIELD_NAME)
