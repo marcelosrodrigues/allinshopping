@@ -22,73 +22,65 @@ import com.pmrodrigues.android.allinshopping.events.AbrirImagemOnClickEvent;
 import com.pmrodrigues.android.allinshopping.events.ChangeRadioButtonEventListener;
 import com.pmrodrigues.android.allinshopping.models.Pedido;
 import com.pmrodrigues.android.allinshopping.models.Produto;
-import com.pmrodrigues.android.allinshopping.services.CEPService;
 import com.pmrodrigues.android.allinshopping.utilities.DrawableUtilities;
 import com.pmrodrigues.android.allinshopping.utilities.ParseUtilities;
 import com.pmrodrigues.android.allinshopping.utilities.PriceUtilities;
 
 public class ProdutoAdapter extends ArrayAdapter<Produto>
 		implements
-			OnClickListener
-{
+			OnClickListener {
 
-    private AQuery aq;
-    private final List<Produto> products;
-    private final CEPService service;
-    
-    public ProdutoAdapter(Context context, List<Produto> produtos)
-    {
-        super(context, android.R.layout.simple_list_item_1, produtos);
-        this.products = produtos;
-        this.service = new CEPService(context);
-    }
+	private AQuery aq;
+	private final List<Produto> products;
 
-    @Override
-	public View getView(int i, View view, ViewGroup viewgroup)
-    {
-        
-        Activity activity = (Activity)getContext();
-        
-        if (view == null)
-        {
-        	view = activity.getLayoutInflater().inflate(R.layout.item_resumo, null);
-        }
-        aq = new AQuery(view);
-        Produto produto = products.get(i);
-//        if (PriceUtilities.getFaixaEntrega() != null)
-//        {
-//            Long peso = produto.getPeso();
-//            FaixaPreco faixapreco = service.getFaixaPreco(PriceUtilities.getFaixaEntrega(), peso);
-//            produto.setFaixaPreco(faixapreco);
-//        }
-        aq.id(R.id.imagem).image(DrawableUtilities.getImage(activity, produto.getImage()));
-        aq.id(R.id.imagem).tag(produto.getImage());
-        aq.id(R.id.imagem).clicked(new AbrirImagemOnClickEvent());
-        aq.id(R.id.adicionar).tag(produto);
-        aq.id(R.id.titulo).text(produto.getTitulo());
-        aq.id(R.id.preco).text(ParseUtilities.formatMoney(produto.getPrecoVenda()));
-        aq.id(R.id.descricao).text(produto.getDescricao());
-        
-        if( produto.getSecao().isVestuario() ) {
-        	
-        	showRoupas(View.VISIBLE);
-        	showSapatos(View.INVISIBLE);      
-        	
-        } else if( produto.getSecao().isCalcado() ) {
-        	
-        	showSapatos(View.VISIBLE);
-        	showRoupas(View.INVISIBLE);
-        	
-        } else if( !produto.getSecao().isVestuario() && !produto.getSecao().isCalcado() ){
-        	aq.id(R.id.tamanho).visibility(View.INVISIBLE);
-        }
-        
-        
-        aq.id(R.id.adicionar).getButton().setOnClickListener(this);
-        RadioGroup radiogroup = (RadioGroup)view.findViewById(R.id.tamanho);
-        radiogroup.setOnCheckedChangeListener(new ChangeRadioButtonEventListener());
-        return view;
-    }
+	public ProdutoAdapter(final Context context, final List<Produto> produtos) {
+		super(context, android.R.layout.simple_list_item_1, produtos);
+		this.products = produtos;
+	}
+
+	@Override
+	public View getView(int i, View view, ViewGroup viewgroup) {
+
+		final Activity activity = (Activity) getContext();
+		
+		if (view == null) {
+			view = activity.getLayoutInflater().inflate(R.layout.item_resumo,
+					null);
+		}
+		aq = new AQuery(view);
+		Produto produto = products.get(i);
+
+		aq.id(R.id.imagem).image(
+				DrawableUtilities.getImage(activity, produto.getImage()));
+		aq.id(R.id.imagem).tag(produto.getImage());
+		aq.id(R.id.imagem).clicked(new AbrirImagemOnClickEvent());
+		aq.id(R.id.adicionar).tag(produto);
+		aq.id(R.id.titulo).text(produto.getTitulo());
+		aq.id(R.id.preco).text(
+				ParseUtilities.formatMoney(produto.getPrecoVenda()));
+		aq.id(R.id.descricao).text(produto.getDescricao());
+
+		if (produto.getSecao().isVestuario()) {
+
+			showRoupas(View.VISIBLE);
+			showSapatos(View.INVISIBLE);
+
+		} else if (produto.getSecao().isCalcado()) {
+
+			showSapatos(View.VISIBLE);
+			showRoupas(View.INVISIBLE);
+
+		} else if (!produto.getSecao().isVestuario()
+				&& !produto.getSecao().isCalcado()) {
+			aq.id(R.id.tamanho).visibility(View.INVISIBLE);
+		}
+
+		aq.id(R.id.adicionar).getButton().setOnClickListener(this);
+		RadioGroup radiogroup = (RadioGroup) view.findViewById(R.id.tamanho);
+		radiogroup
+				.setOnCheckedChangeListener(new ChangeRadioButtonEventListener());
+		return view;
+	}
 
 	private void showSapatos(int visibility) {
 		aq.id(R.id.T_34).visibility(visibility);
@@ -107,34 +99,31 @@ public class ProdutoAdapter extends ArrayAdapter<Produto>
 		aq.id(R.id.GG).visibility(visibility);
 	}
 
-    @Override
-	public void onClick(View view)
-    {
-        Produto produto = (Produto)view.getTag();
-        Context context = getContext();
-        Activity activity = (Activity)getContext();
-        Intent intent = new Intent(context, ShoppingCartActivity.class);
-        RadioGroup radiogroup = (RadioGroup)activity.findViewById(R.id.tamanho);
-        Pedido pedido = PriceUtilities.getPedido();
-        int i = radiogroup.getCheckedRadioButtonId();
-        RadioButton radiobutton = (RadioButton)radiogroup.findViewById(i);
-        
-        String s = radiobutton.getHint().toString();
-        
+	@Override
+	public void onClick(View view) {
+		Produto produto = (Produto) view.getTag();
+		Context context = getContext();
+		Activity activity = (Activity) getContext();
+		Intent intent = new Intent(context, ShoppingCartActivity.class);
+		RadioGroup radiogroup = (RadioGroup) activity
+				.findViewById(R.id.tamanho);
+		Pedido pedido = PriceUtilities.getPedido();
+		int i = radiogroup.getCheckedRadioButtonId();
+		RadioButton radiobutton = (RadioButton) radiogroup.findViewById(i);
+
+		String s = radiobutton.getHint().toString();
+
 		if ((produto.getSecao().isCalcado() || produto.getSecao().isVestuario())
 				&& GenericValidator.isBlankOrNull(s)) {
-        		
-        		( new ErrorAlert(context) )
-        			.setTitle("Pedidos")
-					.setMessage("Tamanho é obrigatório")
-        			.show();
-        		
+
+			(new ErrorAlert(context)).setTitle("Pedidos")
+					.setMessage("Tamanho é obrigatório").show();
+
 			return;
-        }
-        
-        pedido.add(produto, s);
-        getContext().startActivity(intent);
-        
-        
-    }
+		}
+
+		pedido.add(produto, s);
+		getContext().startActivity(intent);
+
+	}
 }

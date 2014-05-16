@@ -14,7 +14,6 @@ import android.content.Context;
 
 import com.pmrodrigues.android.allinshopping.async.IntegrationProcess;
 import com.pmrodrigues.android.allinshopping.models.FaixaPreco;
-import com.pmrodrigues.android.allinshopping.repository.EstadoRepository;
 import com.pmrodrigues.android.allinshopping.services.CEPService;
 
 @RunWith(RobolectricTestRunner.class)
@@ -25,9 +24,6 @@ public class TestCEPService {
 	
 	private final ResourceBundle response = ResourceBundle.getBundle("json_message");
 	
-	private CEPService service;
-	
-	private EstadoRepository repository;
 	
 	@Before
 	public void setup() throws Exception {
@@ -37,8 +33,7 @@ public class TestCEPService {
 		Robolectric.getFakeHttpLayer().addHttpResponseRule(integration.getString("faixapreco"),response.getString("faixa"));
 		
 		final Context context = Robolectric.application.getApplicationContext();
-		service = new CEPService(context);
-		repository = new EstadoRepository(context);
+		
 		final IntegrationProcess process = new IntegrationProcess(context);
 		process.importarEstado();
 		process.importarCEP();
@@ -48,7 +43,9 @@ public class TestCEPService {
 	
 	@Test
 	public void pesquisarFaixaPreco() {
-				
+		
+		final Context context = Robolectric.application.getApplicationContext();
+		final CEPService service = new CEPService(context);
 		final FaixaPreco faixaPreco = service.getFaixaPrecoByCEPDestino(22745L);
 		assertNotNull(faixaPreco);
 		

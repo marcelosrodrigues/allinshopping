@@ -11,6 +11,7 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 import com.pmrodrigues.android.allinshopping.utilities.Constante;
+import com.pmrodrigues.android.allinshopping.utilities.PriceUtilities;
 
 @DatabaseTable
 public class Produto implements Serializable {
@@ -24,7 +25,7 @@ public class Produto implements Serializable {
 	private static final String DESCRICAO_FIELD_NAME = "descricao"; // NOPMD
 	private static final String DESCRICAO_BREVE_FIELD_NAME = "descricaobreve"; // NOPMD
 	private static final String PESO_FIELD_NAME = "peso";
-	private FaixaPreco faixaPreco;
+	
 
 	@SerializedName("id")
 	@DatabaseField(id = true)
@@ -184,10 +185,6 @@ public class Produto implements Serializable {
 		return id.hashCode();
 	}
 
-	public void setFaixaPreco(FaixaPreco faixapreco) {
-		faixaPreco = faixapreco;
-	}
-
 	public void setId(final Long id) {
 		this.id = id;
 	}
@@ -202,13 +199,7 @@ public class Produto implements Serializable {
 
 	public BigDecimal getFrete() {
 
-		BigDecimal frete = BigDecimal.ZERO;
-
-		if (faixaPreco != null) {
-			frete = faixaPreco.getPreco();
-		}
-
-		return frete;
+		return PriceUtilities.getFrete();
 	}
 
 	public void setDescricao(String descricao) {

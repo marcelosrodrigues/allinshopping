@@ -26,7 +26,7 @@ public class SecaoAdapter extends ArrayAdapter<Secao>
     }
 
     @Override
-	public View getView(int i, View view, ViewGroup viewgroup)
+	public View getView(final int i, final View view, final ViewGroup viewgroup)
     {
         linha = view;
         final Activity activity = (Activity)getContext();        

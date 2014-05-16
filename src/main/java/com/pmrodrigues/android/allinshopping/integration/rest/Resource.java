@@ -12,7 +12,7 @@ public class Resource
     {
 		BufferedReader bufferedreader = null; // NOPMD
         try {
-			bufferedreader = new BufferedReader(new InputStreamReader(stream));
+			bufferedreader = new BufferedReader(new InputStreamReader(stream,"ISO-8859-1"));
 			final StringBuffer buffer = new StringBuffer();
 			String partial = null; // NOPMD
 			while ((partial = bufferedreader.readLine()) != null) { // NOPMD

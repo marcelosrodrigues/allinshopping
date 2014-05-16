@@ -17,18 +17,12 @@ import com.pmrodrigues.android.allinshopping.utilities.PriceUtilities;
 
 public class MainActivity extends AbstractActivity implements OnClickListener {
 
-	private final AQuery aq;
-	private final CEPService cepservice;
-	private final ConfigurationService service;
+	private AQuery aq;
+	private CEPService cepservice;
+	private ConfigurationService service;
 	
 	private static final Long UNDEFINED_ZIPCODE = 0L;
 	
-	public MainActivity() {
-		cepservice = new CEPService(this);
-		service = new ConfigurationService(this);
-		aq = new AQuery(this);
-	}
-
 	public void setCEP(final String cep) {
 		aq.id(R.id.zipcode).text(cep);
 	}
@@ -66,6 +60,9 @@ public class MainActivity extends AbstractActivity implements OnClickListener {
 	public void onCreate(final Bundle bundle) {
 		super.onCreate(bundle);		
 		setContentView(R.layout.activity_home);
+		cepservice = new CEPService(this);
+		service = new ConfigurationService(this);
+		aq = new AQuery(this);
 		
 		aq.id(R.id.progressText).clicked(this);
 		aq.id(R.id.shopping).clicked(this);

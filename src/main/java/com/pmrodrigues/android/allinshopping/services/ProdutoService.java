@@ -2,11 +2,9 @@ package com.pmrodrigues.android.allinshopping.services;
 
 import java.io.File;
 import java.sql.SQLException;
-import java.util.concurrent.Callable;
 
 import android.content.Context;
 
-import com.j256.ormlite.misc.TransactionManager;
 import com.pmrodrigues.android.allinshopping.models.Atributo;
 import com.pmrodrigues.android.allinshopping.models.Imagem;
 import com.pmrodrigues.android.allinshopping.models.Produto;
@@ -28,30 +26,21 @@ public class ProdutoService {
 
 	public void save(final Produto produto) {
 		try {
-			TransactionManager.callInTransaction(
-					PRODUCT_REPOSITORY.getConnectionSource(),
-					new Callable<Void>() {
+			if (PRODUCT_REPOSITORY.exists(produto)) {
+				IMAGEM_REPOSITORY.delete(produto);
+				ATRIBUTO_REPOSITORY.delete(produto);
+				PRODUCT_REPOSITORY.delete(produto);
+			}
+			PRODUCT_REPOSITORY.insert(produto);
 
-						@Override
-						public Void call() throws Exception {
-							if (PRODUCT_REPOSITORY.exists(produto)) {
-								IMAGEM_REPOSITORY.delete(produto);
-								ATRIBUTO_REPOSITORY.delete(produto);
-								PRODUCT_REPOSITORY.delete(produto);
-							} 
-							PRODUCT_REPOSITORY.insert(produto);
-							
-							for (final Imagem imagem : produto.getImagens()) {
-								IMAGEM_REPOSITORY.insert(imagem);
-							} 
-							
-							for( final Atributo atributo : produto.getAtributos() ) {
-								ATRIBUTO_REPOSITORY.insert(atributo);
-							}
-							
-							return null;
-						}
-					});
+			for (final Imagem imagem : produto.getImagens()) {
+				IMAGEM_REPOSITORY.insert(imagem);
+			}
+
+			for (final Atributo atributo : produto.getAtributos()) {
+				ATRIBUTO_REPOSITORY.insert(atributo);
+			}
+
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
