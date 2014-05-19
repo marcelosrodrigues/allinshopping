@@ -35,4 +35,8 @@ public class Atributo implements Serializable {
 		this.produto = produto;		
 	}
 	
+	public String getDescricao() {
+		return descricao;
+	}
+	
 }

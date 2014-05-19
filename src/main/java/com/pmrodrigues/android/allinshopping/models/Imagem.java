@@ -1,5 +1,6 @@
 package com.pmrodrigues.android.allinshopping.models;
 
+import java.io.File;
 import java.io.Serializable;
 
 import com.google.gson.annotations.SerializedName;
@@ -50,5 +51,15 @@ public class Imagem implements Serializable {
 
 	public void setFileName(final String imagepath) {
 		this.fileName = imagepath;
+	}
+
+	public void apagar() {
+		final File imagem = new File(this.fileName);
+		imagem.delete();
+		
+	}
+
+	public String getFileName() {
+		return this.fileName;
 	}
 }

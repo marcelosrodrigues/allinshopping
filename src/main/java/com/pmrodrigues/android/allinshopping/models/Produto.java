@@ -1,10 +1,10 @@
 package com.pmrodrigues.android.allinshopping.models;
 
-import java.io.File;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 import com.j256.ormlite.field.DatabaseField;
@@ -18,7 +18,6 @@ public class Produto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private static final String ID_LOJA_PRESTASHOP_FIELD_NAME = "id_loja"; // NOPMD
-	private static final String IMAGE_URL_FIELD_NAME = "imageurl"; // NOPMD
 	private static final String NOME_FIELD_NAME = "nome";
 	private static final String PRECO_FIELD_NAME = "preco";
 	private static final String SECAO_FIELD_NAME = "secao";
@@ -34,10 +33,6 @@ public class Produto implements Serializable {
 	@SerializedName("shop_id")
 	@DatabaseField(columnName = Produto.ID_LOJA_PRESTASHOP_FIELD_NAME)
 	private Long idLoja;
-
-	@SerializedName("image")
-	@DatabaseField(columnName = Produto.IMAGE_URL_FIELD_NAME)
-	private String imageUrl;
 
 	@SerializedName("nome")
 	@DatabaseField(columnName = Produto.NOME_FIELD_NAME)
@@ -75,44 +70,13 @@ public class Produto implements Serializable {
 		super();
 	}
 
-	public Produto(final Long id, final String nome, final BigDecimal preco,
-			final Long idLoja) { // NOPMD
-		this();
-		this.id = id;
-		this.nome = nome;
-		this.preco = preco;
-		this.idLoja = idLoja;
-	}
-
-	public Produto(final Long id, final String nome, final String imageUrl,
-			final BigDecimal preco, final Secao secao) { // NOPMD
-		this();
-		this.id = id;
-		this.nome = nome;
-		this.preco = preco;
-		this.secao = secao;
-		if (imageUrl.endsWith("jpg") || imageUrl.endsWith("gif")
-				|| imageUrl.endsWith("png")) {
-			this.imageUrl = imageUrl;
-		}
-	}
-
-	public Produto(String imageUrl, String nome, BigDecimal preco) {
-		this();
-		this.imageUrl = imageUrl;
-		this.nome = nome;
-		this.preco = preco;
-	}
 
 	@Override
 	public boolean equals(Object obj) {
-		boolean flag;
+		boolean flag = false;
 		if (obj instanceof Produto) {
-			Long long1 = ((Produto) obj).id;
-			Long long2 = id;
-			flag = long1.equals(long2);
-		} else {
-			flag = false;
+			final Produto other = (Produto)obj;
+			flag =(this.id == other.id);
 		}
 		return flag;
 	}
@@ -125,8 +89,10 @@ public class Produto implements Serializable {
 		return idLoja;
 	}
 
-	public String getImage() {
-		return imageUrl;
+	public String getDefaultImage() {
+		final List<Imagem> imagens = new ArrayList<Imagem>();
+		imagens.addAll(this.imagens);
+		return imagens.get(0).getFileName();
 	}
 
 	public BigDecimal getMargemGestor() {
@@ -171,8 +137,7 @@ public class Produto implements Serializable {
 				.add(getMargemVendedoras())
 				.add(getMargemLider())
 				.add(getFrete())
-				.divide(Constante.PERCENTUAL_GATEWAY_PAGAMENTO, 2,
-						BigDecimal.ROUND_UP)
+				.divide(Constante.PERCENTUAL_GATEWAY_PAGAMENTO, 2, BigDecimal.ROUND_UP)
 				.add(Constante.TAXA_GATEWAY_PAGAMENTO);
 	}
 
@@ -188,11 +153,7 @@ public class Produto implements Serializable {
 	public void setId(final Long id) {
 		this.id = id;
 	}
-
-	public void setImage(String s) {
-		imageUrl = s;
-	}
-
+	
 	public void setSecao(Secao secao) {
 		this.secao = secao;
 	}
@@ -222,9 +183,10 @@ public class Produto implements Serializable {
 		return secao;
 	}
 
-	public boolean apagarImagem() {
-		File image = new File(this.imageUrl);
-		return image.delete();
+	public void apagarImagem() {
+		for( final Imagem imagem : this.imagens ){
+			imagem.apagar();
+		}
 	}
 
 	public Collection<Imagem> getImagens() {

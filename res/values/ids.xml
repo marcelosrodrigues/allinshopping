@@ -68,6 +68,7 @@
     <item type="id" name="descricao"/>
     <item type="id" name="configuration">false</item>
     <item type="id" name="nomeLoja">false</item>
-    <item type="id" name="atualizar">false</item>
+    <item type="id" name="atributos">false</item>
+    <item type="id" name="atributo">false</item>
     
 </resources>

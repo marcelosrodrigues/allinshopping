@@ -41,8 +41,8 @@ public class ProdutoAdapter extends ArrayAdapter<Produto>
 	@Override
 	public View getView(int i, View view, ViewGroup viewgroup) {
 
-		final Activity activity = (Activity) getContext();
-		
+		Activity activity = (Activity) getContext();
+
 		if (view == null) {
 			view = activity.getLayoutInflater().inflate(R.layout.item_resumo,
 					null);
@@ -51,8 +51,8 @@ public class ProdutoAdapter extends ArrayAdapter<Produto>
 		Produto produto = products.get(i);
 
 		aq.id(R.id.imagem).image(
-				DrawableUtilities.getImage(activity, produto.getImage()));
-		aq.id(R.id.imagem).tag(produto.getImage());
+				DrawableUtilities.getImage(produto.getDefaultImage()));
+		aq.id(R.id.imagem).tag(produto.getDefaultImage());
 		aq.id(R.id.imagem).clicked(new AbrirImagemOnClickEvent());
 		aq.id(R.id.adicionar).tag(produto);
 		aq.id(R.id.titulo).text(produto.getTitulo());
