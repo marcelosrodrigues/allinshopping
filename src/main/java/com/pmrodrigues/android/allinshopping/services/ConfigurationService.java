@@ -57,5 +57,4 @@ public class ConfigurationService {
 		return this.get(Constante.NOME_LOJA);
 	}
 
-	
 }

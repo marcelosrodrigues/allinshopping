@@ -38,8 +38,8 @@ public class DownloadResource {
 	public void getResourceByProduto(final Produto produto)
 			throws IntegrationException {
 		
-		for( Imagem imagem : produto.getImagens() ) {
-			String imagepath = getResourceByImage(imagem);
+		for( final Imagem imagem : produto.getImagens() ) {
+			final String imagepath = getResourceByImage(imagem);
 			imagem.setFileName(imagepath);
 		}
 		

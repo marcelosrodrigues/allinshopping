@@ -30,7 +30,7 @@ public class TestDownloadCliente {
 	@Test
 	public void testGetAll() throws IntegrationException {
 		final DownloadCliente downloadCliente = new DownloadCliente();
-		final List<Cliente> clientes = downloadCliente.getAll();
+		final List<Cliente> clientes = downloadCliente.list();
 		Assert.assertFalse(clientes.isEmpty());
 	}
 

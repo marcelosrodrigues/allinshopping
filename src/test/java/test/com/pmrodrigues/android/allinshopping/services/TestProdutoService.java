@@ -39,7 +39,7 @@ public class TestProdutoService {
 		repository = new ProductRepository(Robolectric.application.getApplicationContext());
 		imageRepository = new ImagemRepository(Robolectric.application.getApplicationContext());
 		Robolectric.getFakeHttpLayer().addPendingHttpResponse(200, bundle.getString("produto"));
-		this.produtos = download.getAll();
+		this.produtos = download.list();
 	}
 	
 	@Test

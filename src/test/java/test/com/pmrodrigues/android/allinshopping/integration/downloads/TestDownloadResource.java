@@ -34,7 +34,7 @@ public class TestDownloadResource {
 	@Test
 	public void testGetResourceByProduto() throws IntegrationException {
 		final DownloadProdutos downloadProdutos = new DownloadProdutos();
-		final List<Produto> produtos = downloadProdutos.getAll();
+		final List<Produto> produtos = downloadProdutos.list();
 
 		final Produto produto = produtos.get(0);
 

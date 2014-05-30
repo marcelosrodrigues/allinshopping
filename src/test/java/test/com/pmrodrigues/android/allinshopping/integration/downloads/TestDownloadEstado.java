@@ -32,7 +32,7 @@ public class TestDownloadEstado  {
 	@Test
 	public void testGetAll() throws IntegrationException {
 		DownloadEstado download = new DownloadEstado();
-		List<Estado> estados = download.getAll();
+		List<Estado> estados = download.list();
 		Assert.assertFalse(estados.isEmpty());
 	}
 

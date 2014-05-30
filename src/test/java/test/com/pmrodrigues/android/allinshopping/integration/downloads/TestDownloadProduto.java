@@ -33,7 +33,7 @@ public class TestDownloadProduto {
 	@Test
 	public void test() throws IntegrationException {
 		DownloadProdutos download = new DownloadProdutos();
-		List<Produto> produtos = download.getAll();
+		List<Produto> produtos = download.list();
 		Assert.assertFalse(produtos.isEmpty());
 	}
 

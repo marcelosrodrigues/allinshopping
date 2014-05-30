@@ -30,7 +30,7 @@ public class TestDownloadSecao {
 	@Test
 	public void test() throws IntegrationException {
 		DownloadSecoes download = new DownloadSecoes();
-		List<Secao> secoes = download.getAll();
+		List<Secao> secoes = download.list();
 		Assert.assertFalse(secoes.isEmpty());
 
 	}

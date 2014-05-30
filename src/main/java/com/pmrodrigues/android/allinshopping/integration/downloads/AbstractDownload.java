@@ -22,7 +22,7 @@ public abstract class AbstractDownload<E> implements Download<E> {
 
 	private final ResourceBundle bundle = ResourceBundle
 			.getBundle("integration");
-
+	
 	@SuppressWarnings("unchecked")
 	public AbstractDownload() {
 		final ParameterizedType type = (ParameterizedType) this.getClass()
@@ -41,10 +41,10 @@ public abstract class AbstractDownload<E> implements Download<E> {
 	}
 
 	@Override
-	public List<E> getAll() throws IntegrationException {
+	public List<E> list() throws IntegrationException {
 
 		try {
-			final JSONObject json = new GetResource(this.getURL()).getJSON();
+			final JSONObject json = new GetResource(this.getURL(),"teste","teste").getJSON();
 
 			return toList(json.get("list"));
 

@@ -31,7 +31,7 @@ public class TestDownloadCEP {
 	@Test
 	public void testDeCarregamentoDeLista() throws IntegrationException {
 		final DownloadCEP download = new DownloadCEP();
-		final List<CEP> ceps = download.getAll();
+		final List<CEP> ceps = download.list();
 
 		Assert.assertFalse(ceps.isEmpty());
 	}

@@ -23,29 +23,28 @@ public abstract class AbstractActivity extends Activity
     }
 	
     @Override
-	public boolean onCreateOptionsMenu(Menu menu)
+	public boolean onCreateOptionsMenu(final Menu menu)
     {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
     @Override
-	public boolean onOptionsItemSelected(MenuItem menuitem)
+	public boolean onOptionsItemSelected(final MenuItem menuitem)
     {
-    	Intent intent = null;
+    	Intent toStart = null; //NOPMD
         switch(menuitem.getItemId()){
         	case R.id.action_settings:
-        		intent = new Intent(this, ConfigurationActivity.class);
+        		toStart = new Intent(this, ConfigurationActivity.class);
         		break;
         	case R.id.shopping_cart:
-        		intent = new Intent(this, ShoppingCartActivity.class);
+        		toStart = new Intent(this, ShoppingCartActivity.class);
         		break;
         	default:
-        		intent = new Intent(this,HomeActivity.class);
+        		toStart = new Intent(this,HomeActivity.class);
         		break;
         }
-        startActivity(intent);
-        boolean returned = super.onOptionsItemSelected(menuitem);
-        return returned;
+        startActivity(toStart);
+        return super.onOptionsItemSelected(menuitem);
     }
 }

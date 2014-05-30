@@ -23,7 +23,7 @@ public class ClienteRepository extends AbstractRepository<Cliente,Long>
         super(context);
     }
 
-    public boolean exists(Cliente cliente)
+	public boolean exists(final Cliente cliente)
     {   
         try
         {

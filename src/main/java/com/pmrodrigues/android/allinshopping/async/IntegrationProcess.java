@@ -54,7 +54,7 @@ public class IntegrationProcess {
 	public void importarEstado() throws IntegrationException { // NOPMD
 		final EstadoService service = new EstadoService(context); // NOPMD
 		final List<Estado> estados = integration.getDownload(
-				ResourceType.ESTADOS).getAll();
+				ResourceType.ESTADOS).list();
 		for (final Estado estado : estados) {
 			service.save(estado);
 		}
@@ -82,7 +82,7 @@ public class IntegrationProcess {
 	public void importarCEP() throws IntegrationException { // NOPMD
 
 		final List<CEP> ceps = integration.getDownload(ResourceType.CEP)
-				.getAll();
+				.list();
 		final CEPService service = new CEPService(context); // NOPMD
 		for (CEP cep : ceps) { // NOPMD
 			service.save(cep);
@@ -93,7 +93,7 @@ public class IntegrationProcess {
 	public void importarFaixaPreco() throws IntegrationException { // NOPMD
 
 		final List<FaixaPreco> faixas = integration.getDownload(
-				ResourceType.FAIXA_PRECO).getAll();
+				ResourceType.FAIXA_PRECO).list();
 		final CEPService service = new CEPService(context); // NOPMD
 		for (final FaixaPreco faixa : faixas) { // NOPMD
 			service.save(faixa);
@@ -106,7 +106,7 @@ public class IntegrationProcess {
 			NoUniqueRegistryException { // NOPMD
 		final ClienteService clienteservice = new ClienteService(context); // NOPMD
 		final List<Cliente> clientes = integration.getDownload(
-				ResourceType.CLIENTE).getAll();
+				ResourceType.CLIENTE).list();
 
 		for (final Cliente cliente : clientes) {
 			clienteservice.save(cliente);
@@ -119,7 +119,7 @@ public class IntegrationProcess {
 		produtoservice.removeAll();
 
 		final List<Produto> produtos = integration.getDownload(
-				ResourceType.PRODUTOS).getAll();
+				ResourceType.PRODUTOS).list();
 
 		final BlockingQueue<Runnable> blockingQueue = new LinkedBlockingQueue<Runnable>();
 		final ThreadPoolExecutor t = new ThreadPoolExecutor(
@@ -148,7 +148,7 @@ public class IntegrationProcess {
 
 		final SecaoService secaoservice = new SecaoService(context); // NOPMD
 		final List<Secao> secoes = integration.getDownload(ResourceType.SECOES)
-				.getAll();
+				.list();
 		for (final Secao secao : secoes) {
 			secaoservice.save(secao);
 		}

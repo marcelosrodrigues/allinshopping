@@ -10,14 +10,14 @@ import com.pmrodrigues.android.allinshopping.models.Produto;
 public class DownloadProdutos extends AbstractDownload<Produto> {
 	
 	@Override
-	public List<Produto> getAll() throws IntegrationException {
+	public List<Produto> list() throws IntegrationException { //NOPMD
 		
-			final List<Produto> produtos =  super.getAll();
-			for(Produto produto : produtos){
-				for( Imagem imagem : produto.getImagens() ) {
+			final List<Produto> produtos =  super.list();
+			for(final Produto produto : produtos){
+				for( final Imagem imagem : produto.getImagens() ) {
 					imagem.setProduto(produto);
 				}
-				for( Atributo atributo : produto.getAtributos() ){
+				for( final Atributo atributo : produto.getAtributos() ){
 					atributo.setProduto(produto);
 				}
 			}

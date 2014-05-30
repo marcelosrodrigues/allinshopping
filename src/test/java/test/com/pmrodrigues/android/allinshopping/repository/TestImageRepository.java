@@ -33,7 +33,7 @@ public class TestImageRepository {
 		
 		this.repository = new ImagemRepository(Robolectric.application.getApplicationContext());
 		final DownloadProdutos download = new DownloadProdutos();
-		this.produtos = download.getAll();
+		this.produtos = download.list();
 		
 		ProdutoService service = new ProdutoService(Robolectric.application.getApplicationContext());
 		for(final Produto produto : this.produtos ){

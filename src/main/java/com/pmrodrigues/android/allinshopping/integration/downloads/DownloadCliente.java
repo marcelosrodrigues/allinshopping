@@ -14,10 +14,10 @@ import com.pmrodrigues.android.allinshopping.models.Cliente;
 public class DownloadCliente extends AbstractDownload<Cliente> {
 	
 	@Override
-	public List<Cliente> getAll() throws IntegrationException {
+	public List<Cliente> list() throws IntegrationException {
 
 		try {
-			final JSONObject json = new GetResource(this.getURL()).getJSON();
+			final JSONObject json = new GetResource(this.getURL(),null,null).getJSON();
 			final Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd")
 					.create();
 			

@@ -16,10 +16,9 @@ public abstract class AbstractRepository<E,T>
 
     private final DbHelper helper;
 
-    public AbstractRepository(Context context)
+    public AbstractRepository(final Context context)
     {
-        DbHelper dbhelper = DbHelperFactory.getDbHelper(context);
-        helper = dbhelper;
+        this.helper = DbHelperFactory.getDbHelper(context);
     }
 
     public ConnectionSource getConnectionSource()
@@ -32,7 +31,7 @@ public abstract class AbstractRepository<E,T>
         return helper;
     }
     
-    public void insert(E e) {    	    	
+    public void insert(final E e) {    	    	
     	try {
 			this.getDao().create(e);
 		} catch (SQLException sqlexp) {
@@ -40,7 +39,7 @@ public abstract class AbstractRepository<E,T>
 		}
     }
     
-    public void update(E e){
+    public void update(final E e){
     	try {
 			this.getDao().update(e);
 		} catch (SQLException sqlexp) {
@@ -48,7 +47,7 @@ public abstract class AbstractRepository<E,T>
 		}
     }
     
-    public void delete(E e){
+    public void delete(final E e){
     	try {
 			this.getDao().delete(e);
 		} catch (SQLException sqlexp) {
@@ -56,13 +55,13 @@ public abstract class AbstractRepository<E,T>
 		}
     }
     
-    public E getById(T id) {
+    public E getById(final T id) {
     	try {
     		
-    		if( id != null ) {
-    			return this.getDao().queryForId(id);
+    		if( id == null ) {
+    			return null;    			
     		} else {
-    			return null;
+    			return this.getDao().queryForId(id);
     		}
     		
 		} catch (SQLException sqlexp) {
