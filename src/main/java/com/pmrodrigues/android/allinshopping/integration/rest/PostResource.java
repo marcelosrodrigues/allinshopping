@@ -10,6 +10,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.message.BasicHeader;
+import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
 import com.pmrodrigues.android.allinshopping.exceptions.IntegrationException;
@@ -45,7 +46,7 @@ public class PostResource extends Resource {
 							super.getURL()));
 
 				} else {
-					return toString(httpentity.getContent());
+					return EntityUtils.toString(httpentity);
 				}
 			} else if (httpresponse.getStatusLine().getStatusCode() == HttpStatus.SC_NOT_FOUND) {
 				throw new PageNotFoundException(String.format(
