@@ -9,6 +9,10 @@ import com.pmrodrigues.android.allinshopping.models.Produto;
 
 public class DownloadProdutos extends AbstractDownload<Produto> {
 	
+	public DownloadProdutos(String username, String password) {
+		super(username,password);
+	}
+
 	@Override
 	public List<Produto> list() throws IntegrationException { //NOPMD
 		

@@ -11,4 +11,8 @@ public interface Integration
 	Download getDownload(ResourceType resourcetype);
 
 	Upload getUpload(ResourceType resourcetype);
+
+	Integration setUserName(String username);
+
+	Integration setPassword(String password);
 }

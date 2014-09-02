@@ -28,6 +28,11 @@ public class HttpEntityResponseRule implements ResponseRule {
 					IllegalStateException {
 				return ClassLoader.getSystemResourceAsStream("850.jpg");
 			}
+			
+			@Override
+			public long getContentLength() {
+				return 100L;
+			}
 		});
 		BasicHttpResponse response =  new BasicHttpResponse(new BasicStatusLine(HttpVersion.HTTP_1_1, 200, "OK"));
 		

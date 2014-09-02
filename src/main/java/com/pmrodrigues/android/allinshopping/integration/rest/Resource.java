@@ -1,5 +1,10 @@
 package com.pmrodrigues.android.allinshopping.integration.rest;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
@@ -17,7 +22,7 @@ public class Resource {
 		super();
 		this.URL = URL;
 		CLIENT = new DefaultHttpClient();		
-		CLIENT.setCredentialsProvider(this.getCredential(username, password));
+		CLIENT.setCredentialsProvider(this.getCredential(username, password));		
 	}
 
 	protected CredentialsProvider getCredential(final String username , final String password) {
@@ -29,6 +34,27 @@ public class Resource {
 		provider.setCredentials(authscope, credential);
 		return provider;
 	}
+	
+	protected String toString(final InputStream stream)
+	        throws IOException
+	    {
+			BufferedReader bufferedreader = null; // NOPMD
+	        try {
+				bufferedreader = new BufferedReader(new InputStreamReader(stream,"ISO-8859-1"));
+				final StringBuffer buffer = new StringBuffer();
+				String partial = null; // NOPMD
+				while ((partial = bufferedreader.readLine()) != null) { // NOPMD
+					buffer.append(partial);
+				}
+
+				return buffer.substring(buffer.indexOf("{")).toString();
+
+			} finally {
+				if( bufferedreader != null ) {
+					bufferedreader.close();
+				}
+			}
+	    }
 	
 	protected HttpClient getHttpClient() {
 		return this.CLIENT;

@@ -16,23 +16,27 @@ class PrestashopIntegration
     implements Integration
 {
 
+	private String username;
+	
+	private String password;
+	
      @Override
 	public Download getDownload(ResourceType resourcetype)
     {
         
         Object obj = null;
         if (resourcetype == ResourceType.CEP){
-            obj = new DownloadCEP();
+            obj = new DownloadCEP(this.username,this.password);
         } else if (resourcetype == ResourceType.SECOES) {
-           obj = new DownloadSecoes();
+           obj = new DownloadSecoes(this.username,this.password);
         } else if (resourcetype == ResourceType.CLIENTE) {
-           obj = new DownloadCliente();
+           obj = new DownloadCliente(this.username,this.password);
         } else if (resourcetype == ResourceType.PRODUTOS){
-           obj = new DownloadProdutos();
+           obj = new DownloadProdutos(this.username,this.password);
         } else if( resourcetype == ResourceType.ESTADOS ) {
-        	obj = new DownloadEstado();
+        	obj = new DownloadEstado(this.username,this.password);
         } else if ( resourcetype == ResourceType.FAIXA_PRECO ){
-        	obj = new DownloadFaixaPreco();
+        	obj = new DownloadFaixaPreco(this.username,this.password);
         }
         
         return ((Download) (obj));
@@ -49,4 +53,16 @@ class PrestashopIntegration
         } 
         return ((Upload) (obj));
     }
+
+	@Override
+	public Integration setUserName(String username) {
+		this.username = username;
+		return this;
+	}
+
+	@Override
+	public Integration setPassword(String password) {
+		this.password = password;
+		return this;
+	}
 }

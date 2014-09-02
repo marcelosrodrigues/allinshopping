@@ -41,7 +41,7 @@ public class TestFaixaPrecoRepository {
 		final Context context = Robolectric.application.getApplicationContext();
 		repository = new FaixaPrecoRepository(context);
 		ceprepository = new CEPRepository(context);
-		final IntegrationProcess process = new IntegrationProcess(context);
+		final IntegrationProcess process = new IntegrationProcess("teste","teste");
 		process.importarEstado();
 		process.importarCEP();
 		process.importarFaixaPreco();

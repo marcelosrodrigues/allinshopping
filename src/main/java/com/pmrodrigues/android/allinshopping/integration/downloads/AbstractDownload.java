@@ -23,11 +23,25 @@ public abstract class AbstractDownload<E> implements Download<E> {
 	private final ResourceBundle bundle = ResourceBundle
 			.getBundle("integration");
 	
+	private final GetResource GET;
+
+	private final String url;
+
+	private final String username;
+
+	private final String password;
+	
 	@SuppressWarnings("unchecked")
-	public AbstractDownload() {
+	public AbstractDownload(String username, String password) {
+		this.username = username;
+		this.password = password;
 		final ParameterizedType type = (ParameterizedType) this.getClass()
 				.getGenericSuperclass();
 		this.persistentClass = (Class<E>) type.getActualTypeArguments()[0];
+		this.url = bundle.getString(this.persistentClass.getSimpleName()
+				.toLowerCase()); 
+		GET = new GetResource(url,username,password);
+		
 	}
 
 	protected List<E> toList(final Object json) {
@@ -36,15 +50,14 @@ public abstract class AbstractDownload<E> implements Download<E> {
 	}
 
 	protected String getURL() {
-		return bundle.getString(this.persistentClass.getSimpleName()
-				.toLowerCase());
+		return this.url;
 	}
 
 	@Override
 	public List<E> list() throws IntegrationException {
 
 		try {
-			final JSONObject json = new GetResource(this.getURL(),"teste","teste").getJSON();
+			final JSONObject json = GET.getJSON();
 
 			return toList(json.get("list"));
 
@@ -67,5 +80,13 @@ public abstract class AbstractDownload<E> implements Download<E> {
 			elements.add(gson.fromJson(json.toString(), persistentClass));
 		}
 		return elements;
+	}
+
+	public String getUserName() {
+		return this.username;
+	}
+	
+	public String getPassword() {
+		return this.password;
 	}
 }

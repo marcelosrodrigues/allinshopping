@@ -14,17 +14,20 @@ import com.pmrodrigues.android.allinshopping.exceptions.NoUniqueRegistryExceptio
 import com.pmrodrigues.android.allinshopping.services.ConfigurationService;
 
 public class IntegrationAsyncProcess extends AsyncTask<Void, String, String> {
-
-	private final IntegrationProcess integration;
+	
 	private final ConfigurationService service;
 	private final AQuery aq;
+	private String email;
+	private String password;
+	private final Context context;
 	
 
 	public IntegrationAsyncProcess(final Context context) {
 
-		integration = new IntegrationProcess(context);
-		service = new ConfigurationService(integration.getContext());
+		this.context = context;
 		this.aq = new AQuery(context);
+		this.service = new ConfigurationService(context);
+		
 		
 	}
 	
@@ -38,6 +41,8 @@ public class IntegrationAsyncProcess extends AsyncTask<Void, String, String> {
 	protected String doInBackground(Void... avoid)
     {
         try {
+        	
+        	final IntegrationProcess integration = new IntegrationProcess(email,password);
         	
         	Log.d("com.pmrodrigues.android.allinshopping.async","Enviando os novos clientes para o backoffice");
         	publishProgress("Enviando os novos clientes para o backoffice");
@@ -96,7 +101,7 @@ public class IntegrationAsyncProcess extends AsyncTask<Void, String, String> {
 		super.onPostExecute(message);
 		this.setMessage(message);
 		
-		(new ActionDialog(integration.getContext()))
+		(new ActionDialog(this.context))
 				.setTitle("Atualização da base de dados")
 				.setCancelable(false)
 				.setMessage(message)
@@ -105,6 +110,16 @@ public class IntegrationAsyncProcess extends AsyncTask<Void, String, String> {
 	
 	private void setMessage(final String message) {
 		this.aq.id(R.id.progressText).text(message);
+	}
+
+	public IntegrationAsyncProcess setUserName(String email) {
+		this.email = email;
+		return this;
+	}
+
+	public IntegrationAsyncProcess setPassword(String password) {
+		this.password = password;
+		return this;		
 	}
 	
 	

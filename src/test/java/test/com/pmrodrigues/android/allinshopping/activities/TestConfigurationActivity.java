@@ -1,7 +1,6 @@
 package test.com.pmrodrigues.android.allinshopping.activities;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.robolectric.Robolectric.shadowOf;
 
 import java.util.ResourceBundle;
@@ -12,17 +11,21 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.shadows.ShadowActivity;
 import org.robolectric.shadows.ShadowAlertDialog;
+import org.robolectric.shadows.ShadowIntent;
 
 import test.com.pmrodrigues.android.allinshopping.responserules.HttpEntityResponseRule;
 import android.app.AlertDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.preference.PreferenceManager;
 
+import com.pmrodrigues.android.allinshopping.AutenticacaoAtualizacaoSistemaActivity;
 import com.pmrodrigues.android.allinshopping.ConfigurationActivity;
+import com.pmrodrigues.android.allinshopping.MainActivity;
 import com.pmrodrigues.android.allinshopping.R;
-import com.pmrodrigues.android.allinshopping.services.ConfigurationService;
 import com.pmrodrigues.android.allinshopping.utilities.Constante;
 import com.pmrodrigues.android.allinshopping.utilities.ParseUtilities;
 
@@ -37,7 +40,7 @@ public class TestConfigurationActivity {
 
 	private ConfigurationActivity activity;
 	
-	private ConfigurationService service = null;
+	private SharedPreferences preferences;
 	
 	@Before
 	public void setup() {
@@ -49,16 +52,13 @@ public class TestConfigurationActivity {
 		Robolectric.getFakeHttpLayer().addHttpResponseRule(integration.getString("produto"),response.getString("produto"));		
 		Robolectric.getFakeHttpLayer().addHttpResponseRule(integration.getString("cliente"),response.getString("cliente"));
 		Robolectric.getFakeHttpLayer().addHttpResponseRule(new HttpEntityResponseRule());
-
-		final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(Robolectric.application.getApplicationContext());
+		
+		this.activity = Robolectric.buildActivity(ConfigurationActivity.class).create().get();
+		preferences = activity.getApplicationContext().getSharedPreferences(Constante.SHARED_PREFERENCES, Context.MODE_PRIVATE);		
+		
 		final Editor editor = preferences.edit();
 		editor.putString(Constante.DATA_ATUALIZACAO, null);
 		editor.commit();
-		
-		
-		this.activity = Robolectric.buildActivity(ConfigurationActivity.class).create().get();
-		
-		service = new ConfigurationService(Robolectric.application.getApplicationContext());
 		
 	}
 	
@@ -71,22 +71,31 @@ public class TestConfigurationActivity {
 		final AlertDialog dialog = ShadowAlertDialog.getLatestAlertDialog();
 		dialog.getButton(AlertDialog.BUTTON_POSITIVE)
 			  .callOnClick();
+		
+		final ShadowActivity actual = shadowOf(activity);
+		final Intent next = actual.getNextStartedActivity();
+		final ShadowIntent shadowIntent = shadowOf(next);
 				
-		assertFalse(service.precisaAtualizar());
+		assertEquals(AutenticacaoAtualizacaoSistemaActivity.class.getName(), shadowIntent.getComponent().getClassName());		
 		
 	}
 	
 	@Test
 	public void deveApenasSalvar() {
 		
-		final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(Robolectric.application.getApplicationContext());
 		final Editor editor = preferences.edit();
 		editor.putString(Constante.DATA_ATUALIZACAO, ParseUtilities.formatDate(DateTime.now().plusDays(1).toDate(),"yyyy-MM-dd HH:mm:ss"));
 		editor.commit();
+		
 		activity.setNomeLoja("Marcelo");
+		
 		activity.onClick(activity.findViewById(R.id.salvar));
 		
-		assertEquals("Marcelo",preferences.getString(Constante.NOME_LOJA, null));
+		final ShadowActivity actual = shadowOf(activity);
+		final Intent next = actual.getNextStartedActivity();
+		final ShadowIntent shadowIntent = shadowOf(next);
+				
+		assertEquals(MainActivity.class.getName(), shadowIntent.getComponent().getClassName());	
 		
 	}
 	
@@ -99,7 +108,11 @@ public class TestConfigurationActivity {
 		dialog.getButton(AlertDialog.BUTTON_POSITIVE)
 			  .callOnClick();
 				
-		assertFalse(service.precisaAtualizar());
+		final ShadowActivity actual = shadowOf(activity);
+		final Intent next = actual.getNextStartedActivity();
+		final ShadowIntent shadowIntent = shadowOf(next);
+				
+		assertEquals(AutenticacaoAtualizacaoSistemaActivity.class.getName(), shadowIntent.getComponent().getClassName());	
 		
 	}
 	

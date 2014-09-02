@@ -25,7 +25,7 @@ public class TestProdutoService {
 	
 	private final ResourceBundle bundle = ResourceBundle.getBundle("json_message");
 	
-	private final DownloadProdutos download = new DownloadProdutos();
+	private final DownloadProdutos download = new DownloadProdutos("teste","teste");
 
 	private List<Produto> produtos;
 	

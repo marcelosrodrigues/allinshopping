@@ -17,6 +17,7 @@ import org.robolectric.shadows.ShadowIntent;
 
 import test.com.pmrodrigues.android.allinshopping.responserules.HttpEntityResponseRule;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -39,6 +40,9 @@ public class TestMainActivity {
 	private final ResourceBundle response = ResourceBundle
 			.getBundle("json_message");
 	
+	private final SharedPreferences preferences = Robolectric.application
+															 .getApplicationContext()
+															 .getSharedPreferences(Constante.SHARED_PREFERENCES, Context.MODE_PRIVATE);
 
 	@Before
 	public void setup() {
@@ -50,8 +54,7 @@ public class TestMainActivity {
 		Robolectric.getFakeHttpLayer().addHttpResponseRule(integration.getString("produto"),response.getString("produto"));		
 		Robolectric.getFakeHttpLayer().addHttpResponseRule(integration.getString("cliente"),response.getString("cliente"));
 		Robolectric.getFakeHttpLayer().addHttpResponseRule(new HttpEntityResponseRule());
-
-		final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(Robolectric.application.getApplicationContext());
+		
 		final Editor editor = preferences.edit();
 		editor.putString(Constante.DATA_ATUALIZACAO, null);
 		editor.commit();
@@ -74,13 +77,12 @@ public class TestMainActivity {
 	@Test
 	public void devePesquisarOFreteEDirecionarParaTelaPrincipal() {
 		
-		final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(Robolectric.application.getApplicationContext());
 		final Editor editor = preferences.edit();
 		editor.putString(Constante.DATA_ATUALIZACAO, ParseUtilities.formatDate(DateTime.now().plusDays(1).toDate(),"yyyy-MM-dd HH:mm:ss"));
 		editor.commit();
 		
 		final IntegrationAsyncProcess process = new IntegrationAsyncProcess(Robolectric.application.getApplicationContext());
-		process.execute();
+		process.setUserName("teste").setPassword("teste").execute();
 		Robolectric.runBackgroundTasks();
 		assertEquals(process.getStatus(), AsyncTask.Status.FINISHED);
 		

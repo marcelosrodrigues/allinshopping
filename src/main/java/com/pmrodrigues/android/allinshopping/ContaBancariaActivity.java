@@ -41,7 +41,7 @@ public class ContaBancariaActivity extends AbstractActivity
             if (dadospagamento.isValid())
             {
                 (new PedidoService(this)).save(dadospagamento);
-                intent = new Intent(this, LogarActivity.class);
+                intent = new Intent(this, AutenticacaoParaEnvioDePedidoActivity.class);
                 intent.putExtra(Constante.PEDIDO, pedido);
             } else
             {

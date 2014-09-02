@@ -12,12 +12,12 @@ import com.pmrodrigues.android.allinshopping.services.ConfigurationService;
 public class SendPedidoIntegrationAsyncProcess extends
 		AsyncTask<Void, String, String> {
 
-	private final IntegrationProcess integration;
+	private final IntegrationProcess integration  = new IntegrationProcess();
+	private final ConfigurationService service;		
 
-	public SendPedidoIntegrationAsyncProcess(Context context1) {
-
-		integration = new IntegrationProcess(context1);		
-
+	public SendPedidoIntegrationAsyncProcess(
+			Context context) {
+		this.service = new ConfigurationService(context);
 	}
 
 	@Override
@@ -25,10 +25,7 @@ public class SendPedidoIntegrationAsyncProcess extends
 		try {
 			integration.enviarCliente();
 			integration.enviarPedido();
-			
-
-			ConfigurationService service = new ConfigurationService(
-					this.integration.getContext());
+						
 			service.atualizar();
 
 			return "Pedido enviado com sucesso";

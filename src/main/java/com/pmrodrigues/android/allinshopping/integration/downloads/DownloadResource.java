@@ -1,11 +1,10 @@
 package com.pmrodrigues.android.allinshopping.integration.downloads;
 
-import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
@@ -14,7 +13,7 @@ import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.ByteArrayBuffer;
+import org.apache.http.util.EntityUtils;
 
 import com.pmrodrigues.android.allinshopping.exceptions.IntegrationException;
 import com.pmrodrigues.android.allinshopping.models.Imagem;
@@ -35,7 +34,7 @@ public class DownloadResource {
 
 	}
 
-	public void getResourceByProduto(final Produto produto)
+	public void getResourceByProduto(final Produto produto) //NOPMD
 			throws IntegrationException {
 		
 		for( final Imagem imagem : produto.getImagens() ) {
@@ -49,10 +48,8 @@ public class DownloadResource {
 
 	private String getResourceByImage(final Imagem imagem)
 			throws IntegrationException {
-		FileOutputStream output = null; // NOPMD
-		BufferedInputStream buffer = null; // NOPMD
-		String absolutImagePath = null; // NOPMD
 		
+		String absolutImagePath = null; // NOPMD
 		
 		try {
 
@@ -63,23 +60,10 @@ public class DownloadResource {
 			final HttpEntity httpentity = client.execute(GET).getEntity();
 
 			if (httpentity != null) {
-
-				buffer = new BufferedInputStream(httpentity.getContent());
-				final File directory = getImageDirectort();
-				final File image = createImageFile(imagem, directory);
-
-				output = new FileOutputStream(image);
-				final ByteArrayBuffer bab = new ByteArrayBuffer(1024);
-
-				int i = 0; // NOPMD
-				while ((i = buffer.read()) != -1) { // NOPMD
-					bab.append(i);
-				}
-
-				final byte b[] = bab.toByteArray(); // NOPMD
-				output.write(b);
-				output.flush();
-
+				
+				final File image = new File(Constante.SDCARD_ALLINSHOPP_IMAGES , String.format("%s-%s.png", imagem.getProduto().getId(),imagem.getId()));
+				
+				FileUtils.writeByteArrayToFile(image, EntityUtils.toByteArray(httpentity));
 				absolutImagePath = image.getAbsoluteFile().getAbsolutePath();
 
 			}
@@ -102,36 +86,6 @@ public class DownloadResource {
 			throw new IntegrationException(
 					"Ocorreu um erro para converter a resposta do servidor " // NOPMD
 							+ e.getMessage(), e);
-		} finally {
-			try {
-				if (output != null) {
-					output.close();
-				}
-
-				if (buffer != null) {
-					buffer.close();
-				}
-			} catch (IOException e) { // NOPMD
-				System.out.println(e);
-			}
 		}
 	}
-
-	private File createImageFile(final Imagem imagem, final File directory)
-			throws IOException {
-		final File image = new File(directory.getAbsolutePath(),
-				String.format("%s-%s.png", imagem.getProduto().getId(),imagem.getId()));
-		image.createNewFile();
-		return image;
-	}
-
-	private File getImageDirectort() {
-		final File directory = new File(Constante.SDCARD_ALLINSHOPP_IMAGES);
-
-		if (!directory.exists()) {
-			directory.mkdirs();
-		}
-		return directory;
-	}
-
 }

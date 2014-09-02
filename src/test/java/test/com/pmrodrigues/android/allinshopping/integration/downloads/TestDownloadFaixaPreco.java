@@ -31,7 +31,7 @@ public class TestDownloadFaixaPreco {
 
 	@Test
 	public void testDeCarregamentoDeLista() throws IntegrationException {
-		final DownloadFaixaPreco download = new DownloadFaixaPreco();
+		final DownloadFaixaPreco download = new DownloadFaixaPreco("teste","teste");
 		final List<FaixaPreco> faixas = download.list();
 
 		Assert.assertFalse(faixas.isEmpty());

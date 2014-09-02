@@ -12,6 +12,7 @@ import org.json.JSONObject;
 
 import android.content.Context;
 
+import com.pmrodrigues.android.allinshopping.ApplicationContext;
 import com.pmrodrigues.android.allinshopping.enumations.IntegrationType;
 import com.pmrodrigues.android.allinshopping.enumations.ResourceType;
 import com.pmrodrigues.android.allinshopping.exceptions.IntegrationException;
@@ -38,15 +39,26 @@ public class IntegrationProcess {
 	private final Integration integration;
 	private final ResourceBundle bundle = ResourceBundle
 			.getBundle("configuration");
+	private String username;
+	private String password;
 
 	public Context getContext() {
 		return context;
 	}
 
-	public IntegrationProcess(final Context context) {
+	public IntegrationProcess() {
 		this.integration = IntegrationFactory.getInstance().getIntegration(
 				IntegrationType.PRESTASHOP);
-		this.context = context;
+		this.context = ApplicationContext.getInstance()
+										 .getApplicationContext();
+	}
+
+	public IntegrationProcess(final String username, final String password) {
+		this();
+		this.username = username;
+		this.password = password;
+		this.integration.setUserName(username)
+						.setPassword(password);
 	}
 
 	@SuppressWarnings("unchecked")

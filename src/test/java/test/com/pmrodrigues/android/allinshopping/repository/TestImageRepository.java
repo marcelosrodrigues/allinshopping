@@ -32,7 +32,7 @@ public class TestImageRepository {
 				   .addPendingHttpResponse(200, bundle.getString("produto"));
 		
 		this.repository = new ImagemRepository(Robolectric.application.getApplicationContext());
-		final DownloadProdutos download = new DownloadProdutos();
+		final DownloadProdutos download = new DownloadProdutos("teste","teste");
 		this.produtos = download.list();
 		
 		ProdutoService service = new ProdutoService(Robolectric.application.getApplicationContext());

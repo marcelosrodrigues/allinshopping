@@ -41,7 +41,10 @@ public class TestHomeActivity {
 		Robolectric.getFakeHttpLayer().addHttpResponseRule(new HttpEntityResponseRule());
 		
 		IntegrationAsyncProcess integration = new IntegrationAsyncProcess(Robolectric.application.getApplicationContext());
-		integration.execute();
+		integration.setUserName("teste")
+				   .setPassword("teste")
+				   .execute();
+		
 		Robolectric.runBackgroundTasks();
 		assertEquals(integration.getStatus(), AsyncTask.Status.FINISHED);
 						

@@ -29,6 +29,8 @@ public class TestSecaoRepository {
 	
 	private final ResourceBundle response = ResourceBundle.getBundle("json_message");
 	
+	private final Context context = Robolectric.application.getApplicationContext();
+	
 	@Before
 	public void setup() throws Exception {
 		
@@ -36,9 +38,9 @@ public class TestSecaoRepository {
 		Robolectric.getFakeHttpLayer().addHttpResponseRule(integration.getString("produto"),response.getString("produto"));		
 		Robolectric.getFakeHttpLayer().addHttpResponseRule(new HttpEntityResponseRule());
 		
-		final Context context = Robolectric.application.getApplicationContext();
 		repository = new SectionRepository(context);
-		final IntegrationProcess process = new IntegrationProcess(context);
+		final IntegrationProcess process = new IntegrationProcess("teste","teste");
+			
 		process.importarSecao();
 		process.importarProdutos();
 		

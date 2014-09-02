@@ -7,7 +7,6 @@ import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -21,7 +20,7 @@ public class GetResource extends Resource {
 
 	public GetResource(final String URL,final String username , final String password) {
 		super(URL,username,password);
-		GET = new HttpGet(URL);
+		GET = new HttpGet(URL);		
 	}
 
 	public JSONObject getJSON() throws IntegrationException {
@@ -36,8 +35,7 @@ public class GetResource extends Resource {
 							"Ocorreu um erro no processamento no endereço %s",
 							super.getURL()));
 				} else {
-					return new JSONObject(EntityUtils.toString(httpentity));
-
+					return new JSONObject(this.toString(httpentity.getContent()));
 				}
 			} else if (httpresponse.getStatusLine().getStatusCode() == HttpStatus.SC_UNAUTHORIZED) {
 				throw new PageNotFoundException("Acesso negado");

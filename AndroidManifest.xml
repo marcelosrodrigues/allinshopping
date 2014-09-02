@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-sdk android:minSdkVersion="15" android:targetSdkVersion="19" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <application android:theme="@style/AppTheme" android:label="@string/app_name" android:icon="@drawable/ic_launcher" android:hardwareAccelerated="true" android:allowBackup="false">
+    <application android:name="com.pmrodrigues.android.allinshopping.ApplicationContext" android:theme="@style/AppTheme" android:label="@string/app_name" android:icon="@drawable/ic_launcher" android:hardwareAccelerated="true" android:allowBackup="false">
         <activity android:label="@string/app_name" android:name="com.pmrodrigues.android.allinshopping.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

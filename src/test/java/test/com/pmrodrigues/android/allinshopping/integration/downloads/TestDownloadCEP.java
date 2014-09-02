@@ -30,7 +30,7 @@ public class TestDownloadCEP {
 	
 	@Test
 	public void testDeCarregamentoDeLista() throws IntegrationException {
-		final DownloadCEP download = new DownloadCEP();
+		final DownloadCEP download = new DownloadCEP("teste","teste");
 		final List<CEP> ceps = download.list();
 
 		Assert.assertFalse(ceps.isEmpty());

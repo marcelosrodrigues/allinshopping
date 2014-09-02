@@ -44,7 +44,7 @@ public class TestProdutoAdapter {
 		Robolectric.getFakeHttpLayer().addHttpResponseRule(integration.getString("cliente"),response.getString("cliente"));
 		Robolectric.getFakeHttpLayer().addHttpResponseRule(new HttpEntityResponseRule());
 
-		final IntegrationProcess integration = new IntegrationProcess(Robolectric.application.getApplicationContext());
+		final IntegrationProcess integration = new IntegrationProcess();
 		integration.importarEstado();
 		integration.importarCEP();
 		integration.importarFaixaPreco();

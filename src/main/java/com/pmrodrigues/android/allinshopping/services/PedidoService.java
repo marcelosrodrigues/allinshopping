@@ -47,8 +47,8 @@ public class PedidoService
         jsonobject.put("id_address", pedido.getCliente().getId());
         jsonobject.put("id_customer", pedido.getCliente().getId());
         jsonobject.put("id_transacao", pedido.getIdTransacao());
-        jsonobject.put("email", pedido.getEmail());
-        jsonobject.put("password",pedido.getSenha());
+        jsonobject.put("email", "");
+        jsonobject.put("password","");
         jsonobject.put("total_venda", totalvenda);
         jsonobject.put("total_venda_liquida", totalliquido);
         jsonobject.put("item", createJSONList(itens));

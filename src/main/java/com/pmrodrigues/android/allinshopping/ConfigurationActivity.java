@@ -14,8 +14,8 @@ import com.pmrodrigues.android.allinshopping.services.ConfigurationService;
 
 public class ConfigurationActivity extends AbstractActivity implements OnClickListener {
 
-    private AQuery aq;
-
+    private AQuery aq; //NOPMD
+	private ConfigurationService service;
     
     public String getNomeLoja() {
     	return aq.id(R.id.nomeLoja).getText().toString();
@@ -48,7 +48,6 @@ public class ConfigurationActivity extends AbstractActivity implements OnClickLi
 		    	
         	} else {
         		
-        		final ConfigurationService service = new ConfigurationService(this);
 		    	service.setNomeLoja(this.getNomeLoja());
 		    	
 		    	if( service.precisaAtualizar() ) {
@@ -57,6 +56,11 @@ public class ConfigurationActivity extends AbstractActivity implements OnClickLi
 	            		.setTitle("Deseja atualizar a base de dados?")
 	            		.setMessage("Enviaremos suas vendas em aberto e atualizaremos o seu banco de dados")
 	            		.show();
+		    	} else {
+		    		
+		    		final Intent intent = new Intent(this,MainActivity.class);
+		            startActivity(intent);
+		    		
 		    	}
         		
         	}
@@ -77,7 +81,7 @@ public class ConfigurationActivity extends AbstractActivity implements OnClickLi
         aq.id(R.id.salvar).clicked(this);
         aq.id(R.id.cancelar).clicked(this);
         
-        final ConfigurationService service = new ConfigurationService(this);
+        this.service = new ConfigurationService(this);
     	
     	if( !GenericValidator.isBlankOrNull(service.getNomeLoja()) ){
     		this.setNomeLoja(service.getNomeLoja());    		

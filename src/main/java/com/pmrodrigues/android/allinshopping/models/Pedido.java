@@ -57,11 +57,6 @@ public class Pedido
     @DatabaseField
 	private String idTransacao;
     
-    @DatabaseField
-    private String email;
-    
-    @DatabaseField
-    private String password;
     
     public boolean pagar() throws IntegrationException {
     	CartOperation cart = new Akatus(Constante.ENVIROMENT,Constante.AUTH_USER, Constante.AUTH_PASSWORD).cart();
@@ -216,22 +211,6 @@ public class Pedido
 
 	public String getIdTransacao() {
 		return this.idTransacao;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public void setSenha(String senha) {
-		this.password = senha;
-	}
-
-	public String getEmail() {
-		return this.email ;
-	}
-
-	public String getSenha() {
-		return this.password;
 	}
 
 	public Long getId() {

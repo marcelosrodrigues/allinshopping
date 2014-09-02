@@ -36,5 +36,8 @@ public interface Constante { // NOPMD
 	String CREDENTIALS = "KIGDS4I9RGFKHW48673LEOLYHMH5S0EN";
 	String DATA_ATUALIZACAO = "dataAtualizacao";
 	String NOME_LOJA = "nomeLoja";
+	String PASSWORD = "password";
+	String USERNAME = "username";
+	String SHARED_PREFERENCES = "ellasa";
 	
 }

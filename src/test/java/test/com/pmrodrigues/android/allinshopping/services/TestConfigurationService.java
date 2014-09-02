@@ -11,10 +11,12 @@ import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.preference.PreferenceManager;
 
+import com.pmrodrigues.android.allinshopping.ConfigurationActivity;
 import com.pmrodrigues.android.allinshopping.services.ConfigurationService;
 import com.pmrodrigues.android.allinshopping.utilities.Constante;
 import com.pmrodrigues.android.allinshopping.utilities.ParseUtilities;
@@ -24,11 +26,15 @@ import com.pmrodrigues.android.allinshopping.utilities.ParseUtilities;
 public class TestConfigurationService {
 
 	private ConfigurationService service = null;
+	private SharedPreferences preferences;
 	
 	@Before
 	public void setup() {
 		
-		service = new ConfigurationService(Robolectric.application.getApplicationContext());
+		
+		Activity activity = Robolectric.buildActivity(ConfigurationActivity.class).create().get();
+		service = new ConfigurationService(activity);
+		this.preferences = activity.getApplicationContext().getSharedPreferences(Constante.SHARED_PREFERENCES, Context.MODE_PRIVATE);	
 		
 	}
 	
@@ -40,7 +46,6 @@ public class TestConfigurationService {
 	@Test
 	public void jaFoiAtualizado() {
 		
-		final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(Robolectric.application.getApplicationContext());
 		final Editor editor = preferences.edit();
 		editor.putString(Constante.DATA_ATUALIZACAO, ParseUtilities.formatDate(DateTime.now().plusDays(1).toDate(),"yyyy-MM-dd HH:mm:ss"));
 		editor.commit();
@@ -50,18 +55,22 @@ public class TestConfigurationService {
 	@Test
 	public void salvarNomeDaLoja() {
 		service.setNomeLoja("TESTE");
-		final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(Robolectric.application.getApplicationContext());
 		assertEquals("TESTE",preferences.getString(Constante.NOME_LOJA, null));
 	}
 	
 	@Test
 	public void recuperarNomeDaLoja() {
 		service.setNomeLoja("TESTE");
-		assertEquals("TESTE",service.getNomeLoja());
+		assertEquals("TESTE",preferences.getString(Constante.NOME_LOJA, null));
 	}
 	
 	@Test
 	public void marcarComoAtualizado() {
+		
+		final Editor editor = preferences.edit();
+		editor.putString(Constante.DATA_ATUALIZACAO, ParseUtilities.formatDate(DateTime.now().minusDays(1).toDate(),"yyyy-MM-dd HH:mm:ss"));
+		editor.commit();
+		
 		assertTrue(service.precisaAtualizar());
 		service.atualizar();
 		assertFalse(service.precisaAtualizar());
