@@ -7,7 +7,7 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable
-public class CEP implements Serializable { // NOPMD
+public class CEP implements Serializable { 
 
 	private static final long serialVersionUID = 1L;
 
@@ -25,7 +25,7 @@ public class CEP implements Serializable { // NOPMD
 
 	@SerializedName("id")
 	@DatabaseField(id = true, columnName = CEP.ID_FIELD_NAME)
-	private Long id; // NOPMD
+	private Long id; 
 
 	@SerializedName("inicial")
 	@DatabaseField(columnName = CEP.INICIO_FIELD_NAME)
@@ -33,7 +33,7 @@ public class CEP implements Serializable { // NOPMD
 
 	@SerializedName("estado")
 	@DatabaseField(columnName = CEP.UF_FIELD_NAME, foreign = true, foreignAutoRefresh = true )
-	private Estado estado; // NOPMD
+	private Estado estado; 
 	
 	public Long getFim() {
 		return fim;

@@ -7,7 +7,7 @@ import com.pmrodrigues.android.allinshopping.services.ProdutoService;
 
 public class IntegrationProdutoRunnable implements Runnable {
 
-	private final DownloadResource download = new DownloadResource(); // NOPMD
+	private final DownloadResource download = new DownloadResource(); 
 	private final Produto produto;
 	private final ProdutoService service;
 

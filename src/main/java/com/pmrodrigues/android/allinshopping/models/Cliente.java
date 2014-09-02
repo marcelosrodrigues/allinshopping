@@ -24,7 +24,7 @@ public class Cliente extends ValidationConstraint
 
     private static final long serialVersionUID = 1L;
 
-	public static final String DATA_NASCIMENTO_FIELD_NAME = "datanascimento"; // NOPMD
+	public static final String DATA_NASCIMENTO_FIELD_NAME = "datanascimento"; 
 
 	public static final String EMAIL_FIELD_NAME = "email";
 	
@@ -46,7 +46,7 @@ public class Cliente extends ValidationConstraint
     private String email;
     
     @DatabaseField(columnName = Cliente.ID_FIELD_NAME ,  generatedId=true)
-	private Long internalId; // NOPMD    
+	private Long internalId; 
     
     @SerializedName("id")
     @DatabaseField(columnName = Cliente.BACKOFFICE_ID_FIELD_NAME)

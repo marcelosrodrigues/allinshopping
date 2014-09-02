@@ -65,20 +65,20 @@ public class PostResource extends Resource {
 			}
 		} catch (UnsupportedEncodingException e) {
 			throw new IntegrationException(
-					"Ocorreu um erro no envio para o backoffice " // NOPMD
-							+ e.getMessage(), e); // NOPMD
+					"Ocorreu um erro no envio para o backoffice " 
+							+ e.getMessage(), e); 
 		} catch (ClientProtocolException e) {
 			throw new IntegrationException(
 					"Ocorreu um erro no envio para o backoffice "
-							+ e.getMessage(), e);// NOPMD
+							+ e.getMessage(), e);
 		} catch (IllegalStateException e) {
 			throw new IntegrationException(
 					"Ocorreu um erro no envio para o backoffice "
-							+ e.getMessage(), e);// NOPMD
+							+ e.getMessage(), e);
 		} catch (IOException e) {
 			throw new IntegrationException(
 					"Ocorreu um erro no envio para o backoffice "
-							+ e.getMessage(), e);// NOPMD
+							+ e.getMessage(), e);
 		}
 
 	}

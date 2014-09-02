@@ -7,23 +7,23 @@ import android.os.Environment;
 
 import com.akatus.connect.api.Akatus;
 
-public interface Constante { // NOPMD
+public interface Constante { 
 
 	String FRETE = "cep";
 	String PEDIDO = "pedido";
 	
-	BigDecimal PERCENTUAL_GATEWAY_PAGAMENTO = new BigDecimal("0.942"); // NOPMD
-	BigDecimal TAXA_GATEWAY_PAGAMENTO = new BigDecimal("0.39"); // NOPMD
+	BigDecimal PERCENTUAL_GATEWAY_PAGAMENTO = new BigDecimal("0.942"); 
+	BigDecimal TAXA_GATEWAY_PAGAMENTO = new BigDecimal("0.39"); 
 	BigDecimal PERCENTUAL_GESTOR = new BigDecimal("0.9547");
 	BigDecimal PERCENTUAL_LIDER = new BigDecimal("0.8748");
-	BigDecimal PERCENTUAL_PROJETANDOO = new BigDecimal("0.70"); // NOPMD
+	BigDecimal PERCENTUAL_PROJETANDOO = new BigDecimal("0.70"); 
 	BigDecimal PERCENTUAL_TI = new BigDecimal("0.95");
-	BigDecimal PERCENTUAL_VENDEDORAS = new BigDecimal("0.5828"); // NOPMD
+	BigDecimal PERCENTUAL_VENDEDORAS = new BigDecimal("0.5828"); 
 	
 	Locale PT_BR = new Locale("pt-BR");
 	
 	String SDCARD_ALLINSHOPP_IMAGES = Environment.getExternalStorageDirectory()
-			.getAbsolutePath() + "/allinshopp/images/"; // NOPMD
+			.getAbsolutePath() + "/allinshopp/images/"; 
 	String DATE_LONG_FORMAT = "dd-MM-yyyy";
 	String AUTH_USER = "projetandoo@projetandoo.com.br";
 	// PRODUCAO

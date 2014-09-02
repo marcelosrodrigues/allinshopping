@@ -62,9 +62,9 @@ public class IntegrationProcess {
 	}
 
 	@SuppressWarnings("unchecked")
-	// NOPMD
-	public void importarEstado() throws IntegrationException { // NOPMD
-		final EstadoService service = new EstadoService(context); // NOPMD
+	
+	public void importarEstado() throws IntegrationException { 
+		final EstadoService service = new EstadoService(context); 
 		final List<Estado> estados = integration.getDownload(
 				ResourceType.ESTADOS).list();
 		for (final Estado estado : estados) {
@@ -91,23 +91,23 @@ public class IntegrationProcess {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void importarCEP() throws IntegrationException { // NOPMD
+	public void importarCEP() throws IntegrationException { 
 
 		final List<CEP> ceps = integration.getDownload(ResourceType.CEP)
 				.list();
-		final CEPService service = new CEPService(context); // NOPMD
-		for (CEP cep : ceps) { // NOPMD
+		final CEPService service = new CEPService(context); 
+		for (CEP cep : ceps) { 
 			service.save(cep);
 		}
 	}
 
 	@SuppressWarnings("unchecked")
-	public void importarFaixaPreco() throws IntegrationException { // NOPMD
+	public void importarFaixaPreco() throws IntegrationException { 
 
 		final List<FaixaPreco> faixas = integration.getDownload(
 				ResourceType.FAIXA_PRECO).list();
-		final CEPService service = new CEPService(context); // NOPMD
-		for (final FaixaPreco faixa : faixas) { // NOPMD
+		final CEPService service = new CEPService(context); 
+		for (final FaixaPreco faixa : faixas) { 
 			service.save(faixa);
 		}
 
@@ -115,8 +115,8 @@ public class IntegrationProcess {
 
 	@SuppressWarnings("unchecked")
 	public void importarCliente() throws IntegrationException,
-			NoUniqueRegistryException { // NOPMD
-		final ClienteService clienteservice = new ClienteService(context); // NOPMD
+			NoUniqueRegistryException { 
+		final ClienteService clienteservice = new ClienteService(context); 
 		final List<Cliente> clientes = integration.getDownload(
 				ResourceType.CLIENTE).list();
 
@@ -126,7 +126,7 @@ public class IntegrationProcess {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void importarProdutos() throws IntegrationException { // NOPMD
+	public void importarProdutos() throws IntegrationException { 
 		final ProdutoService produtoservice = new ProdutoService(context);
 		produtoservice.removeAll();
 
@@ -156,9 +156,9 @@ public class IntegrationProcess {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void importarSecao() throws IntegrationException { // NOPMD
+	public void importarSecao() throws IntegrationException { 
 
-		final SecaoService secaoservice = new SecaoService(context); // NOPMD
+		final SecaoService secaoservice = new SecaoService(context); 
 		final List<Secao> secoes = integration.getDownload(ResourceType.SECOES)
 				.list();
 		for (final Secao secao : secoes) {

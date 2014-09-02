@@ -38,12 +38,12 @@ public class Resource {
 	protected String toString(final InputStream stream)
 	        throws IOException
 	    {
-			BufferedReader bufferedreader = null; // NOPMD
+			BufferedReader bufferedreader = null; 
 	        try {
 				bufferedreader = new BufferedReader(new InputStreamReader(stream,"ISO-8859-1"));
 				final StringBuffer buffer = new StringBuffer();
-				String partial = null; // NOPMD
-				while ((partial = bufferedreader.readLine()) != null) { // NOPMD
+				String partial = null; 
+				while ((partial = bufferedreader.readLine()) != null) { 
 					buffer.append(partial);
 				}
 

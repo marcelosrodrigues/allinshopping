@@ -49,7 +49,7 @@ public class DownloadResource {
 	private String getResourceByImage(final Imagem imagem)
 			throws IntegrationException {
 		
-		String absolutImagePath = null; // NOPMD
+		String absolutImagePath = null; 
 		
 		try {
 
@@ -72,19 +72,19 @@ public class DownloadResource {
 			
 		} catch (ClientProtocolException e) {
 			throw new IntegrationException(
-					"Ocorreu um erro para converter a resposta do servidor " // NOPMD
+					"Ocorreu um erro para converter a resposta do servidor " 
 							+ e.getMessage(), e);
 		} catch (IllegalStateException e) {
 			throw new IntegrationException(
-					"Ocorreu um erro para converter a resposta do servidor " // NOPMD
+					"Ocorreu um erro para converter a resposta do servidor " 
 							+ e.getMessage(), e);
 		} catch (FileNotFoundException e) {
 			throw new IntegrationException(
-					"Ocorreu um erro para converter a resposta do servidor " // NOPMD
+					"Ocorreu um erro para converter a resposta do servidor " 
 							+ e.getMessage(), e);
 		} catch (IOException e) {
 			throw new IntegrationException(
-					"Ocorreu um erro para converter a resposta do servidor " // NOPMD
+					"Ocorreu um erro para converter a resposta do servidor " 
 							+ e.getMessage(), e);
 		}
 	}

@@ -71,7 +71,7 @@ public abstract class AbstractDownload<E> implements Download<E> {
 
 	@SuppressWarnings("unchecked")
 	protected List<E> toList(final Gson gson, final Object json) {
-		List<E> elements = null; // NOPMD
+		List<E> elements = null; 
 		if (json instanceof JSONArray) {
 			elements = Arrays.asList((E[]) gson.fromJson(json.toString(), Array
 					.newInstance(persistentClass, 0).getClass()));

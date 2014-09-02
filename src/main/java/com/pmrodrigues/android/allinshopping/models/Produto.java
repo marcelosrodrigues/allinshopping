@@ -17,18 +17,18 @@ import com.pmrodrigues.android.allinshopping.utilities.PriceUtilities;
 public class Produto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private static final String ID_LOJA_PRESTASHOP_FIELD_NAME = "id_loja"; // NOPMD
+	private static final String ID_LOJA_PRESTASHOP_FIELD_NAME = "id_loja"; 
 	private static final String NOME_FIELD_NAME = "nome";
 	private static final String PRECO_FIELD_NAME = "preco";
 	private static final String SECAO_FIELD_NAME = "secao";
-	private static final String DESCRICAO_FIELD_NAME = "descricao"; // NOPMD
-	private static final String DESCRICAO_BREVE_FIELD_NAME = "descricaobreve"; // NOPMD
+	private static final String DESCRICAO_FIELD_NAME = "descricao"; 
+	private static final String DESCRICAO_BREVE_FIELD_NAME = "descricaobreve"; 
 	private static final String PESO_FIELD_NAME = "peso";
 	
 
 	@SerializedName("id")
 	@DatabaseField(id = true)
-	private Long id; // NOPMD
+	private Long id; 
 
 	@SerializedName("shop_id")
 	@DatabaseField(columnName = Produto.ID_LOJA_PRESTASHOP_FIELD_NAME)
@@ -44,7 +44,7 @@ public class Produto implements Serializable {
 
 	@SerializedName("peso")
 	@DatabaseField(columnName = Produto.PESO_FIELD_NAME)
-	private BigDecimal peso; // NOPMD
+	private BigDecimal peso; 
 
 	@SerializedName("secao")
 	@DatabaseField(columnName = Produto.SECAO_FIELD_NAME, foreign = true, foreignAutoRefresh = true)

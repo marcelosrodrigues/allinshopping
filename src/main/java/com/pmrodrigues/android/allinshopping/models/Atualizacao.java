@@ -11,12 +11,12 @@ public class Atualizacao implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	public static final String DATA_ATUALIZACAO_FIELD = "dataatualizacao"; // NOPMD
+	public static final String DATA_ATUALIZACAO_FIELD = "dataatualizacao"; 
 
 	private static final String ID_FIELD = "id";
 
 	@DatabaseField(generatedId=true,columnName=Atualizacao.ID_FIELD)
-	private Long id; // NOPMD
+	private Long id; 
 	
 	@DatabaseField(canBeNull=false,columnName=Atualizacao.DATA_ATUALIZACAO_FIELD)
 	private Date dataAtualizacao = new Date();
@@ -25,7 +25,7 @@ public class Atualizacao implements Serializable {
 		return id;
 	}
 
-	public void setId(final Long id) { // NOPMD
+	public void setId(final Long id) { 
 		this.id = id;
 	}
 

@@ -30,11 +30,11 @@ public class FaixaPreco
 	
 	@SerializedName("destino")
 	@DatabaseField(columnName = FaixaPreco.DESTINO_FIELD_NAME, foreign = true, foreignAutoRefresh = true)
-	private Estado destino; // NOPMD
+	private Estado destino; 
 	
 	@SerializedName("origem")
 	@DatabaseField(columnName = FaixaPreco.ORIGEM_FIELD_NAME, foreign = true, foreignAutoRefresh = true)
-	private Estado origem; // NOPMD
+	private Estado origem; 
    
     public Long getId()
     {

@@ -22,22 +22,22 @@ public class Endereco extends ValidationConstraint implements Serializable {
 
 	public static final String ESTADO_FIELD_NAME = "estado";
 
-	public static final String LOGRADOURO_FIELD_NAME = "logradouro"; // NOPMD
+	public static final String LOGRADOURO_FIELD_NAME = "logradouro"; 
 
-	public static final String TELEFONE_FIELD_NAME = "telefone"; // NOPMD
+	public static final String TELEFONE_FIELD_NAME = "telefone"; 
 
-	public static final String CELULAR_FIELD_NAME = "celular"; // NOPMD
+	public static final String CELULAR_FIELD_NAME = "celular"; 
 
 	private static final String BACKOFFICE_ID_FIELD_NAME = "backoffice_id";
 
 	private static final String ID_FIELD_NAME = "id";
 	
 	@DatabaseField(columnName = Endereco.ID_FIELD_NAME, generatedId = true)
-	private Long internalId; // NOPMD
+	private Long internalId; 
 	
 	@SerializedName("id")
 	@DatabaseField(columnName = Endereco.BACKOFFICE_ID_FIELD_NAME)
-	private Long backofficeId; // NOPMD
+	private Long backofficeId; 
 	
 	@SerializedName("bairro")
 	@DatabaseField(columnName = Endereco.BAIRRO_FIELD_NAME)
