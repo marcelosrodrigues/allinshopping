@@ -189,7 +189,7 @@
 						<wait>30000</wait>
 					</emulator>
 					<proguard>
-						<skip>false</skip>
+						<skip>true</skip>
 					</proguard>
 				</configuration>
 				<extensions>true</extensions>
