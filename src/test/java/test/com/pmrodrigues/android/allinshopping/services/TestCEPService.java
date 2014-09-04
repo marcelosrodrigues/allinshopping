@@ -34,7 +34,7 @@ public class TestCEPService {
 		
 		final Context context = Robolectric.application.getApplicationContext();
 		
-		final IntegrationProcess process = new IntegrationProcess("teste","teste");
+		final IntegrationProcess process = new IntegrationProcess("teste","teste",context);
 		process.importarEstado();
 		process.importarCEP();
 		process.importarFaixaPreco();

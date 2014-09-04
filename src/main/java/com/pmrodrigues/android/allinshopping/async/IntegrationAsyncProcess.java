@@ -42,7 +42,7 @@ public class IntegrationAsyncProcess extends AsyncTask<Void, String, String> {
     {
         try {
         	
-        	final IntegrationProcess integration = new IntegrationProcess(email,password);
+        	final IntegrationProcess integration = new IntegrationProcess(email,password,this.context);
         	
         	Log.d("com.pmrodrigues.android.allinshopping.async","Enviando os novos clientes para o backoffice");
         	publishProgress("Enviando os novos clientes para o backoffice");

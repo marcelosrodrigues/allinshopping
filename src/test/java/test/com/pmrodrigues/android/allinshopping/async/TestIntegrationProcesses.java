@@ -45,7 +45,7 @@ public class TestIntegrationProcesses {
 		Robolectric.getFakeHttpLayer().addHttpResponseRule(new HttpEntityResponseRule());
 		
 		this.context = Robolectric.application.getApplicationContext();
-		this.process = new IntegrationProcess("teste","teste");
+		this.process = new IntegrationProcess("teste","teste",this.context);
 		dbhelper = DbHelperFactory.getDbHelper(context);
 	}
 

@@ -39,7 +39,7 @@ public class TestSecaoRepository {
 		Robolectric.getFakeHttpLayer().addHttpResponseRule(new HttpEntityResponseRule());
 		
 		repository = new SectionRepository(context);
-		final IntegrationProcess process = new IntegrationProcess("teste","teste");
+		final IntegrationProcess process = new IntegrationProcess("teste","teste",this.context);
 			
 		process.importarSecao();
 		process.importarProdutos();

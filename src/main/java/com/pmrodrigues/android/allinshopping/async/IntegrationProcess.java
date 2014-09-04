@@ -35,7 +35,7 @@ import com.pmrodrigues.android.allinshopping.services.SecaoService;
 
 public class IntegrationProcess {
 
-	private final Context context;
+	private Context context;
 	private final Integration integration;
 	private final ResourceBundle bundle = ResourceBundle
 			.getBundle("configuration");
@@ -49,16 +49,16 @@ public class IntegrationProcess {
 	public IntegrationProcess() {
 		this.integration = IntegrationFactory.getInstance().getIntegration(
 				IntegrationType.PRESTASHOP);
-		this.context = ApplicationContext.getInstance()
-										 .getApplicationContext();
+
 	}
 
-	public IntegrationProcess(final String username, final String password) {
+	public IntegrationProcess(final String username, final String password,Context context) {
 		this();
 		this.username = username;
 		this.password = password;
 		this.integration.setUserName(username)
 						.setPassword(password);
+        this.context = context;
 	}
 
 	@SuppressWarnings("unchecked")

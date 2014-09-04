@@ -26,18 +26,13 @@ public abstract class AbstractLogarActivity extends AbstractActivity
 		
 		List<String> messages = new ArrayList<String>();
 
-		if (GenericValidator.isBlankOrNull(aq.id(R.id.email).getText()
-				.toString())) {
+		if (GenericValidator.isBlankOrNull(this.getEmail())) {
 			messages.add("E-mail é obrigatória");
-		}
-
-		if (!GenericValidator.isEmail(aq.id(R.id.email).getText()
-				.toString())) {
+		} else if (!GenericValidator.isEmail(this.getEmail())) {
 			messages.add("E-mail é inválido");
 		}
 
-		if (GenericValidator.isBlankOrNull(aq.id(R.id.password).getText()
-				.toString())) {
+		if (GenericValidator.isBlankOrNull(this.getPassword())) {
 			messages.add("Senha é obrigatória");
 		}
 		if (!messages.isEmpty()) {

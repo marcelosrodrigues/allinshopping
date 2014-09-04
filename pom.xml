@@ -185,7 +185,7 @@
 					<extractDuplicates>true</extractDuplicates>
 					<undeployBeforeDeploy>true</undeployBeforeDeploy>
 					<emulator>
-						<avd>allinshopping</avd>
+						<avd>ellasa</avd>
 						<wait>30000</wait>
 					</emulator>
 					<proguard>
