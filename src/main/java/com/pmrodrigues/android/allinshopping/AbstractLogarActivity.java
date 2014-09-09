@@ -63,10 +63,16 @@ public abstract class AbstractLogarActivity extends AbstractActivity
 	
 	protected abstract void doBack();
 
+    protected abstract int getLayout();
+
+    protected AQuery getAquery() {
+        return aq;
+    }
+
 	@Override
 	protected void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
-		setContentView(R.layout.activity_login);
+		setContentView(getLayout());
 		aq = new AQuery(this);
 		aq.id(R.id.logar).clicked(this);
 	}
@@ -79,4 +85,11 @@ public abstract class AbstractLogarActivity extends AbstractActivity
 		return aq.id(R.id.password).getText().toString();
 	}
 
+    public void setEmail(String email) {
+        aq.id(R.id.email).text(email);
+    }
+
+    public void setPassword(String password) {
+        aq.id(R.id.password).text(password);
+    }
 }

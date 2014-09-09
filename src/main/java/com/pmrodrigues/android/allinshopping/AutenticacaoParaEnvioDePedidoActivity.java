@@ -36,4 +36,11 @@ public class AutenticacaoParaEnvioDePedidoActivity extends AbstractLogarActivity
 		Intent pagamento = new Intent(this, PagamentoActivity.class);
 		startActivity(pagamento);		
 	}
+
+    @Override
+    protected int getLayout() {
+        return R.layout.activity_login;
+    }
+
+
 }

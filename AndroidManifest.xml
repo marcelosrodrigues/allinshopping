@@ -17,8 +17,8 @@
         <activity android:label="@string/cliente" android:name="com.pmrodrigues.android.allinshopping.ClienteActivity" />
         <activity android:label="@string/pagamento" android:name="com.pmrodrigues.android.allinshopping.PagamentoActivity" />
         <activity android:label="@string/clientes" android:name="com.pmrodrigues.android.allinshopping.ListClientesActivity" />
-        <activity android:label="@string/app_name" android:name="com.pmrodrigues.android.allinshopping.AutenticacaoParaEnvioDePedidoActivity" />
-        <activity android:label="@string/app_name" android:name="com.pmrodrigues.android.allinshopping.AutenticacaoAtualizacaoSistemaActivity" />
+        <activity android:label="Enviar Pedido" android:name="com.pmrodrigues.android.allinshopping.AutenticacaoParaEnvioDePedidoActivity" />
+        <activity android:label="Atualizar o Sistema" android:name="com.pmrodrigues.android.allinshopping.AutenticacaoAtualizacaoSistemaActivity" />
         <activity android:label="@string/title_activity_cartao_credito" android:name="com.pmrodrigues.android.allinshopping.CartaoCreditoActivity" />
         <activity android:label="@string/title_activity_conta_bancaria" android:name="com.pmrodrigues.android.allinshopping.ContaBancariaActivity" />
         <activity android:label="@string/title_activity_configuration" android:name="com.pmrodrigues.android.allinshopping.ConfigurationActivity" />

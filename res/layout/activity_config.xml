@@ -40,7 +40,6 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@id/progress"
         android:orientation="vertical" >
 
         <EditText
@@ -54,45 +53,6 @@
             android:ems="10"
             android:hint="Nome da Loja"
             android:maxLength="8" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@id/progress"            
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:orientation="vertical" >
-        
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Atualize o banco de dados?" />
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true" >
-
-            <ProgressBar
-                android:id="@id/progressBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="invisible" />
-
-            <TextView
-                android:id="@id/progressText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="" />
-        </LinearLayout>
-
-        <Button
-            android:id="@id/atualizar"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Atualizar" />
     </LinearLayout>
 
 </RelativeLayout>

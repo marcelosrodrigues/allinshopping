@@ -14,7 +14,6 @@
 
         <Button
             android:id="@id/salvar"
-            style="?android:attr/verticalDivider"
             android:layout_width="0.0dip"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
@@ -22,7 +21,6 @@
 
         <Button
             android:id="@id/cancelar"
-            style="?android:attr/verticalDivider"
             android:layout_width="0.0dip"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"

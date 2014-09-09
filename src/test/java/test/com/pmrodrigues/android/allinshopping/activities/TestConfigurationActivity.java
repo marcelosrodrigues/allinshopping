@@ -98,24 +98,7 @@ public class TestConfigurationActivity {
 		assertEquals(MainActivity.class.getName(), shadowIntent.getComponent().getClassName());	
 		
 	}
-	
-	@Test
-	public void deveApenasAtualizar() {
-		
-		activity.onClick(activity.findViewById(R.id.atualizar));
-		
-		final AlertDialog dialog = ShadowAlertDialog.getLatestAlertDialog();
-		dialog.getButton(AlertDialog.BUTTON_POSITIVE)
-			  .callOnClick();
-				
-		final ShadowActivity actual = shadowOf(activity);
-		final Intent next = actual.getNextStartedActivity();
-		final ShadowIntent shadowIntent = shadowOf(next);
-				
-		assertEquals(AutenticacaoAtualizacaoSistemaActivity.class.getName(), shadowIntent.getComponent().getClassName());	
-		
-	}
-	
+
 	@Test
 	public void naoPodeSalvarLojaSemNome() {
 		

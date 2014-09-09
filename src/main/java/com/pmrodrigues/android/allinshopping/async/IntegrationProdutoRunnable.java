@@ -25,7 +25,5 @@ public class IntegrationProdutoRunnable implements Runnable {
 		} catch (IntegrationException e) {
 			throw new RuntimeException(e);
 		}
-
 	}
-
 }

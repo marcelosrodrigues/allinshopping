@@ -2,6 +2,7 @@ package com.pmrodrigues.android.allinshopping.adapters;
 
 import java.util.List;
 
+import android.graphics.Bitmap;
 import org.apache.commons.validator.GenericValidator;
 
 import android.app.Activity;
@@ -50,8 +51,8 @@ public class ProdutoAdapter extends ArrayAdapter<Produto>
 		aq = new AQuery(view);
 		Produto produto = products.get(i);
 
-		aq.id(R.id.imagem).image(
-				DrawableUtilities.getImage(produto.getDefaultImage()));
+		aq.id(R.id.imagem).image(DrawableUtilities.getImage(produto.getDefaultImage()));
+
 		aq.id(R.id.imagem).tag(produto.getDefaultImage());
 		aq.id(R.id.imagem).clicked(new AbrirImagemOnClickEvent());
 		aq.id(R.id.adicionar).tag(produto);

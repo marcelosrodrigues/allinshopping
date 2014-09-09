@@ -28,15 +28,7 @@ public class ConfigurationActivity extends AbstractActivity implements OnClickLi
     @Override
 	public void onClick(final View view)
     {
-        if (view.getId() == R.id.atualizar) {
-            
-        	(new UpdateApplicationDialog(this))
-            		.setCancelable(true)
-            		.setTitle("Deseja atualizar a base de dados?")
-            		.setMessage("Enviaremos suas vendas em aberto e atualizaremos o seu banco de dados")
-            		.show();
-            
-        } else if (view.getId() == R.id.salvar ){
+        if (view.getId() == R.id.salvar ){
         	
         	if( GenericValidator.isBlankOrNull(this.getNomeLoja()) ) {
 		    	

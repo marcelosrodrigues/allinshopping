@@ -13,9 +13,7 @@ import com.pmrodrigues.android.allinshopping.models.Cliente;
 import com.pmrodrigues.android.allinshopping.services.ConfigurationService;
 
 public class DownloadCliente extends AbstractDownload<Cliente> {
-	
-	private final ConfigurationService service = new ConfigurationService();
-	
+
 	public DownloadCliente(String username, String password) {
 		super(username,password);
 	}
