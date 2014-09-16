@@ -18,21 +18,17 @@ public class EstadoRepository extends AbstractRepository<Estado,Long>
 
     public Estado findByUF(String uf)
     {
-        Estado estado;
         try
         {
-            estado = super.getDatabase()
+           return super.getDatabase()
             			  .getEstadoDao()
             			  .queryBuilder()
             			  .where()
             			  .eq(Estado.UF_FIELD_NAME , uf)
             			  .queryForFirst();
-        }
-        catch (SQLException sqlexception)
-        {
+        }catch (SQLException sqlexception){
             throw new RuntimeException(sqlexception);
         }
-        return estado;
     }
 
     public List<Estado> getAll()

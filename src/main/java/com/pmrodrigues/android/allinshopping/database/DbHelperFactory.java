@@ -5,14 +5,11 @@ import android.content.Context;
 public final class DbHelperFactory
 {
 
-    public DbHelperFactory()
-    {
-    }
+    public DbHelperFactory(){}
 
 	public static DbHelper getDbHelper(Context context)
     {
         DummyDbHelper dummydbhelper = new DummyDbHelper(context);
-        dummydbhelper.getWritableDatabase();
         return dummydbhelper;
     }
 }

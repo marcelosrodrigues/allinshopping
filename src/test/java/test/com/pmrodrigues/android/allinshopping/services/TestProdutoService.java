@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotSame;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import com.pmrodrigues.android.allinshopping.MainActivity;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,6 +18,7 @@ import com.pmrodrigues.android.allinshopping.models.Produto;
 import com.pmrodrigues.android.allinshopping.repository.ImagemRepository;
 import com.pmrodrigues.android.allinshopping.repository.ProductRepository;
 import com.pmrodrigues.android.allinshopping.services.ProdutoService;
+import sun.applet.Main;
 
 @RunWith(RobolectricTestRunner.class)
 public class TestProdutoService {
@@ -32,12 +34,15 @@ public class TestProdutoService {
 	private ProductRepository repository;
 	
 	private ImagemRepository imageRepository;
+
+    private MainActivity activity;
 	
 	@Before
-	public void setup() throws IntegrationException {		
-		service = new ProdutoService(Robolectric.application.getApplicationContext());
-		repository = new ProductRepository(Robolectric.application.getApplicationContext());
-		imageRepository = new ImagemRepository(Robolectric.application.getApplicationContext());
+	public void setup() throws IntegrationException {
+        activity = Robolectric.buildActivity(MainActivity.class).create().get();
+		service = new ProdutoService(activity);
+		repository = new ProductRepository(activity);
+		imageRepository = new ImagemRepository(activity);
 		Robolectric.getFakeHttpLayer().addPendingHttpResponse(200, bundle.getString("produto"));
 		this.produtos = download.list();
 	}

@@ -1,6 +1,7 @@
 package com.pmrodrigues.android.allinshopping.utilities;
 
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import org.apache.commons.lang3.BitField;

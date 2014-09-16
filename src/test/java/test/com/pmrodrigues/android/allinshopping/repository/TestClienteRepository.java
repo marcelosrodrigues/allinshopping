@@ -1,5 +1,6 @@
 package test.com.pmrodrigues.android.allinshopping.repository;
 
+import com.pmrodrigues.android.allinshopping.MainActivity;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,8 +16,8 @@ public class TestClienteRepository {
 
 	@Before
 	public void setup() {
-		repository = new ClienteRepository(
-				Robolectric.application.getApplicationContext());
+        MainActivity context = Robolectric.buildActivity(MainActivity.class).create().get();
+		repository = new ClienteRepository(context);
 	}
 
 	@Test

@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotSame;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import com.pmrodrigues.android.allinshopping.MainActivity;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,8 +31,8 @@ public class TestImageRepository {
 		
 		Robolectric.getFakeHttpLayer()
 				   .addPendingHttpResponse(200, bundle.getString("produto"));
-		
-		this.repository = new ImagemRepository(Robolectric.application.getApplicationContext());
+        MainActivity context = Robolectric.buildActivity(MainActivity.class).create().get();
+		this.repository = new ImagemRepository(context);
 		final DownloadProdutos download = new DownloadProdutos("teste","teste");
 		this.produtos = download.list();
 		

@@ -186,7 +186,7 @@
 					<undeployBeforeDeploy>true</undeployBeforeDeploy>
 					<emulator>
 						<avd>ellasa</avd>
-						<wait>30000</wait>
+						<wait>60000</wait>
 					</emulator>
 					<proguard>
 						<skip>true</skip>
@@ -211,6 +211,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-pmd-plugin</artifactId>
+                <version>3.2</version>
 				<configuration>
 					<linkXref>true</linkXref>
 					<sourceEncoding>UTF-8</sourceEncoding>

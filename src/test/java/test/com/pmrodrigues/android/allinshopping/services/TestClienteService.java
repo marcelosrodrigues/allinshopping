@@ -4,7 +4,10 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
 
+import com.pmrodrigues.android.allinshopping.ClienteActivity;
+import com.pmrodrigues.android.allinshopping.MainActivity;
 import org.joda.time.DateTime;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,11 +27,14 @@ public class TestClienteService {
 	private ClienteService service;
 	
 	private ClienteRepository repository;
+
+    private MainActivity activity;
 	
 	@Before
 	public void setup() {
-		service = new ClienteService(Robolectric.application.getApplicationContext());
-		repository = new ClienteRepository(Robolectric.application.getApplicationContext());
+        activity = Robolectric.buildActivity(MainActivity.class).create().get();
+		service = new ClienteService(activity);
+		repository = new ClienteRepository(activity);
 	}
 
 	private Cliente create() {
@@ -47,7 +53,8 @@ public class TestClienteService {
 		
 		Cliente cliente = new Cliente();
 		cliente.setEndereco(endereco);
-		cliente.setNomeCompleto("Marcelo");
+		cliente.setPrimeiroNome("Marcelo");
+        cliente.setUltimoNome("Marcelo");
 		cliente.setDataNascimento(new DateTime(1977, 8, 17, 0 , 0).toDate());
 		cliente.setEmail("marcelosrodrigues@globo.com");
 		
@@ -76,7 +83,8 @@ public class TestClienteService {
 		service.save(cliente);
 		
 		Cliente toupdate = repository.getById(cliente.getId());
-		toupdate.setNomeCompleto("Marceo Rodrigues");
+		toupdate.setPrimeiroNome("Marcelo");
+        toupdate.setUltimoNome("Rodrigues");
 		toupdate.getEndereco().setLogradouro("teste teste");
 		service.save(toupdate);
 		

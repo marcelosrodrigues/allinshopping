@@ -4,6 +4,7 @@ import static org.junit.Assert.assertNotNull;
 
 import java.util.ResourceBundle;
 
+import com.pmrodrigues.android.allinshopping.MainActivity;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,6 +24,8 @@ public class TestCEPService {
 			.getBundle("integration");
 	
 	private final ResourceBundle response = ResourceBundle.getBundle("json_message");
+
+    private MainActivity activity;
 	
 	
 	@Before
@@ -31,10 +34,10 @@ public class TestCEPService {
 		Robolectric.getFakeHttpLayer().addHttpResponseRule(integration.getString("estado"),response.getString("estado"));
 		Robolectric.getFakeHttpLayer().addHttpResponseRule(integration.getString("cep"),response.getString("cep"));
 		Robolectric.getFakeHttpLayer().addHttpResponseRule(integration.getString("faixapreco"),response.getString("faixa"));
-		
-		final Context context = Robolectric.application.getApplicationContext();
-		
-		final IntegrationProcess process = new IntegrationProcess("teste","teste",context);
+
+        activity = Robolectric.buildActivity(MainActivity.class).create().get();
+
+		final IntegrationProcess process = new IntegrationProcess("teste","teste",activity);
 		process.importarEstado();
 		process.importarCEP();
 		process.importarFaixaPreco();
@@ -43,9 +46,8 @@ public class TestCEPService {
 	
 	@Test
 	public void pesquisarFaixaPreco() {
-		
-		final Context context = Robolectric.application.getApplicationContext();
-		final CEPService service = new CEPService(context);
+
+		final CEPService service = new CEPService(activity);
 		final FaixaPreco faixaPreco = service.getFaixaPrecoByCEPDestino(22745L);
 		assertNotNull(faixaPreco);
 		

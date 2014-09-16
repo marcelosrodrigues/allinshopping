@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.ResourceBundle;
 
+import com.pmrodrigues.android.allinshopping.MainActivity;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -44,7 +45,7 @@ public class TestProdutoAdapter {
 		Robolectric.getFakeHttpLayer().addHttpResponseRule(integration.getString("cliente"),response.getString("cliente"));
 		Robolectric.getFakeHttpLayer().addHttpResponseRule(new HttpEntityResponseRule());
 
-		final IntegrationProcess integration = new IntegrationProcess("teste","teste",Robolectric.application.getApplicationContext());
+		final IntegrationProcess integration = new IntegrationProcess("teste","teste",Robolectric.buildActivity(MainActivity.class).create().get());
 		integration.importarEstado();
 		integration.importarCEP();
 		integration.importarFaixaPreco();
@@ -58,7 +59,7 @@ public class TestProdutoAdapter {
 		
 		final HomeActivity activity = Robolectric.buildActivity(HomeActivity.class).create().get();
 		
-		final ProductRepository service = new ProductRepository(Robolectric.application.getApplicationContext());
+		final ProductRepository service = new ProductRepository(activity);
 		
 		final Collection<Produto> produtos = service.list();
 		final ProdutoAdapter adapter = new ProdutoAdapter(activity, new ArrayList<Produto>(produtos));

@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotSame;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import com.pmrodrigues.android.allinshopping.MainActivity;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -44,7 +45,7 @@ public class TestIntegrationProcesses {
 		Robolectric.getFakeHttpLayer().addHttpResponseRule(integration.getString("cliente"),response.getString("cliente"));
 		Robolectric.getFakeHttpLayer().addHttpResponseRule(new HttpEntityResponseRule());
 		
-		this.context = Robolectric.application.getApplicationContext();
+		this.context = Robolectric.buildActivity(MainActivity.class).create().get();
 		this.process = new IntegrationProcess("teste","teste",this.context);
 		dbhelper = DbHelperFactory.getDbHelper(context);
 	}

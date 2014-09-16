@@ -17,9 +17,7 @@ public class ListClientesActivity extends AbstractActivity
 
     private AQuery aq;
 
-    public ListClientesActivity()
-    {
-    }
+    public ListClientesActivity(){}
 
     protected void onCreate(Bundle bundle)
     {

@@ -30,7 +30,7 @@ public abstract class AbstractRepository<E,T>
     {
         return helper;
     }
-    
+
     public void insert(final E e) {    	    	
     	try {
 			this.getDao().create(e);
@@ -57,7 +57,7 @@ public abstract class AbstractRepository<E,T>
     
     public E getById(final T id) {
     	try {
-    		
+
     		if( id == null ) {
     			return null;    			
     		} else {
@@ -82,7 +82,7 @@ public abstract class AbstractRepository<E,T>
 			return this.getDao().countOf();
 		} catch (SQLException e) {
 			throw new DatabaseOperationException("Falha ao listar os valores do banco de dados", e);
-		}		
+		}
 	}
     
     protected abstract Dao<E,T> getDao() throws SQLException;

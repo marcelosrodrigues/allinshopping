@@ -2,6 +2,7 @@ package com.pmrodrigues.android.allinshopping.integration.downloads;
 
 import java.io.*;
 
+import android.graphics.BitmapFactory;
 import android.util.Log;
 import org.apache.commons.io.FileUtils;
 import org.apache.http.HttpEntity;
@@ -64,7 +65,7 @@ public class DownloadResource {
 			if (httpentity != null) {
 
                 buffer = new BufferedInputStream(httpentity.getContent());
-				final File image = new File(Constante.SDCARD_ALLINSHOPP_IMAGES , String.format("%s-%s.png", imagem.getProduto().getId(),imagem.getId()));
+				final File image = new File(Constante.SDCARD_ALLINSHOPP_IMAGES , String.format("%s-%s.bmp", imagem.getProduto().getId(),imagem.getId()));
                 final File directory = new File(Constante.SDCARD_ALLINSHOPP_IMAGES);
 
                 if( !directory.exists() ){

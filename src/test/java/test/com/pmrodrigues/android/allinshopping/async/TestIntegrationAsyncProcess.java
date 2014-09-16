@@ -1,5 +1,6 @@
 package test.com.pmrodrigues.android.allinshopping.async;
 
+import com.pmrodrigues.android.allinshopping.MainActivity;
 import junit.framework.Assert;
 
 import org.junit.Before;
@@ -27,7 +28,8 @@ public class TestIntegrationAsyncProcess {
 	@Test
 	public void testandoImportandoDadosDoServidor() {
 		final IntegrationAsyncProcess process = new IntegrationAsyncProcess(
-				Robolectric.application.getApplicationContext());
+                Robolectric.buildActivity(MainActivity.class).create().get()
+        );
 
 		process.execute();
 		Robolectric.runBackgroundTasks();

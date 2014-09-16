@@ -4,6 +4,7 @@ import static org.junit.Assert.assertNotNull;
 
 import java.util.ResourceBundle;
 
+import com.pmrodrigues.android.allinshopping.MainActivity;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,7 +39,7 @@ public class TestFaixaPrecoRepository {
 		Robolectric.getFakeHttpLayer().addHttpResponseRule(integration.getString("cep"),response.getString("cep"));
 		Robolectric.getFakeHttpLayer().addHttpResponseRule(integration.getString("faixapreco"),response.getString("faixa"));
 		
-		final Context context = Robolectric.application.getApplicationContext();
+		final Context context = Robolectric.buildActivity(MainActivity.class).create().get();
 		repository = new FaixaPrecoRepository(context);
 		ceprepository = new CEPRepository(context);
 		final IntegrationProcess process = new IntegrationProcess("teste","teste",context);

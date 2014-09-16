@@ -50,7 +50,10 @@ public class ClienteRepository extends AbstractRepository<Cliente,Long>
         try
         {
             Log.i("com.pmrodrigues.android.allinshopping", "Listando todos os clientes cadastrados");
-            return this.getDao().queryBuilder().orderBy(Cliente.NOME_FIELD_NAME, true).query();
+            return this.getDao().queryBuilder()
+                                .orderBy(Cliente.PRIMEIRO_NOME_FIELD_NAME, true)
+                                .orderBy(Cliente.ULTIMO_NOME_FIELD_NAME,true)
+                                .query();
         }
         catch (SQLException sqlexception)
         {

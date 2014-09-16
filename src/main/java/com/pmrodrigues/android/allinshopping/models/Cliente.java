@@ -27,17 +27,18 @@ public class Cliente extends ValidationConstraint
 	public static final String DATA_NASCIMENTO_FIELD_NAME = "datanascimento"; 
 
 	public static final String EMAIL_FIELD_NAME = "email";
-	
-	public static final String NOME_FIELD_NAME = "nome";
 
 	public static final String ENDERECO_FIELD_NAME = "endereco";
 
 	public static final String BACKOFFICE_ID_FIELD_NAME = "backoffice_id";
 
-	public static final String ID_FIELD_NAME = "id";   
+	public static final String ID_FIELD_NAME = "id";
 
+    public static final String PRIMEIRO_NOME_FIELD_NAME = "primeironome";
 
-	@SerializedName("dataNascimento")
+    public static final String ULTIMO_NOME_FIELD_NAME = "ultimonome";
+
+    @SerializedName("dataNascimento")
 	@DatabaseField(columnName = Cliente.DATA_NASCIMENTO_FIELD_NAME)
     private Date dataNascimento;
     
@@ -51,10 +52,14 @@ public class Cliente extends ValidationConstraint
     @SerializedName("id")
     @DatabaseField(columnName = Cliente.BACKOFFICE_ID_FIELD_NAME)
     private Long backofficeId;
-    
-	@SerializedName("nome")
-	@DatabaseField(columnName = Cliente.NOME_FIELD_NAME)
-    private String nome;
+
+    @SerializedName("primeiroNome")
+    @DatabaseField(columnName = Cliente.PRIMEIRO_NOME_FIELD_NAME)
+	private String primeiroNome;
+
+    @SerializedName("ultimoNome")
+    @DatabaseField(columnName = Cliente.ULTIMO_NOME_FIELD_NAME)
+    private String ultimoNome;
 	
 	@SerializedName("endereco")
 	@DatabaseField(columnName = Cliente.ENDERECO_FIELD_NAME,foreign = true,foreignAutoCreate = true,foreignAutoRefresh = true)
@@ -118,7 +123,7 @@ public class Cliente extends ValidationConstraint
 
     public String getNomeCompleto()
     {
-        return nome;
+        return String.format("%s %s",this.primeiroNome,this.ultimoNome);
     }
 
     public JSONObject toJSON()
@@ -142,9 +147,13 @@ public class Cliente extends ValidationConstraint
 	@Override
 	protected void validate()
     {
-        if (GenericValidator.isBlankOrNull(nome))
+        if (GenericValidator.isBlankOrNull(primeiroNome))
         {
-			super.add("Nome completo é obrigatório");
+			super.add("Primeiro nome é obrigatório");
+        }
+        if (GenericValidator.isBlankOrNull(ultimoNome))
+        {
+            super.add("Ultimo nome é obrigatório");
         }
         if (dataNascimento == null)
         {
@@ -163,15 +172,24 @@ public class Cliente extends ValidationConstraint
 
 	public void setEndereco(final Endereco endereco) {
 		this.endereco = endereco;
-		
 	}
+    public String getPrimeiroNome() {
+        return primeiroNome;
+    }
 
-	public void setNomeCompleto(final String nome) {
-		this.nome = nome;
-		
-	}
+    public void setPrimeiroNome(String primeiroNome) {
+        this.primeiroNome = primeiroNome;
+    }
 
-	public void setDataNascimento(final Date dataNascimento) {
+    public String getUltimoNome() {
+        return ultimoNome;
+    }
+
+    public void setUltimoNome(String ultimoNome) {
+        this.ultimoNome = ultimoNome;
+    }
+
+    public void setDataNascimento(final Date dataNascimento) {
 		this.dataNascimento = dataNascimento;		
 	}
 

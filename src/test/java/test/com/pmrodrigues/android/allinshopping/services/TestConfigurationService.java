@@ -30,9 +30,8 @@ public class TestConfigurationService {
 	
 	@Before
 	public void setup() {
-		
-		
-		Activity activity = Robolectric.buildActivity(ConfigurationActivity.class).create().get();
+
+			Activity activity = Robolectric.buildActivity(ConfigurationActivity.class).create().get();
 		service = new ConfigurationService(activity);
 		this.preferences = activity.getApplicationContext().getSharedPreferences(Constante.SHARED_PREFERENCES, Context.MODE_PRIVATE);	
 		

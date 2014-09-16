@@ -1,15 +1,19 @@
 package com.pmrodrigues.android.allinshopping;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.j256.ormlite.android.apptools.OrmLiteBaseActivity;
+import com.pmrodrigues.android.allinshopping.database.DummyDbHelper;
 import com.pmrodrigues.android.allinshopping.models.Pedido;
 
-public abstract class AbstractActivity extends Activity
+public abstract class AbstractActivity extends OrmLiteBaseActivity<DummyDbHelper>
 {
-	private Pedido pedido;
+    private Context context;
+    private Pedido pedido;
 
     protected Pedido getPedido()
     {
@@ -21,6 +25,14 @@ public abstract class AbstractActivity extends Activity
 		this.pedido = pedido;
     }
 	
+    public AbstractActivity() {
+        super();
+    }
+    
+    public AbstractActivity(final Context context){
+        this.context = context;
+    }
+    
     @Override
 	public boolean onCreateOptionsMenu(final Menu menu)
     {

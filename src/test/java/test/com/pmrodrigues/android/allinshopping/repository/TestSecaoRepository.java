@@ -6,12 +6,14 @@ import static org.junit.Assert.assertFalse;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import com.pmrodrigues.android.allinshopping.MainActivity;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 
+import sun.applet.Main;
 import test.com.pmrodrigues.android.allinshopping.responserules.HttpEntityResponseRule;
 import android.content.Context;
 
@@ -29,7 +31,7 @@ public class TestSecaoRepository {
 	
 	private final ResourceBundle response = ResourceBundle.getBundle("json_message");
 	
-	private final Context context = Robolectric.application.getApplicationContext();
+	private final Context context = Robolectric.buildActivity(MainActivity.class).create().get();
 	
 	@Before
 	public void setup() throws Exception {
