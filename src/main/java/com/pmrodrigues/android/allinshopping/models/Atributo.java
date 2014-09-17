@@ -11,11 +11,11 @@ public class Atributo implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private static final String DESCRICAO_FIELD_NAME = "descricao";
+	public static final String DESCRICAO_FIELD_NAME = "descricao";
 
-	private static final String ID_PRESTASHOP_FIELD_NAME = "atributo_id";
+    public static final String ID_PRESTASHOP_FIELD_NAME = "atributo_id";
 
-	private static final String PRODUTO_FIELD_NAME = "produto_id";
+    public static final String PRODUTO_FIELD_NAME = "produto_id";
 	
 	@DatabaseField(generatedId = true)
 	private Long id_attribute;

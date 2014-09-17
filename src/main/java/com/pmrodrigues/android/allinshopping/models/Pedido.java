@@ -119,10 +119,10 @@ public class Pedido
         dataPedido = new Date();
     }
 
-    public void add(Produto produto, String s)
+    public void add(Produto produto, Atributo s)
  {
     	for( ItemPedido item : itens ) {
-    		if (item.getProduto().equals(produto) && item.getTamanho().equals(s)) {
+    		if (item.getProduto().equals(produto) && item.getAtributo().equals(s)) {
     			item.aumentar();
     			return;
     		}	

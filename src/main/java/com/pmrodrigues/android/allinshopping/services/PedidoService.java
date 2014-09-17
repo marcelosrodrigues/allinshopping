@@ -72,7 +72,7 @@ public class PedidoService
             jsonobject.put("comissao_vendedora", itempedido.getMargemVendedoras());
             jsonobject.put("frete", itempedido.getFrete());
             jsonobject.put("akatus", itempedido.getAkatus());
-            jsonobject.put("tamanho", itempedido.getTamanho());
+            jsonobject.put("tamanho", itempedido.getAtributo());
             jsonarray.put(jsonobject);
         } 
         

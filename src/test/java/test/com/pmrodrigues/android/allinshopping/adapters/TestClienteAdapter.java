@@ -57,8 +57,8 @@ public class TestClienteAdapter {
         final ClienteAdapter adapter = new ClienteAdapter(activity,clientes,null);
         final View view = adapter.getView(0,null,null);
 
-        assertNotNull(view.findViewById(R.id.nomeCompleto));
-        assertEquals(((TextView)view.findViewById(R.id.nomeCompleto)).getText(),clientes.get(0).getNomeCompleto());
+        assertNotNull(view.findViewById(R.id.cliente));
+        assertEquals(((TextView)view.findViewById(R.id.cliente)).getText(),clientes.get(0).getNomeCompleto());
 
     }
 

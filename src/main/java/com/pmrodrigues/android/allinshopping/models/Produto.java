@@ -63,7 +63,7 @@ public class Produto implements Serializable {
     private final Collection<Imagem> imagens = new ArrayList<Imagem>();
  	
 	@SerializedName("atributos")
-	@ForeignCollectionField(eager=true)
+	@ForeignCollectionField(eager=true,orderColumnName = Atributo.DESCRICAO_FIELD_NAME)
 	private final Collection<Atributo> atributos = new ArrayList<Atributo>();
 
 	public Produto() {
@@ -201,4 +201,8 @@ public class Produto implements Serializable {
 	public String toString() {
 		return String.format("[id:%s nome:%s]",this.id,this.nome);
 	}
+
+    public boolean temAtributos() {
+        return this.atributos != null && !this.atributos.isEmpty();
+    }
 }

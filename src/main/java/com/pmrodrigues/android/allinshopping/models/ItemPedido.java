@@ -24,8 +24,8 @@ public class ItemPedido
     private Produto produto;
     @DatabaseField
     private Long quantidade;
-    @DatabaseField
-    private String tamanho;
+    @DatabaseField(foreign = true)
+    private Atributo atributo;
 
     @DatabaseField
 	private BigDecimal frete;
@@ -35,12 +35,12 @@ public class ItemPedido
         
     }
 
-    public ItemPedido(Produto produto, String tamanho)
+    public ItemPedido(Produto produto, Atributo atributo)
     {
         this();
         this.produto = produto;
         this.quantidade = 1L;
-        this.tamanho = tamanho;
+        this.atributo = atributo;
         this.frete = produto.getFrete();
     }
 
@@ -79,9 +79,9 @@ public class ItemPedido
         return quantidade;
     }
 
-    public String getTamanho()
+    public Atributo getAtributo()
     {
-        return tamanho;
+        return atributo;
     }
 
     public BigDecimal getTotal()

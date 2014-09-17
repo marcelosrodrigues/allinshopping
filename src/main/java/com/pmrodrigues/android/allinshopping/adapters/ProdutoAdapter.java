@@ -8,8 +8,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import com.pmrodrigues.android.allinshopping.models.Atributo;
 import org.apache.commons.validator.GenericValidator;
 
 import android.app.Activity;
@@ -67,60 +69,40 @@ public class ProdutoAdapter extends ArrayAdapter<Produto>
 				ParseUtilities.formatMoney(produto.getPrecoVenda()));
 		aq.id(R.id.descricao).text(produto.getDescricao());
 
-		if (produto.getSecao().isVestuario()) {
 
-			showRoupas(View.VISIBLE);
-			showSapatos(View.INVISIBLE);
+        if( produto.temAtributos() ){
 
-		} else if (produto.getSecao().isCalcado()) {
+            RadioGroup radiogroup = (RadioGroup) view.findViewById(R.id.tamanho);
+            radiogroup
+                    .setOnCheckedChangeListener(new ChangeRadioButtonEventListener());
 
-			showSapatos(View.VISIBLE);
-			showRoupas(View.INVISIBLE);
+            for( Atributo atributo : produto.getAtributos() ){
+                RadioButton radiobutton = new RadioButton(activity);
+                radiobutton.setTag(atributo);
+                radiobutton.setHint(atributo.getDescricao());
+                radiogroup.addView(radiobutton);
+            }
 
-		} else if (!produto.getSecao().isVestuario()
-				&& !produto.getSecao().isCalcado()) {
-			aq.id(R.id.tamanho).visibility(View.INVISIBLE);
-		}
+            radiogroup.setVisibility(View.VISIBLE);
+        }
+
 
 		aq.id(R.id.adicionar).getButton().setOnClickListener(this);
-		RadioGroup radiogroup = (RadioGroup) view.findViewById(R.id.tamanho);
-		radiogroup
-				.setOnCheckedChangeListener(new ChangeRadioButtonEventListener());
-		return view;
-	}
-	private void showSapatos(int visibility) {
-		aq.id(R.id.T_34).visibility(visibility);
-		aq.id(R.id.T_35).visibility(visibility);
-		aq.id(R.id.T_36).visibility(visibility);
-		aq.id(R.id.T_37).visibility(visibility);
-		aq.id(R.id.T_38).visibility(visibility);
-		aq.id(R.id.T_39).visibility(visibility);
-		aq.id(R.id.T_40).visibility(visibility);
-	}
 
-	private void showRoupas(int visibility) {
-		aq.id(R.id.P).visibility(visibility);
-		aq.id(R.id.M).visibility(visibility);
-		aq.id(R.id.G).visibility(visibility);
-		aq.id(R.id.GG).visibility(visibility);
+		return view;
 	}
 
 	@Override
 	public void onClick(View view) {
-		Produto produto = (Produto) view.getTag();
-		Context context = getContext();
-		Activity activity = (Activity) getContext();
-		Intent intent = new Intent(context, ShoppingCartActivity.class);
-		RadioGroup radiogroup = (RadioGroup) activity
-				.findViewById(R.id.tamanho);
-		Pedido pedido = PriceUtilities.getPedido();
-		int i = radiogroup.getCheckedRadioButtonId();
-		RadioButton radiobutton = (RadioButton) radiogroup.findViewById(i);
+		final Produto produto = (Produto) view.getTag();
+		final Context context = getContext();
+		final Activity activity = (Activity) getContext();
+		final Intent intent = new Intent(context, ShoppingCartActivity.class);
+        final Pedido pedido = PriceUtilities.getPedido();
 
-		String s = radiobutton.getHint().toString();
+        final Atributo atributo = getAtributo((View) view.getParent());
 
-		if ((produto.getSecao().isCalcado() || produto.getSecao().isVestuario())
-				&& GenericValidator.isBlankOrNull(s)) {
+		if (produto.temAtributos() && atributo == null ) {
 
 			(new ErrorAlert(context)).setTitle("Pedidos")
 					.setMessage("Tamanho é obrigatório").show();
@@ -128,8 +110,23 @@ public class ProdutoAdapter extends ArrayAdapter<Produto>
 			return;
 		}
 
-		pedido.add(produto, s);
+		pedido.add(produto, atributo);
 		getContext().startActivity(intent);
 
 	}
+
+    private Atributo getAtributo(View view) {
+
+        final RadioGroup radiogroup = (RadioGroup)view.findViewById(R.id.tamanho);
+
+        if( radiogroup != null ) {
+            final int i = radiogroup.getCheckedRadioButtonId();
+            final RadioButton radiobutton = (RadioButton) radiogroup.findViewById(i);
+            if( radiobutton != null ) {
+                return (Atributo) radiobutton.getTag();
+            }
+        }
+        return null;
+
+    }
 }

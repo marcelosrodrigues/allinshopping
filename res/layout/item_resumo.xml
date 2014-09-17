@@ -95,52 +95,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:orientation="horizontal"
-                android:visibility="visible" >
-
-                <RadioButton
-                    android:id="@id/P"
-                    android:checked="true"
-                    android:hint="P" />
-
-                <RadioButton
-                    android:id="@id/M"
-                    android:hint="M" />
-
-                <RadioButton
-                    android:id="@id/G"
-                    android:hint="G" />
-
-                <RadioButton
-                    android:id="@id/GG"
-                    android:hint="GG" />
-
-                <RadioButton
-                    android:id="@id/T_34"
-                    android:hint="34" />
-
-                <RadioButton
-                    android:id="@id/T_35"
-                    android:hint="35" />
-
-                <RadioButton
-                    android:id="@id/T_36"
-                    android:hint="36" />
-
-                <RadioButton
-                    android:id="@id/T_37"
-                    android:hint="37" />
-
-                <RadioButton
-                    android:id="@id/T_38"
-                    android:hint="38" />
-
-                <RadioButton
-                    android:id="@id/T_39"
-                    android:hint="39" />
-
-                <RadioButton
-                    android:id="@id/T_40"
-                    android:hint="40" />
+                android:visibility="invisible" >
             </RadioGroup>
 
             <Button
