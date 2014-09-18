@@ -38,5 +38,6 @@ public class Atributo implements Serializable {
 	public String getDescricao() {
 		return descricao;
 	}
-	
+
+
 }

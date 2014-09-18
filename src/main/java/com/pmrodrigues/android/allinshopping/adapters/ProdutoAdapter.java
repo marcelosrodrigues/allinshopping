@@ -1,18 +1,8 @@
 package com.pmrodrigues.android.allinshopping.adapters;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.util.List;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.util.AttributeSet;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import com.pmrodrigues.android.allinshopping.models.Atributo;
-import org.apache.commons.validator.GenericValidator;
 
 import android.app.Activity;
 import android.content.Context;
@@ -110,7 +100,7 @@ public class ProdutoAdapter extends ArrayAdapter<Produto>
 			return;
 		}
 
-		pedido.add(produto, atributo);
+		pedido.adicionar(produto, atributo);
 		getContext().startActivity(intent);
 
 	}

@@ -3,6 +3,7 @@ package com.pmrodrigues.android.allinshopping.models;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import android.content.ClipData;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import com.pmrodrigues.android.allinshopping.utilities.Constante;
@@ -30,18 +31,16 @@ public class ItemPedido
     @DatabaseField
 	private BigDecimal frete;
 
-    public ItemPedido()
-    {
-        
-    }
+    public ItemPedido() {}
 
-    public ItemPedido(Produto produto, Atributo atributo)
+    public ItemPedido(Produto produto, Atributo atributo, Pedido pedido)
     {
         this();
         this.produto = produto;
         this.quantidade = 1L;
         this.atributo = atributo;
         this.frete = produto.getFrete();
+        this.pedido = pedido;
     }
 
     public void aumentar()
@@ -51,17 +50,18 @@ public class ItemPedido
 
     public boolean equals(Object obj)
     {
-        boolean flag;
-        if (obj instanceof ItemPedido)
-        {
-            Produto produto1 = ((ItemPedido)obj).getProduto();
-            Produto produto2 = produto;
-            flag = produto1.equals(produto2);
-        } else
-        {
-            flag = false;
+        if( obj instanceof ItemPedido ) {
+            ItemPedido other = (ItemPedido) obj;
+            if (other.getProduto().equals(this.getProduto())) {
+                if( ( other.getAtributo() == null && this.getAtributo() == null ) ||
+                    (other.getAtributo().equals(this.getAtributo())) ) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
         }
-        return flag;
+        return false;
     }
 
     public Long getId()
@@ -136,7 +136,7 @@ public class ItemPedido
     
     public int hashCode()
     {
-        return produto.hashCode();
+        return produto.hashCode() + ( this.getAtributo() != null ? this.getAtributo().hashCode() : 0);
     }
 
     public void setPedido(Pedido pedido1)

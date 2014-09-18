@@ -119,18 +119,19 @@ public class Pedido
         dataPedido = new Date();
     }
 
-    public void add(Produto produto, Atributo s)
+    public void adicionar(Produto produto, Atributo atributo)
  {
-    	for( ItemPedido item : itens ) {
-    		if (item.getProduto().equals(produto) && item.getAtributo().equals(s)) {
-    			item.aumentar();
-    			return;
-    		}	
-    	}
-    	
-    	ItemPedido item = new ItemPedido(produto, s);
-    	item.setPedido(this);
-    	this.itens.add(item);
+     ItemPedido item = new ItemPedido(produto,atributo,this);
+     if( !this.itens.contains(item) ){
+         this.itens.add(item);
+     } else {
+         for( ItemPedido i : this.itens ){
+             if( i.equals(item) ){
+                 i.aumentar();
+                 break;
+             }
+         }
+     }
     	
     }
 
@@ -167,10 +168,6 @@ public class Pedido
         	total = total.add(item.getTotal());
         }
 
-/*		if (PriceUtilities.getFaixaEntrega() == null) {
-			total = total.add(new BigDecimal(2));
-		}*/
-
         return total;
     }
 
@@ -188,9 +185,9 @@ public class Pedido
         itens.remove(itempedido);
     }
 
-    public void setCliente(Cliente cliente1)
+    public void setCliente(Cliente cliente)
     {
-        cliente = cliente1;
+        this.cliente = cliente;
     }
 
     public void setDadosPagamento(DadosPagamento dadospagamento)
@@ -216,4 +213,10 @@ public class Pedido
 	public Long getId() {
 		return this.id;
 	}
+
+    public void adicionar(Produto produto) {
+
+        this.adicionar(produto,null);
+
+    }
 }
