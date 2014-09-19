@@ -21,10 +21,6 @@ public class AtualizarQuantidadeItemPedidoEvent
 
     private AQuery aq;
 
-    public AtualizarQuantidadeItemPedidoEvent()
-    {
-    }
-
     @Override
 	public void onFocusChange(View view, boolean flag)
     {

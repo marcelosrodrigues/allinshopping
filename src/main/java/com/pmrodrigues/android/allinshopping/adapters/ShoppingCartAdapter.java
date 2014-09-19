@@ -29,22 +29,31 @@ public class ShoppingCartAdapter extends ArrayAdapter<ItemPedido>
 
     public View getView(int i, View view, ViewGroup viewgroup)
     {
-        
-        Activity activity = (Activity)getContext();
+        final Activity activity = (Activity)getContext();
+        final ItemPedido itempedido = (ItemPedido)itens.get(i);
+
         if (view == null)
         {
         	view = activity.getLayoutInflater().inflate(R.layout.item_pedido, null);
         }
+
         aq = new AQuery(view);
-        ItemPedido itempedido = (ItemPedido)itens.get(i);
         aq.id(R.id.remover).tag(itempedido);
-        aq.id(R.id.remover).clicked(new RemoverItemPedidoOnClickListener());
+
         aq.id(R.id.id).text(itempedido.getId().toString());
         aq.id(R.id.nome).text(itempedido.getProduto().getTitulo());
+
+        if(itempedido.getAtributo() != null ) {
+            aq.id(R.id.atributo).text(itempedido.getAtributo().getDescricao());
+        }
+        aq.id(R.id.preco).text(ParseUtilities.formatMoney(itempedido.getTotal()));
+
         aq.id(R.id.quantidade).text(itempedido.getQuantidade().toString());
         aq.id(R.id.quantidade).tag(itempedido);
+
+        aq.id(R.id.remover).clicked(new RemoverItemPedidoOnClickListener());
         aq.id(R.id.quantidade).getEditText().setOnFocusChangeListener(new AtualizarQuantidadeItemPedidoEvent());
-        aq.id(R.id.preco).text(ParseUtilities.formatMoney(itempedido.getTotal()));
+
         return view;
     }
 }

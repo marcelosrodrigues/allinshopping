@@ -23,10 +23,6 @@ public class RemoverItemPedidoOnClickListener
 
     private AQuery aq;
 
-    public RemoverItemPedidoOnClickListener()
-    {
-    }
-
     @Override
 	public void onClick(View view)
     {
