@@ -1,5 +1,6 @@
 package com.pmrodrigues.android.allinshopping;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import android.content.Intent;
@@ -50,4 +51,5 @@ public class ShoppingCartActivity extends AbstractActivity
 		aq.id(R.id.continuar_comprando).clicked(this);
 		aq.id(R.id.finalizar_pedido).clicked(this);
 	}
+
 }

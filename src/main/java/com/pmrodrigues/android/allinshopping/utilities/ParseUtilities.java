@@ -1,5 +1,7 @@
 package com.pmrodrigues.android.allinshopping.utilities;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -46,4 +48,5 @@ public final class ParseUtilities
         }
 
     }
+
 }

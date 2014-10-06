@@ -20,6 +20,8 @@ public abstract class ValidationConstraint
 
     public boolean isValid()
     {
+        this.errors.clear();
+        this.validate();
         return errors.isEmpty();
     }
 

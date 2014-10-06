@@ -39,5 +39,16 @@ public class Atributo implements Serializable {
 		return descricao;
 	}
 
+    @Override
+    public boolean equals(Object o) {
+        if( o instanceof Atributo ){
+            Atributo other = (Atributo) o;
+            return other.id.equals(this.id);
+        }
+        return false;
+    }
 
+    public int hashCode() {
+        return this.id.hashCode();
+    }
 }

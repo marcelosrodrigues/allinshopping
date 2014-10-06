@@ -14,10 +14,7 @@ import com.pmrodrigues.android.allinshopping.repository.ClienteRepository;
 import com.pmrodrigues.android.allinshopping.utilities.Constante;
 public class ListClientesActivity extends AbstractActivity
 {
-
     private AQuery aq;
-
-    public ListClientesActivity(){}
 
     protected void onCreate(Bundle bundle)
     {

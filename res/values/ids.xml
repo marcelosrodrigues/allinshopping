@@ -70,5 +70,7 @@
     <item type="id" name="nomeLoja">false</item>
     <item type="id" name="atributos">false</item>
     <item type="id" name="atributo">false</item>
-    
+    <item name="primeiroNome" type="id">primeiroNome</item>
+    <item name="ultimoNome" type="id">ultimoNome</item>
+
 </resources>

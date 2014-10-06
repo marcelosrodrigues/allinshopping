@@ -15,6 +15,7 @@ public abstract class AbstractRepository<E,T>
 {
 
     private final DbHelper helper;
+    private int count;
 
     public AbstractRepository(final Context context)
     {
@@ -86,4 +87,5 @@ public abstract class AbstractRepository<E,T>
 	}
     
     protected abstract Dao<E,T> getDao() throws SQLException;
+
 }

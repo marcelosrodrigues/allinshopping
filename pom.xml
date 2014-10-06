@@ -208,13 +208,17 @@
 				<artifactId>maven-resources-plugin</artifactId>
 				<version>2.6</version>
 			</plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>2.7</version>
+            </plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-pmd-plugin</artifactId>
                 <version>3.2</version>
 				<configuration>
-					<linkXref>true</linkXref>
-					<sourceEncoding>UTF-8</sourceEncoding>
+                    <sourceEncoding>UTF-8</sourceEncoding>
 					<minimumTokens>30</minimumTokens>
 					<excludes>
 						<exclude>com/akatus/**/*.java</exclude>						

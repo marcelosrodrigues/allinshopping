@@ -40,18 +40,26 @@
         android:orientation="vertical" >
 
         <EditText
-            android:id="@id/nomeCompleto"
+            android:id="@id/primeiroNome"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:hint="Nome Completo"
+            android:hint="Primeiro Nome"
             android:paddingTop="20.0dip" >
 
             <requestFocus />
-        </EditText>   
-       
+        </EditText>
+
+        <EditText
+                android:id="@id/ultimoNome"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="Ultimo Nome"
+                android:paddingTop="20.0dip" >
+        </EditText>
+
         <EditText
             android:id="@id/dataNascimento"
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Data de Nascimento"
@@ -68,8 +76,9 @@
 
         <EditText
             android:id="@id/cep"
-            android:layout_width="162.0dip"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="0.2"
             android:hint="CEP"
             android:inputType="number"
             android:paddingTop="20.0dip" />
@@ -92,7 +101,7 @@
         <Spinner
             android:id="@id/estados"
             android:layout_width="fill_parent"
-            android:layout_height="56dp"
+            android:layout_height="wrap_content"
             android:paddingTop="20.0dip"
             android:prompt="@string/estado" />
 
