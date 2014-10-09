@@ -159,6 +159,13 @@ public class Cliente extends ValidationConstraint
         {
 			add("Data de nascimento é obrigatório");
         }
+        if( GenericValidator.isBlankOrNull(email) || !GenericValidator.isEmail(email) ){
+            add("E-mail inválido");
+        }
+
+        if(!endereco.isValid() ){
+            addAll(endereco.errors());
+        }
        
     }
 

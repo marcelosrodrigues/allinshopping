@@ -5,74 +5,64 @@
 
 package com.pmrodrigues.android.allinshopping.models;
 
-import java.io.Serializable;
-
 import com.akatus.connect.api.v1.entity.Transaction.PaymentMethod;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+
+import java.io.Serializable;
+
 @DatabaseTable
 public class FormaPagamento
-    implements Serializable
-{
+        implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @DatabaseField(id=true)
+
+    public static final String ID_FIELD = "id";
+    public static final String NOME_FIELD = "nome";
+    public static final String PAYMENT_METHOD_FIELD = "metodo";
+
+    @DatabaseField(id = true , columnName = FormaPagamento.ID_FIELD)
     private Long id;
-    @DatabaseField
+
+    @DatabaseField(columnName = FormaPagamento.NOME_FIELD)
     private String nome;
-    @DatabaseField
+
+    @DatabaseField(columnName = FormaPagamento.PAYMENT_METHOD_FIELD)
     private PaymentMethod paymentMethod;
 
-    public FormaPagamento()
-    {
+    public FormaPagamento() {
     }
 
-    public FormaPagamento(Long long1)
-    {
+    public FormaPagamento(final Long id, final String nome, final PaymentMethod metodo) {
         this();
-        id = long1;
+        this.id = id;
+        this.nome = nome;
+        paymentMethod = metodo;
     }
 
-    public FormaPagamento(Long long1, String s, PaymentMethod s1)
-    {
-        this();
-        id = long1;
-        nome = s;
-        paymentMethod = s1;
-    }
-
-    public Long getId()
-    {
+    public Long getId() {
         return id;
     }
 
-    public String getNome()
-    {
+    public String getNome() {
         return nome;
     }
 
-    public PaymentMethod getPaymentMethod()
-    {
+    public PaymentMethod getPaymentMethod() {
         return paymentMethod;
     }
-    
 
-    public boolean isCartao()
-    {
-        return this.paymentMethod == PaymentMethod.CARTAO_AMEX || 
-        	   this.paymentMethod == PaymentMethod.CARTAO_DINERS ||
-        	   this.paymentMethod == PaymentMethod.CARTAO_ELO ||
-        	   this.paymentMethod == PaymentMethod.CARTAO_MASTER ||
-        	   this.paymentMethod == PaymentMethod.CARTAO_VISA;
+
+    public boolean isCartao() {
+        return this.paymentMethod == PaymentMethod.CARTAO_AMEX ||
+                this.paymentMethod == PaymentMethod.CARTAO_DINERS ||
+                this.paymentMethod == PaymentMethod.CARTAO_ELO ||
+                this.paymentMethod == PaymentMethod.CARTAO_MASTER ||
+                this.paymentMethod == PaymentMethod.CARTAO_VISA;
     }
 
-    public void setNome(String s)
-    {
-        nome = s;
+    public void setNome(final String nome) {
+        this.nome = nome;
     }
 
-    public void setPaymentMethod(PaymentMethod s)
-    {
-        this.paymentMethod = s;
-    }
 }

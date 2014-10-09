@@ -72,5 +72,7 @@
     <item type="id" name="atributo">false</item>
     <item name="primeiroNome" type="id">primeiroNome</item>
     <item name="ultimoNome" type="id">ultimoNome</item>
+    <item name="scroll" type="id">scroll</item>
+    <item name="pagamentos" type="id">pagamentos</item>
 
 </resources>

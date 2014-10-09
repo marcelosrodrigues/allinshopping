@@ -15,36 +15,38 @@
 
         <Button
             android:id="@id/salvar"
-            style="?android:attr/verticalDivider"
-            android:layout_width="0.0dip"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:text="@string/avancar" />
 
         <Button
             android:id="@id/cancelar"
-            style="?android:attr/verticalDivider"
-            android:layout_width="0.0dip"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:text="@string/cancelar" />
     </LinearLayout>
 
-    <RadioGroup
-        android:id="@id/formapagamento"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <ScrollView android:id="@id/scroll" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_above="@id/linear_item">
+
+        <RadioGroup
+            android:id="@id/formapagamento"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </ScrollView>
 
     <TextView
         android:id="@id/total_pedido"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/linear_item"
-        android:layout_alignLeft="@id/formapagamento"
         android:paddingBottom="20.0dip"
         android:paddingLeft="10.0dip"
         android:paddingRight="10.0dip"
         android:paddingTop="20.0dip"
-        android:text="" />
+        android:text="Total" android:gravity="right"/>
+
 
 </RelativeLayout>

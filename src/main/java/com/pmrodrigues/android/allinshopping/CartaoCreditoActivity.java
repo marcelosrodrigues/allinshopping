@@ -1,87 +1,121 @@
 package com.pmrodrigues.android.allinshopping;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-
 import com.androidquery.AQuery;
 import com.pmrodrigues.android.allinshopping.alerts.AbstractDialog;
+import com.pmrodrigues.android.allinshopping.alerts.ActionDialog;
 import com.pmrodrigues.android.allinshopping.alerts.ErrorAlert;
 import com.pmrodrigues.android.allinshopping.models.DadosPagamento;
 import com.pmrodrigues.android.allinshopping.models.Pedido;
 import com.pmrodrigues.android.allinshopping.services.PedidoService;
 import com.pmrodrigues.android.allinshopping.utilities.Constante;
+import com.pmrodrigues.android.allinshopping.utilities.ParseUtilities;
+import com.pmrodrigues.android.allinshopping.utilities.PriceUtilities;
+import org.joda.time.DateTime;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class CartaoCreditoActivity extends AbstractActivity
-		implements
-			OnClickListener
-{
+        implements
+        OnClickListener {
 
     private AQuery aq;
 
-    public CartaoCreditoActivity()
-    {
-    }
-
     @Override
-	public void onClick(View view)
-    {
-        Pedido pedido = (Pedido)getIntent().getExtras().get(Constante.PEDIDO);
+    public void onClick(final View view) {
+        Pedido pedido = PriceUtilities.getPedido();
         Intent intent = null;
-        if (view.getId() == R.id.salvar){
-        	
-            DadosPagamento dadospagamento = new DadosPagamento();
-            dadospagamento.setPedido(pedido);
-            dadospagamento.setNome(aq.id(R.id.nome).getText().toString());
-            dadospagamento.setNumero(aq.id(R.id.cartao).getText().toString());
-            dadospagamento.setDataValidade(aq.id(R.id.validade).getText().toString());
-            dadospagamento.setCVV(aq.id(R.id.cvv).getText().toString());
-            dadospagamento.setCPF(aq.id(R.id.cpf).getText().toString());
-            if( aq.id(R.id.parcelas).getSelectedItemPosition() > 0 ) {
-            	dadospagamento.setQtdParcelas(aq.id(R.id.parcelas).getSelectedItemPosition());
-            }
-            
-            if (dadospagamento.isValid())
-            {
+
+        if (view.getId() == R.id.salvar) {
+
+            DadosPagamento dadospagamento = criarDadosPagamento(pedido);
+
+            if (dadospagamento.isValid()) {
                 (new PedidoService(this)).save(dadospagamento);
-                intent = new Intent(this, AutenticacaoParaEnvioDePedidoActivity.class);
-                intent.putExtra(Constante.PEDIDO, pedido);
-            } else
-            {
-				AbstractDialog abstractdialog = new ErrorAlert(this)
-						.setTitle("Dados de Cartão de crédito");
-                List<String> list = dadospagamento.errors();
-                abstractdialog.setMessages(list).setCancelable(true).show();
+
+                if( this.isNetworkConnected() ) {
+                    intent = new Intent(this, AutenticacaoParaEnvioDePedidoActivity.class);
+                } else {
+                    PriceUtilities.novoPedido();
+                    new ActionDialog(this)
+                            .setTitle("Pedido")
+                            .setMessage("Seu pedido foi salvo com sucesso e será enviado tão logo tenha conexão com a internet disponível.")
+                            .show();
+                }
+            } else {
+                new ErrorAlert(this)
+                        .setTitle("Dados de Cartão de crédito")
+                        .setMessages(dadospagamento.errors())
+                        .setCancelable(true)
+                        .show();
             }
-        } else
-        {
+        } else {
             intent = new Intent(this, PagamentoActivity.class);
-            intent.putExtra(Constante.PEDIDO, pedido);
         }
         startActivity(intent);
     }
 
+    private DadosPagamento criarDadosPagamento(Pedido pedido) {
+        DadosPagamento dadospagamento = new DadosPagamento();
+        dadospagamento.setPedido(pedido);
+        dadospagamento.setPortador(getPortador());
+        dadospagamento.setNumero(getNumeroCartao());
+        dadospagamento.setDataValidade(getDataValidade());
+        dadospagamento.setCVV(getCVV());
+        dadospagamento.setCPF(getCPF());
+        dadospagamento.setQtdParcelas(getNumeroParcelas());
+        return dadospagamento;
+    }
+
+    public Integer getNumeroParcelas() {
+        if (aq.id(R.id.parcelas).getSelectedItemPosition() > 0) {
+            return aq.id(R.id.parcelas).getSelectedItemPosition();
+        } else {
+            return 1;
+        }
+    }
+
+    public String getCPF() {
+        return aq.id(R.id.cpf).getText().toString();
+    }
+
+    public String getCVV() {
+        return aq.id(R.id.cvv).getText().toString();
+    }
+
+    public Date getDataValidade() {
+        return ParseUtilities.toDate(aq.id(R.id.validade).getText().toString(), "MMyy");
+    }
+
+    public String getNumeroCartao() {
+        return aq.id(R.id.cartao).getText().toString();
+    }
+
+    public String getPortador() {
+        return aq.id(R.id.nome).getText().toString();
+    }
+
     @Override
-	protected void onCreate(Bundle bundle)
-    {
+    protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         setContentView(R.layout.activity_cartao_credito);
-        
+
         aq = new AQuery(this);
         aq.id(R.id.salvar).clicked(this);
         aq.id(R.id.cancelar).clicked(this);
-        
+
         Spinner spinner = aq.id(R.id.parcelas).getSpinner();
         List<String> parcelas = new ArrayList<String>();
-        
+
         parcelas.add("Seleciona a quantidade de parcelas");
-		parcelas.add("À vista");
+        parcelas.add("À vista");
         parcelas.add("2 vezes");
         parcelas.add("3 vezes");
         parcelas.add("4 vezes");
@@ -93,8 +127,28 @@ public class CartaoCreditoActivity extends AbstractActivity
         parcelas.add("10 vezes");
         parcelas.add("11 vezes");
         parcelas.add("12 vezes");
-        
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,  android.R.layout.simple_list_item_1, parcelas);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, parcelas);
         spinner.setAdapter(adapter);
+    }
+
+    public void setPortador(final String portador) {
+        aq.id(R.id.nome).text(portador);
+    }
+
+    public void setCPF(final String cpf) {
+        aq.id(R.id.cpf).text(cpf);
+    }
+
+    public void setDataValidade(final Date dataValidade) {
+        aq.id(R.id.validade).text(ParseUtilities.formatDate(dataValidade,"MMyy"));
+    }
+
+    public void setNumeroCartao(final String cartao) {
+        aq.id(R.id.cartao).text(cartao);
+    }
+
+    public void setCVV(String CVV) {
+        aq.id(R.id.cvv).text(CVV);
     }
 }

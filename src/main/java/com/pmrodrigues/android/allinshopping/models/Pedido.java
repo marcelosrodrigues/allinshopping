@@ -74,7 +74,7 @@ public class Pedido
     	trans.setReference(this.id.toString());
     	trans.setInstallments(dadosPagamento.getQtdParcelas());
     	if( formaPagamento.isCartao() ) {
-	    	trans.setExpiration( ParseUtilities.formatDate(ParseUtilities.toDate(dadosPagamento.getValidade(),"MMyy"),"MM/yyyy")) ;
+	    	trans.setExpiration( ParseUtilities.formatDate(dadosPagamento.getValidade(),"MM/yyyy")) ;
 	    	trans.setNumber(dadosPagamento.getNumero());
 	    	trans.setPaymentMethod(formaPagamento.getPaymentMethod());
 	    	trans.setSecurityNumber(dadosPagamento.getCVV());
@@ -82,7 +82,7 @@ public class Pedido
     	//TODO avaliar outros meios de pagamento
     	trans.setHolder(new Holder());
     	trans.getHolder().setDocument(dadosPagamento.getCPF());
-    	trans.getHolder().setName(dadosPagamento.getNome());
+    	trans.getHolder().setName(dadosPagamento.getPortador());
     	
     	if( !GenericValidator.isBlankOrNull(cliente.getEndereco().getTelefone()) && !"{}".equalsIgnoreCase(cliente.getEndereco().getTelefone()) ) {
     		trans.getHolder().setPhone(cliente.getEndereco().getTelefone());

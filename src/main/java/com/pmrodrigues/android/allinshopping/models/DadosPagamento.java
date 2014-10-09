@@ -3,205 +3,128 @@ package com.pmrodrigues.android.allinshopping.models;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import com.pmrodrigues.android.allinshopping.models.constraints.ValidationConstraint;
-import com.pmrodrigues.android.allinshopping.utilities.ParseUtilities;
+import org.apache.commons.validator.GenericValidator;
+import org.joda.time.DateTime;
 
 import java.io.Serializable;
 import java.util.Date;
 
-import org.apache.commons.validator.GenericValidator;
-
 @DatabaseTable
 public class DadosPagamento extends ValidationConstraint
-    implements Serializable
-{
+        implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
-    @DatabaseField
-    private String agencia;
-    @DatabaseField
-    private String banco;
-    @DatabaseField
-    private String conta;
+
     @DatabaseField
     private String cvv;
     @DatabaseField
-    private String dataValidade;
-    
-    @DatabaseField(foreign=true)
+    private Date dataValidade;
+
+    @DatabaseField(foreign = true)
     private FormaPagamento formaPagamento;
-    @DatabaseField(generatedId=true)
+    @DatabaseField(generatedId = true)
     private Long id;
     @DatabaseField
-    private String nome;
+    private String portador;
     @DatabaseField
     private String numeroCartao;
-    
-    @DatabaseField(foreign=true)
+
+    @DatabaseField(foreign = true)
     private Pedido pedido;
 
     @DatabaseField
-	private String cpf;
-    
+    private String cpf;
+
     @DatabaseField
     private Integer quantidadeParcelas = 1;
 
-    public DadosPagamento()
-    {
-    }
-
-    private void validateCartaoCredito()
-    {
-        if (GenericValidator.isBlankOrNull(numeroCartao))
-        {
+    private void validateCartaoCredito() {
+        if (GenericValidator.isBlankOrNull(numeroCartao)) {
             add("Número do cartão de crédito é obrigatório");
         }
-        if (!GenericValidator.isBlankOrNull(numeroCartao) && !GenericValidator.isCreditCard(numeroCartao))
-        {
+        if (!GenericValidator.isBlankOrNull(numeroCartao) && !GenericValidator.isCreditCard(numeroCartao)) {
             add("Número do cartão de crédito inválido");
         }
-        if (GenericValidator.isBlankOrNull(dataValidade))
-        {
+        if (dataValidade == null ) {
             add("Data de validade é obrigatória");
-        }
-        if (!GenericValidator.isDate(dataValidade, "MMyy", true))
-        {
-            add("Data de validade inválida");
-        }
-        Date date = ParseUtilities.toDate(dataValidade, "MMyy");
-        if (date != null)
-        {
-            Date date1 = new Date();
-            if (date.before(date1))
-            {
+        } else {
+            if (dataValidade.before(DateTime.now().toDate())) {
                 add("Cartão de crédito vencido");
             }
         }
-        if( GenericValidator.isBlankOrNull(nome) ) {
-        	add("Nome do portador do cartão é obrigatório");
-        } else if( nome.split(" ").length == 0 ){
-        	add("Nome do portador deve ser composto por nome e sobrenome");
+        if (GenericValidator.isBlankOrNull(portador)) {
+            add("Nome do portador do cartão é obrigatório");
+        } else if (portador.split(" ").length == 0) {
+            add("Nome do portador deve ser composto por nome e sobrenome");
         }
-        
-        
-    }
 
-    private void validateContaBancaria()
-    {
-        if (GenericValidator.isBlankOrNull(banco))
-        {
-            add("Número do banco é obrigatório");
-        }
-        if (GenericValidator.isBlankOrNull(agencia))
-        {
-            add("Agência é obrigatório");
-        }
-        if (GenericValidator.isBlankOrNull(conta))
-        {
-            add("Némero da conta é obrigatório");
-        }
+
     }
 
     public Integer getQtdParcelas() {
-    	return this.quantidadeParcelas;    		
-    }
-    
-    public void setQtdParcelas(Integer i) {
-    	this.quantidadeParcelas = i;
-    }
-    
-    public void setAgencia(String s)
-    {
-        agencia = s;
+        return this.quantidadeParcelas;
     }
 
-    public void setBanco(String s)
-    {
-        banco = s;
+    public void setQtdParcelas(final Integer numeroParcelas) {
+        this.quantidadeParcelas = numeroParcelas;
     }
 
-    public void setCVV(String s)
-    {
-        cvv = s;
+    public void setCVV(final String cvv) {
+        this.cvv = cvv;
     }
 
-    public void setConta(String s)
-    {
-        conta = s;
+    public void setDataValidade(final Date dataValidade) {
+        this.dataValidade = dataValidade;
     }
 
-    public void setDataValidade(String s)
-    {
-        dataValidade = s;
+    public void setPortador(final String portador) {
+        this.portador = portador;
     }
 
-    public void setNome(String s)
-    {
-        nome = s;
+    public void setNumero(final String numeroCartao) {
+        this.numeroCartao = numeroCartao;
     }
 
-    public void setNumero(String s)
-    {
-        numeroCartao = s;
-    }
-
-    public void setPedido(Pedido pedido)
-    {
+    public void setPedido(final Pedido pedido) {
         this.pedido = pedido;
-        FormaPagamento formapagamento = pedido.getFormaPagamento();
-        this.formaPagamento = formapagamento;
+        this.formaPagamento = pedido.getFormaPagamento();
     }
-    
+
     public Pedido getPedido() {
-    	return this.pedido;
+        return this.pedido;
     }
 
-    protected void validate()
-    {
-        if (formaPagamento != null && formaPagamento.isCartao())
-        {
-            validateCartaoCredito();
-        } else
-        {
-            validateContaBancaria();
-        }
+    protected void validate() {
+        validateCartaoCredito();
     }
 
-	public String getValidade() {
-		return this.dataValidade;
-	}
+    public Date getValidade() {
+        return this.dataValidade;
+    }
 
-	public String getNumero() {
-		return numeroCartao;
-	}
+    public String getNumero() {
+        return numeroCartao;
+    }
 
-	public String getNome() {
-		return this.nome;
-	}
+    public String getPortador() {
+        return this.portador;
+    }
 
-	public String getCVV() {
-		return this.cvv;
-	}
+    public String getCVV() {
+        return this.cvv;
+    }
 
-	public String getConta() {
-		return this.conta;
-	}
-	
-	public String getAgencia() {
-		return this.agencia;
-	}
+    public String getCPF() {
+        return this.cpf;
+    }
 
-	public String getCPF() {
-		return this.cpf;
-	}
-	
-	public void setCPF(String cpf){
-		this.cpf = cpf;
-	}
-	
-	@Override
-	public boolean isValid() {
-		this.validate();
-		return super.isValid();
-	}
+    public void setCPF(String cpf) {
+        this.cpf = cpf;
+    }
+
+    @Override
+    public boolean isValid() {
+        this.validate();
+        return super.isValid();
+    }
 }

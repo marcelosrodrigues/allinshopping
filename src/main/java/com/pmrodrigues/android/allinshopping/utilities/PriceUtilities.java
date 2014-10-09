@@ -38,5 +38,8 @@ public final class PriceUtilities {
 		}
 		return preco;
 	}
-	
+
+    public static void novoPedido() {
+        PriceUtilities.pedido = null;
+    }
 }

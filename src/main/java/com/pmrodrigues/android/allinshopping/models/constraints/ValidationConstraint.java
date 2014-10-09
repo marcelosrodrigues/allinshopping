@@ -25,5 +25,11 @@ public abstract class ValidationConstraint
         return errors.isEmpty();
     }
 
+    protected void addAll(List<String> errors ){
+        for(String error : errors ){
+            this.add(error);
+        }
+    }
+
     protected abstract void validate();
 }

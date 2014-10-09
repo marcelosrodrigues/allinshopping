@@ -19,6 +19,7 @@ import com.pmrodrigues.android.allinshopping.services.ClienteService;
 import com.pmrodrigues.android.allinshopping.utilities.Constante;
 import com.pmrodrigues.android.allinshopping.utilities.ParseUtilities;
 import com.pmrodrigues.android.allinshopping.utilities.PriceUtilities;
+import org.apache.commons.validator.GenericValidator;
 
 import java.util.Date;
 import java.util.List;
@@ -149,7 +150,12 @@ public class ClienteActivity extends AbstractActivity
     }
 
     public Date getDataNascimento() {
-        return ParseUtilities.toDate(aq.id(R.id.dataNascimento).getText().toString(), Constante.DATE_LONG_FORMAT);
+        String dt = aq.id(R.id.dataNascimento).getText().toString();
+        if(!GenericValidator.isBlankOrNull(dt)) {
+            return ParseUtilities.toDate(dt, Constante.DATE_LONG_FORMAT);
+        }else{
+            return null;
+        }
     }
 
     public void setPrimeiroNome(final String primeiroNome) {
@@ -182,7 +188,7 @@ public class ClienteActivity extends AbstractActivity
                         .setTitle("Não foi possível salvar o cliente.")
                         .setCancelable(true)
                         .setMessage(
-                                "Não foi possível salvar o cliente. A data de nascimento está errada")
+                                "Não foi possível salvar o cliente. A data de nascimento inválida")
                         .show();
             } else {
                 Cliente cliente = createCliente();

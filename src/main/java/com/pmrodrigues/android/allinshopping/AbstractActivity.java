@@ -3,6 +3,8 @@ package com.pmrodrigues.android.allinshopping;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -57,5 +59,16 @@ public abstract class AbstractActivity extends OrmLiteBaseActivity<DummyDbHelper
         }
         startActivity(toStart);
         return super.onOptionsItemSelected(menuitem);
+    }
+
+    public boolean isNetworkConnected() {
+
+        ConnectivityManager manager = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info =  manager.getActiveNetworkInfo();
+        if( info != null && ( info.isAvailable() || info.isConnected() ) ){
+            return true;
+        } else {
+            return false;
+        }
     }
 }

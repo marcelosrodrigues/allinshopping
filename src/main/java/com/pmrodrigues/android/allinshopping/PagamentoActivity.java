@@ -16,61 +16,52 @@ import com.pmrodrigues.android.allinshopping.repository.FormaPagamentoRepository
 import com.pmrodrigues.android.allinshopping.services.PedidoService;
 import com.pmrodrigues.android.allinshopping.utilities.Constante;
 import com.pmrodrigues.android.allinshopping.utilities.ParseUtilities;
+import com.pmrodrigues.android.allinshopping.utilities.PriceUtilities;
 
 public class PagamentoActivity extends AbstractActivity
-		implements
-			OnClickListener
-{
+        implements
+        OnClickListener {
 
     private AQuery aq;
+
     private Pedido pedido;
 
-    public PagamentoActivity()
-    {
-    }
+    private PedidoService pedidoservice = new PedidoService(this);
 
     @Override
-	public void onClick(View view)
-    {
+    public void onClick(View view) {
         Intent intent = null;
-        if( view.getId() == R.id.salvar ) {
-        	
-        	RadioGroup radiogroup = (RadioGroup)findViewById(R.id.formapagamento);
-            int i = radiogroup.getCheckedRadioButtonId();
-            FormaPagamento formapagamento = (FormaPagamento)((RadioButton)radiogroup.findViewById(i)).getTag();
+        if (view.getId() == R.id.salvar) {
+
+            FormaPagamento formapagamento = this.getFormaPagamento();
             pedido.setFormaPagamento(formapagamento);
-            PedidoService pedidoservice = new PedidoService(this);            
             pedidoservice.save(pedido);
-            if (formapagamento.isCartao())
-            {
-                intent = new Intent(this, CartaoCreditoActivity.class);
-            } else
-            {
-                intent = new Intent(this, ContaBancariaActivity.class);
-            }
-            intent.putExtra(Constante.PEDIDO, pedido);
-            
-        } else if( view.getId() == R.id.cancelar ) {
-        	intent = new Intent(this, ClienteActivity.class);
+            intent = new Intent(this, CartaoCreditoActivity.class);
+
+        } else if (view.getId() == R.id.cancelar) {
+            intent = new Intent(this, ClienteActivity.class);
         }
         startActivity(intent);
-        
+
+    }
+
+    public FormaPagamento getFormaPagamento() {
+        RadioGroup radiogroup = (RadioGroup) findViewById(R.id.formapagamento);
+        int i = radiogroup.getCheckedRadioButtonId();
+        return (FormaPagamento)radiogroup.findViewById(i).getTag();
     }
 
     @Override
-	protected void onCreate(Bundle bundle)
-    {
+    protected void onCreate(Bundle bundle) {
+
         super.onCreate(bundle);
         setContentView(R.layout.activity_forma_pagamento_main);
-        pedido = (Pedido)getIntent().getExtras().get(Constante.PEDIDO);
+        pedido = PriceUtilities.getPedido();
         aq = new AQuery(this);
-        RadioGroup radiogroup = (RadioGroup)findViewById(R.id.formapagamento);
-		List<FormaPagamento> formasPagamento = new FormaPagamentoRepository(
-				this).list();
-        
-        
-        for(FormaPagamento forma : formasPagamento ) {
-        	
+        RadioGroup radiogroup = (RadioGroup) findViewById(R.id.formapagamento);
+        List<FormaPagamento> formasPagamento = new FormaPagamentoRepository(this).list();
+
+        for (FormaPagamento forma : formasPagamento) {
             RadioButton radiobutton = new RadioButton(this);
             radiobutton.setId(forma.getId().intValue());
             radiobutton.setTag(forma);
@@ -80,7 +71,12 @@ public class PagamentoActivity extends AbstractActivity
         }
         aq.id(R.id.total_pedido).text(ParseUtilities.formatMoney(pedido.getTotal()));
         aq.id(R.id.salvar).clicked(this);
-    	aq.id(R.id.cancelar).clicked(this);
-        
+        aq.id(R.id.cancelar).clicked(this);
+
+    }
+
+    public void setFormaPagamento(final FormaPagamento formaPagamento) {
+        RadioGroup radio = (RadioGroup)findViewById(R.id.formapagamento);
+        radio.check(formaPagamento.getId().intValue());
     }
 }
