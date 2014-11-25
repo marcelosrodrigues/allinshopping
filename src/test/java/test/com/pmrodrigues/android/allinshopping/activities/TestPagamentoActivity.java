@@ -9,6 +9,7 @@ import com.pmrodrigues.android.allinshopping.exceptions.IntegrationException;
 import com.pmrodrigues.android.allinshopping.models.FormaPagamento;
 import com.pmrodrigues.android.allinshopping.repository.FormaPagamentoRepository;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;

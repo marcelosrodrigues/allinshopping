@@ -7,6 +7,7 @@ import com.pmrodrigues.android.allinshopping.async.SendPedidoIntegrationAsyncPro
 import com.pmrodrigues.android.allinshopping.models.Pedido;
 import com.pmrodrigues.android.allinshopping.services.PedidoService;
 import com.pmrodrigues.android.allinshopping.utilities.Constante;
+import com.pmrodrigues.android.allinshopping.utilities.PriceUtilities;
 
 
 public class AutenticacaoParaEnvioDePedidoActivity extends AbstractLogarActivity {
@@ -14,27 +15,20 @@ public class AutenticacaoParaEnvioDePedidoActivity extends AbstractLogarActivity
 	@Override
 	protected void doAction() {
 
-		Pedido pedido = (Pedido) getIntent().getExtras().get(
-				Constante.PEDIDO);
+		Pedido pedido = PriceUtilities.getPedido();
 		(new PedidoService(this)).save(pedido);
 
 		SendPedidoIntegrationAsyncProcess process = new SendPedidoIntegrationAsyncProcess(this);
 		process.execute();
 
-		(new ActionDialog(this))
-				.setTitle("Ella S/A")
-				.setMessage(
-						"Seu pedido foi concluído com sucesso, obrigado pela preferência")
-				.show();
-		Intent home = new Intent(this, HomeActivity.class);
-		startActivity(home);
 		
 	}
 
 	@Override
 	protected void doBack() {
 		Intent pagamento = new Intent(this, PagamentoActivity.class);
-		startActivity(pagamento);		
+		startActivity(pagamento);
+        this.finish();
 	}
 
     @Override

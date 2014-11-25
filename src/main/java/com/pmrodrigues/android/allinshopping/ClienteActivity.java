@@ -202,8 +202,8 @@ public class ClienteActivity extends AbstractActivity
                     clienteservice.save(cliente);
                     pedido.setCliente(cliente);
                     Intent intent = new Intent(this, PagamentoActivity.class);
-                    intent.putExtra(Constante.PEDIDO, pedido);
                     startActivity(intent);
+                    this.finish();
                 }
 
             }
@@ -224,6 +224,7 @@ public class ClienteActivity extends AbstractActivity
         } else {
             Intent intent = new Intent(this, HomeActivity.class);
             startActivity(intent);
+            this.finish();
         }
     }
 
@@ -249,4 +250,10 @@ public class ClienteActivity extends AbstractActivity
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, ShoppingCartActivity.class);
+        startActivity(intent);
+        this.finish();
+    }
 }

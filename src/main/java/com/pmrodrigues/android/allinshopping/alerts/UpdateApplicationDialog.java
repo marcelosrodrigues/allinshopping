@@ -32,9 +32,10 @@ public class UpdateApplicationDialog extends AbstractDialog
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				
-				Context context = getContext();
+				Activity context = (Activity) getContext();
 	            Intent intent = new Intent(context, AutenticacaoAtualizacaoSistemaActivity.class);
 	            getContext().startActivity(intent);
+                context.finish();
 			}
 		});
         alertdialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Não", new OnClickListener() {

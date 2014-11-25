@@ -9,10 +9,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.j256.ormlite.android.apptools.OrmLiteBaseActivity;
-import com.pmrodrigues.android.allinshopping.database.DummyDbHelper;
+import com.pmrodrigues.android.allinshopping.database.DbHelper;
 import com.pmrodrigues.android.allinshopping.models.Pedido;
 
-public abstract class AbstractActivity extends OrmLiteBaseActivity<DummyDbHelper>
+public abstract class AbstractActivity extends OrmLiteBaseActivity<DbHelper>
 {
     private Context context;
     private Pedido pedido;
@@ -70,5 +70,10 @@ public abstract class AbstractActivity extends OrmLiteBaseActivity<DummyDbHelper
         } else {
             return false;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

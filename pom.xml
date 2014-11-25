@@ -13,7 +13,6 @@
 		<platform.version>4.1.1.4</platform.version>
 		<android.plugin.version>3.6.0</android.plugin.version>
 		<ormlite.version>4.48</ormlite.version>
-		<android.support.version>r4</android.support.version>
 		<junit.version>4.10</junit.version>
 		<jmock.version>2.6.0</jmock.version>
 	</properties>
@@ -111,7 +110,7 @@
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
-			<version>2.2.4</version>
+			<version>2.3</version>
 		</dependency>
 
 		<dependency>
@@ -180,7 +179,7 @@
 				<version>3.8.2</version><!--$NO-MVN-MAN-VER$ -->
 				<configuration>
 					<sdk>
-						<platform>15</platform>
+						<platform>17</platform>
 					</sdk>
 					<extractDuplicates>true</extractDuplicates>
 					<undeployBeforeDeploy>true</undeployBeforeDeploy>
@@ -191,6 +190,9 @@
 					<proguard>
 						<skip>true</skip>
 					</proguard>
+                    <zipalign>
+                        <skip>false</skip>
+                    </zipalign>
 				</configuration>
 				<extensions>true</extensions>
 			</plugin>

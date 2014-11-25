@@ -16,12 +16,12 @@ public class Resource {
 	
 	private final DefaultHttpClient CLIENT;
 	private final String URL;
-	
-	
+
+
 	public Resource(final String URL,final String username , final String password) {
 		super();
 		this.URL = URL;
-		CLIENT = new DefaultHttpClient();		
+		CLIENT = new DefaultHttpClient();
 		CLIENT.setCredentialsProvider(this.getCredential(username, password));		
 	}
 

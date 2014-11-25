@@ -48,21 +48,8 @@ public class ClienteService {
 
 	public void update(final Cliente cliente) {
 
-		try {
-			TransactionManager.callInTransaction(
-					CLIENTE_DAO.getConnectionSource(), new Callable<Void>() {
+            ENDERECO_DAO.update(cliente.getEndereco());
+            CLIENTE_DAO.update(cliente);
 
-						@Override
-						public Void call() throws Exception {
-							ENDERECO_DAO.update(cliente.getEndereco());
-							CLIENTE_DAO.update(cliente);
-							return null;
-						}
-					});
-		} catch (SQLException sqlexception) {
-			Log.e("com.pmrodrigues.android.allinshopping",
-					"Erro no salvamento do cliente " + sqlexception.getMessage(),
-					sqlexception);
-		}
 	}
 }

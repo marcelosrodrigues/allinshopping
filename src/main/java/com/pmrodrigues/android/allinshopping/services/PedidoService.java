@@ -1,19 +1,15 @@
 package com.pmrodrigues.android.allinshopping.services;
 
 import java.math.BigDecimal;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
-import android.util.Log;
 
-import com.j256.ormlite.misc.TransactionManager;
 import com.pmrodrigues.android.allinshopping.enumations.IntegrationType;
 import com.pmrodrigues.android.allinshopping.enumations.ResourceType;
 import com.pmrodrigues.android.allinshopping.exceptions.IntegrationException;
@@ -70,7 +66,6 @@ public class PedidoService
             jsonobject.put("margen_paquito", itempedido.getMargemGestor());
             jsonobject.put("margem_lider", itempedido.getMargemLider());
             jsonobject.put("comissao_vendedora", itempedido.getMargemVendedoras());
-            jsonobject.put("frete", itempedido.getFrete());
             jsonobject.put("akatus", itempedido.getAkatus());
             jsonobject.put("tamanho", itempedido.getAtributo());
             jsonarray.put(jsonobject);
@@ -86,54 +81,30 @@ public class PedidoService
         IntegrationFactory.getInstance()
         				  .getIntegration(IntegrationType.PRESTASHOP)
         				  .getUpload(ResourceType.PEDIDO)
-        				  .sendTo(jsonobject);
+        				  .send(jsonobject);
     }
 
     public void save(final DadosPagamento dadospagamento)
     {
-        try {
-			TransactionManager.callInTransaction(PEDIDO_REPOSITORY.getConnectionSource(), new Callable<Void>(){
-
-				@Override
-				public Void call() throws Exception {
-							DADO_PAGTO_REPOSITORY.insert(dadospagamento);
-					Pedido pedido = dadospagamento.getPedido();
-					pedido.setDadosPagamento(dadospagamento);
-					PEDIDO_REPOSITORY.update(dadospagamento.getPedido());
-					return null;
-				}
-			});
-		} catch (SQLException sqlexception) {
-			Log.e("com.pmrodrigues.android.allinshopping", "Erro no salvamento do pedido " + sqlexception.getMessage(), sqlexception);
-		}
+        DADO_PAGTO_REPOSITORY.insert(dadospagamento);
+        Pedido pedido = dadospagamento.getPedido();
+        pedido.setDadosPagamento(dadospagamento);
+        PEDIDO_REPOSITORY.update(dadospagamento.getPedido());
 
     }
 
     public void save(final Pedido pedido)
     {
-        
-        try {
-			TransactionManager.callInTransaction(PEDIDO_REPOSITORY.getConnectionSource(), new Callable<Void>() {
 
-				@Override
-				public Void call() throws Exception {
-					
-					if( pedido.getId() != null && pedido.getId() > 0L) {
-						PEDIDO_REPOSITORY.update(pedido);
-					} else {
-						PEDIDO_REPOSITORY.insert(pedido);
-								for (ItemPedido item : pedido.getItens()) {
-									item.setPedido(pedido);
-									ITEM_PEDIDO_REPOSITORY.insert(item);
-								}
-					}
-					
-					return null;
-				}
-			});
-		} catch (SQLException sqlexception) {
-			Log.e("com.pmrodrigues.android.allinshopping", "Erro no salvamento do pedido " + sqlexception.getMessage(), sqlexception);
-		}
+        if( pedido.getId() != null && pedido.getId() > 0L) {
+            PEDIDO_REPOSITORY.update(pedido);
+        } else {
+            PEDIDO_REPOSITORY.insert(pedido);
+            for (ItemPedido item : pedido.getItens()) {
+                item.setPedido(pedido);
+                ITEM_PEDIDO_REPOSITORY.insert(item);
+            }
+        }
 
     }
 

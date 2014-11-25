@@ -60,6 +60,7 @@ public class CartaoCreditoActivity extends AbstractActivity
             intent = new Intent(this, PagamentoActivity.class);
         }
         startActivity(intent);
+        this.finish();
     }
 
     private DadosPagamento criarDadosPagamento(Pedido pedido) {
@@ -150,5 +151,12 @@ public class CartaoCreditoActivity extends AbstractActivity
 
     public void setCVV(String CVV) {
         aq.id(R.id.cvv).text(CVV);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this,PagamentoActivity.class);
+        startActivity(intent);
+        this.finish();
     }
 }

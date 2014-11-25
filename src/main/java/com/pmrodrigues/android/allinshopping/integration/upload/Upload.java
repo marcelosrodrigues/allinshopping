@@ -4,8 +4,7 @@ import org.json.JSONObject;
 
 import com.pmrodrigues.android.allinshopping.exceptions.IntegrationException;
 
-public interface Upload
+public interface Upload<E>
 {
-	JSONObject sendTo(JSONObject jsonobject)
-        throws IntegrationException;
+	void send(E e) throws IntegrationException;
 }

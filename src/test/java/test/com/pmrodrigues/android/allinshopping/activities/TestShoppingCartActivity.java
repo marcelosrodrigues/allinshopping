@@ -15,6 +15,7 @@ import com.pmrodrigues.android.allinshopping.repository.PedidoRepository;
 import com.pmrodrigues.android.allinshopping.utilities.ParseUtilities;
 import com.pmrodrigues.android.allinshopping.utilities.PriceUtilities;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;

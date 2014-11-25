@@ -19,8 +19,10 @@ public class Imagem implements Serializable {
 
 	private static final String PRODUTO_FIELD_NAME = "produto_id";
 
-	@SerializedName("id")
-	@DatabaseField(id = true)
+    private static final String ID_FIELD_NAME = "id";
+
+	@SerializedName(ID_FIELD_NAME)
+    @DatabaseField(generatedId = true , columnName = Imagem.ID_FIELD_NAME)
 	private Long id;
 	
 	@SerializedName("url")

@@ -39,10 +39,17 @@ public class PagamentoActivity extends AbstractActivity
             intent = new Intent(this, CartaoCreditoActivity.class);
 
         } else if (view.getId() == R.id.cancelar) {
-            intent = new Intent(this, ClienteActivity.class);
+            intent = new Intent(this, ShoppingCartActivity.class);
         }
         startActivity(intent);
+        this.finish();
+    }
 
+    @Override
+    public void onBackPressed() {
+        final Intent intent = new Intent(this,ShoppingCartActivity.class);
+        startActivity(intent);
+        this.finish();
     }
 
     public FormaPagamento getFormaPagamento() {

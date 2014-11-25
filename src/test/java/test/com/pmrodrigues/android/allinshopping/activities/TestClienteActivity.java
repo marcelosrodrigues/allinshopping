@@ -13,6 +13,7 @@ import com.pmrodrigues.android.allinshopping.repository.ClienteRepository;
 import com.pmrodrigues.android.allinshopping.repository.EstadoRepository;
 import org.joda.time.DateTime;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;

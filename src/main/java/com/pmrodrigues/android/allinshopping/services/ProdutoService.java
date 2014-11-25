@@ -48,7 +48,7 @@ public class ProdutoService {
 
 	public void removeAll() {
 		try {
-			PRODUCT_REPOSITORY.removeAll();
+            PRODUCT_REPOSITORY.removeAll();
 			File directory = new File(Constante.SDCARD_ALLINSHOPP_IMAGES);
 			if (directory.exists()) {
 				directory.delete();

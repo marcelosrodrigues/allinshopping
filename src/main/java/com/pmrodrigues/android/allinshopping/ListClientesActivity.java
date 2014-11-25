@@ -38,6 +38,14 @@ public class ListClientesActivity extends AbstractActivity
             Intent intent = new Intent(this, ClienteActivity.class);
             intent.putExtra(Constante.PEDIDO, getPedido());
             startActivity(intent);
+            this.finish();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        final Intent intent = new Intent(this,ShoppingCartActivity.class);
+        startActivity(intent);
+        this.finish();
     }
 }

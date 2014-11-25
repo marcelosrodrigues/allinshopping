@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
@@ -24,8 +25,9 @@ public class Produto implements Serializable {
 	private static final String DESCRICAO_FIELD_NAME = "descricao"; 
 	private static final String DESCRICAO_BREVE_FIELD_NAME = "descricaobreve"; 
 	private static final String PESO_FIELD_NAME = "peso";
-	
 
+
+    @Expose
 	@SerializedName("id")
 	@DatabaseField(id = true)
 	private Long id; 
@@ -34,35 +36,36 @@ public class Produto implements Serializable {
 	@DatabaseField(columnName = Produto.ID_LOJA_PRESTASHOP_FIELD_NAME)
 	private Long idLoja;
 
+
 	@SerializedName("nome")
 	@DatabaseField(columnName = Produto.NOME_FIELD_NAME)
 	private String nome;
 
-	@SerializedName("preco")
+    @SerializedName("preco")
 	@DatabaseField(columnName = Produto.PRECO_FIELD_NAME)
 	private BigDecimal preco;
 
-	@SerializedName("peso")
+    @SerializedName("peso")
 	@DatabaseField(columnName = Produto.PESO_FIELD_NAME)
-	private BigDecimal peso; 
+	private BigDecimal peso;
 
-	@SerializedName("secao")
+    @SerializedName("secao")
 	@DatabaseField(columnName = Produto.SECAO_FIELD_NAME, foreign = true, foreignAutoRefresh = true)
 	private Secao secao;
 
-	@SerializedName("descricao")
+    @SerializedName("descricao")
 	@DatabaseField(columnName = Produto.DESCRICAO_FIELD_NAME)
 	private String descricao;
 
-	@SerializedName("descricaoBreve")
+    @SerializedName("descricaoBreve")
 	@DatabaseField(columnName = Produto.DESCRICAO_BREVE_FIELD_NAME)
 	private String descricaoCurto;
-	
-	@SerializedName("imagens")
+
+    @SerializedName("imagens")
 	@ForeignCollectionField(eager=true)
     private final Collection<Imagem> imagens = new ArrayList<Imagem>();
- 	
-	@SerializedName("atributos")
+
+    @SerializedName("atributos")
 	@ForeignCollectionField(eager=true,orderColumnName = Atributo.DESCRICAO_FIELD_NAME)
 	private final Collection<Atributo> atributos = new ArrayList<Atributo>();
 

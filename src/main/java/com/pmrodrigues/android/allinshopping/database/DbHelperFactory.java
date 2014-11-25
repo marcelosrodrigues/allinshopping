@@ -9,7 +9,7 @@ public final class DbHelperFactory
 
 	public static DbHelper getDbHelper(Context context)
     {
-        DummyDbHelper dummydbhelper = new DummyDbHelper(context);
-        return dummydbhelper;
+        DbHelper helper = new DbHelper(context);
+        return helper;
     }
 }

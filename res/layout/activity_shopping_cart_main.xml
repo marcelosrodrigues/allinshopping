@@ -13,11 +13,11 @@
 
         <ListView
                 android:id="@id/lista_itens_pedidos"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
-                android:scrollbars="vertical">
+                android:scrollbars="vertical" android:layout_gravity="top">
         </ListView>
 
     </LinearLayout>
@@ -31,11 +31,11 @@
                 android:id="@id/total_pedido"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:layout_marginTop="20.0dip"
-                android:layout_marginBottom="20.0dip"
-                android:paddingTop="15dip"
-                android:paddingBottom="15dip"
-                android:text="Total"
+                android:layout_marginTop="10.0dip"
+                android:layout_marginBottom="10.0dip"
+                android:paddingTop="5dip"
+                android:paddingBottom="5dip"
+                android:text=""
                 android:gravity="right"/>
 
 

@@ -27,7 +27,8 @@ public class AutenticacaoAtualizacaoSistemaActivity
     @Override
 	protected void doBack() {
 		Intent pagamento = new Intent(this, ConfigurationActivity.class);
-		startActivity(pagamento);	
+		startActivity(pagamento);
+        this.finish();
 	}
 
     @Override

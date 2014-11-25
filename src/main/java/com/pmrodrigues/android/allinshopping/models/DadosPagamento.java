@@ -1,5 +1,7 @@
 package com.pmrodrigues.android.allinshopping.models;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import com.pmrodrigues.android.allinshopping.models.constraints.ValidationConstraint;
@@ -15,26 +17,43 @@ public class DadosPagamento extends ValidationConstraint
 
     private static final long serialVersionUID = 1L;
 
+    @Expose
     @DatabaseField
+    @SerializedName("codigosegura")
     private String cvv;
+
+    @Expose
     @DatabaseField
+    @SerializedName("dataExpiracao")
     private Date dataValidade;
 
+    @Expose
     @DatabaseField(foreign = true)
+    @SerializedName("meioPagamento")
     private FormaPagamento formaPagamento;
+
     @DatabaseField(generatedId = true)
     private Long id;
+
+    @Expose
     @DatabaseField
+    @SerializedName("portador")
     private String portador;
+
+    @Expose
     @DatabaseField
+    @SerializedName("numero")
     private String numeroCartao;
 
     @DatabaseField(foreign = true)
     private Pedido pedido;
 
+    @Expose
     @DatabaseField
+    @SerializedName("cpf")
     private String cpf;
 
+    //@Expose
     @DatabaseField
     private Integer quantidadeParcelas = 1;
 
@@ -126,5 +145,13 @@ public class DadosPagamento extends ValidationConstraint
     public boolean isValid() {
         this.validate();
         return super.isValid();
+    }
+
+    public void setFormaPagamento(FormaPagamento formaPagamento) {
+        this.formaPagamento = formaPagamento;
+    }
+
+    public FormaPagamento getFormaPagamento() {
+        return formaPagamento;
     }
 }

@@ -7,12 +7,13 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import com.pmrodrigues.android.allinshopping.models.*;
+import com.pmrodrigues.android.allinshopping.repository.FormaPagamentoRepository;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
 
-import com.pmrodrigues.android.allinshopping.ApplicationContext;
 import com.pmrodrigues.android.allinshopping.enumations.IntegrationType;
 import com.pmrodrigues.android.allinshopping.enumations.ResourceType;
 import com.pmrodrigues.android.allinshopping.exceptions.IntegrationException;
@@ -20,12 +21,6 @@ import com.pmrodrigues.android.allinshopping.exceptions.NoUniqueRegistryExceptio
 import com.pmrodrigues.android.allinshopping.integration.Integration;
 import com.pmrodrigues.android.allinshopping.integration.IntegrationFactory;
 import com.pmrodrigues.android.allinshopping.integration.upload.Upload;
-import com.pmrodrigues.android.allinshopping.models.CEP;
-import com.pmrodrigues.android.allinshopping.models.Cliente;
-import com.pmrodrigues.android.allinshopping.models.Estado;
-import com.pmrodrigues.android.allinshopping.models.FaixaPreco;
-import com.pmrodrigues.android.allinshopping.models.Produto;
-import com.pmrodrigues.android.allinshopping.models.Secao;
 import com.pmrodrigues.android.allinshopping.services.CEPService;
 import com.pmrodrigues.android.allinshopping.services.ClienteService;
 import com.pmrodrigues.android.allinshopping.services.EstadoService;
@@ -72,20 +67,6 @@ public class IntegrationProcess {
 		}
 	}
 
-	public void enviarCliente() throws IntegrationException, JSONException {
-		ClienteService clienteservice = new ClienteService(context);
-		Upload upload = integration.getUpload(ResourceType.CLIENTE);
-		List<Cliente> clientes = clienteservice.listToBeSend();
-		for (Cliente cliente : clientes) {
-			JSONObject jsonobject = upload.sendTo(cliente.toJSON());
-			cliente.setId(jsonobject.getJSONObject("cliente").getLong("id"));
-			cliente.getEndereco().setId(
-					jsonobject.getJSONObject("cliente").getLong("address"));
-			clienteservice.update(cliente);
-		}
-
-	}
-
 	public void enviarPedido() throws Exception {
 		(new PedidoService(context)).sendToBackoffice();
 	}
@@ -100,6 +81,14 @@ public class IntegrationProcess {
 			service.save(cep);
 		}
 	}
+
+    public void importarFormasPagamento() throws IntegrationException {
+        final List<FormaPagamento> formas = integration.getDownload(ResourceType.FORMA_PAGAMENTO).list();
+        final FormaPagamentoRepository repository = new FormaPagamentoRepository(context);
+        for(final FormaPagamento formaPagamento : formas ){
+            repository.insert(formaPagamento);
+        }
+    }
 
 	@SuppressWarnings("unchecked")
 	public void importarFaixaPreco() throws IntegrationException { 

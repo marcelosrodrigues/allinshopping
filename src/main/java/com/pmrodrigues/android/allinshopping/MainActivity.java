@@ -72,7 +72,12 @@ public class MainActivity extends AbstractActivity implements OnClickListener {
 		if (service.precisaAtualizar()) {
 			final Intent intent = new Intent(this, ConfigurationActivity.class);
 			startActivity(intent);
+            this.finish();
 		} 
 	}
 
+    @Override
+    public void onBackPressed() {
+        this.finish();
+    }
 }

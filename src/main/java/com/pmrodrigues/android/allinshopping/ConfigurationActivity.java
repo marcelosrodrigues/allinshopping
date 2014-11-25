@@ -52,6 +52,7 @@ public class ConfigurationActivity extends AbstractActivity implements OnClickLi
 		    		
 		    		final Intent intent = new Intent(this,MainActivity.class);
 		            startActivity(intent);
+                    this.finish();
 		    		
 		    	}
         		
@@ -60,6 +61,7 @@ public class ConfigurationActivity extends AbstractActivity implements OnClickLi
         } else {
             final Intent intent = new Intent(this,HomeActivity.class);
             startActivity(intent);
+            this.finish();
         }
     }
 
@@ -80,5 +82,11 @@ public class ConfigurationActivity extends AbstractActivity implements OnClickLi
     	}
         
     }
-	
+
+    @Override
+    public void onBackPressed() {
+        final Intent intent = new Intent(this,HomeActivity.class);
+        startActivity(intent);
+        this.finish();
+    }
 }

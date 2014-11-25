@@ -2,6 +2,7 @@ package com.pmrodrigues.android.allinshopping.models;
 
 import java.io.Serializable;
 
+import com.google.gson.annotations.Expose;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -13,7 +14,8 @@ public class Estado implements Serializable {
 	public static final String UF_FIELD_NAME = "uf";
 	public static final String NOME_FIELD_NAME = "nome";
 	public static final String ID_FIELD_NAME = "id";
-	
+
+    @Expose
 	@DatabaseField(id = true  , columnName = Estado.ID_FIELD_NAME )
 	private Long id;
 

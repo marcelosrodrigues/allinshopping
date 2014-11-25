@@ -33,25 +33,25 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="10.0dip"
-                    android:paddingRight="10.0dip" android:text="atributo" android:layout_weight="0.2"/>
+                    android:paddingRight="10.0dip" android:text="atributo" android:layout_weight="0.3"/>
 
 
             <EditText
                     android:id="@id/quantidade"
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:hint="Quantidade"
                     android:inputType="number"
                     android:paddingLeft="10.0dip"
-                    android:paddingRight="10.0dip" style="0.9"/>
+                    android:paddingRight="10.0dip" android:layout_weight="0.3"/>
 
             <TextView
                     android:id="@id/preco"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="10.0dip"
-                    android:paddingRight="10.0dip" android:text="preco" android:layout_weight="0.2"
-                    android:gravity="right"/>
+                    android:paddingRight="10.0dip" android:text="preco"
+                    android:gravity="right" android:layout_weight="0.3"/>
 
         </LinearLayout>
         

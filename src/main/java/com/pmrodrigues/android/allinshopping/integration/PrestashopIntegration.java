@@ -1,15 +1,8 @@
 package com.pmrodrigues.android.allinshopping.integration;
 
 import com.pmrodrigues.android.allinshopping.enumations.ResourceType;
-import com.pmrodrigues.android.allinshopping.integration.downloads.Download;
-import com.pmrodrigues.android.allinshopping.integration.downloads.DownloadCEP;
-import com.pmrodrigues.android.allinshopping.integration.downloads.DownloadCliente;
-import com.pmrodrigues.android.allinshopping.integration.downloads.DownloadEstado;
-import com.pmrodrigues.android.allinshopping.integration.downloads.DownloadFaixaPreco;
-import com.pmrodrigues.android.allinshopping.integration.downloads.DownloadProdutos;
-import com.pmrodrigues.android.allinshopping.integration.downloads.DownloadSecoes;
+import com.pmrodrigues.android.allinshopping.integration.downloads.*;
 import com.pmrodrigues.android.allinshopping.integration.upload.Upload;
-import com.pmrodrigues.android.allinshopping.integration.upload.UploadCliente;
 import com.pmrodrigues.android.allinshopping.integration.upload.UploadPedido;
 
 class PrestashopIntegration
@@ -37,6 +30,8 @@ class PrestashopIntegration
         	obj = new DownloadEstado(this.username,this.password);
         } else if ( resourcetype == ResourceType.FAIXA_PRECO ){
         	obj = new DownloadFaixaPreco(this.username,this.password);
+        } else if ( resourcetype == ResourceType.FORMA_PAGAMENTO ){
+            obj = new DownloadFormasPagamento(this.username,this.password);
         }
         
         return ((Download) (obj));
@@ -46,10 +41,8 @@ class PrestashopIntegration
 	public Upload getUpload(ResourceType resourcetype)
     {   
         Object obj = null;
-        if (resourcetype == ResourceType.CLIENTE){  
-        	obj = new UploadCliente();
-        } else if (resourcetype == ResourceType.PEDIDO) {
-            obj = new UploadPedido();
+        if (resourcetype == ResourceType.PEDIDO) {
+            obj = new UploadPedido(this.username,this.password);
         } 
         return ((Upload) (obj));
     }

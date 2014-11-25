@@ -27,11 +27,14 @@ public class ShoppingCartActivity extends AbstractActivity
 	public void onClick(View view) {
 		if (view.getId() == R.id.finalizar_pedido) {
 			Pedido pedido = PriceUtilities.getPedido();
-			new ClienteDialog(this).setPedido(pedido)
-					.setMessage("Cadastro de cliente").show();
+			new ClienteDialog(this)
+                    .setPedido(pedido)
+					.setMessage("Cadastro de cliente")
+                    .show();
 		} else if (view.getId() == R.id.continuar_comprando) {
 			Intent intent = new Intent(this, HomeActivity.class);
 			startActivity(intent);
+            this.finish();
 		}
 
 	}
@@ -52,4 +55,10 @@ public class ShoppingCartActivity extends AbstractActivity
 		aq.id(R.id.finalizar_pedido).clicked(this);
 	}
 
+    @Override
+    public void onBackPressed() {
+        final Intent intent = new Intent(this,HomeActivity.class);
+        startActivity(intent);
+        this.finish();
+    }
 }

@@ -1,5 +1,6 @@
 package com.pmrodrigues.android.allinshopping;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.view.View.OnClickListener;
 import android.widget.ListView;
 
 import com.androidquery.AQuery;
+import com.pmrodrigues.android.allinshopping.alerts.ErrorAlert;
 import com.pmrodrigues.android.allinshopping.commandfactory.CommandFactory;
 import com.pmrodrigues.android.allinshopping.models.Secao;
 
@@ -38,10 +40,20 @@ public class HomeActivity extends AbstractActivity implements OnClickListener {
 
 	@Override
 	protected void onStart() {
-		super.onStart();
-		CommandFactory.getFactory(this)
-			    .createCommand()
-			    .execute();
+
+        try {
+
+            super.onStart();
+            CommandFactory.getFactory(this)
+                    .createCommand()
+                    .execute();
+        }catch( Exception e) {
+            new ErrorAlert(this)
+                    .setMessage(e.getMessage())
+                    .setCancelable(true)
+                    .setTitle("Catalogo Digital Ella S/A")
+                    .show();
+        }
 	}
 
 
@@ -49,7 +61,9 @@ public class HomeActivity extends AbstractActivity implements OnClickListener {
 	public void onBackPressed() {
 
 		if (this.secao == null) {
-			super.onBackPressed();
+            final Intent intent = new Intent(this,MainActivity.class);
+            startActivity(intent);
+            this.finish();
 		} else {
 			this.secao = secao.getSecaoPai();
 			CommandFactory.getFactory(this)

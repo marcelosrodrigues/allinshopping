@@ -92,4 +92,9 @@ public abstract class AbstractLogarActivity extends AbstractActivity
     public void setPassword(String password) {
         aq.id(R.id.password).text(password);
     }
+
+    @Override
+    public void onBackPressed() {
+        this.doBack();
+    }
 }

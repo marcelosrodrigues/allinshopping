@@ -1,5 +1,6 @@
 package com.pmrodrigues.android.allinshopping.alerts;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -24,6 +25,8 @@ public class ActionDialog extends AbstractDialog
 				Context context = getContext();
 	            Intent intent = new Intent(context, MainActivity.class);
 	            getContext().startActivity(intent);
+                Activity current = (Activity) getContext();
+                current.finish();
 				
 			}
 		}).create().show();

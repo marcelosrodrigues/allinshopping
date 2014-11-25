@@ -2,6 +2,7 @@ package com.pmrodrigues.android.allinshopping.models;
 
 import java.io.Serializable;
 
+import com.google.gson.annotations.Expose;
 import org.apache.commons.validator.GenericValidator;
 
 import com.google.gson.annotations.SerializedName;
@@ -31,38 +32,47 @@ public class Endereco extends ValidationConstraint implements Serializable {
 	private static final String BACKOFFICE_ID_FIELD_NAME = "backoffice_id";
 
 	private static final String ID_FIELD_NAME = "id";
-	
+
+
 	@DatabaseField(columnName = Endereco.ID_FIELD_NAME, generatedId = true)
-	private Long internalId; 
-	
+	private Long internalId;
+
+    @Expose
 	@SerializedName("id")
 	@DatabaseField(columnName = Endereco.BACKOFFICE_ID_FIELD_NAME)
-	private Long backofficeId; 
-	
+	private Long backofficeId;
+
+    @Expose
 	@SerializedName("bairro")
 	@DatabaseField(columnName = Endereco.BAIRRO_FIELD_NAME)
 	private String bairro;
 
+    @Expose
 	@SerializedName("cep")
 	@DatabaseField(columnName = Endereco.CEP_FIELD_NAME)
 	private String cep;
 
+    @Expose
 	@SerializedName("cidade")
 	@DatabaseField(columnName = Endereco.CIDADE_FIELD_NAME)
 	private String cidade;
 
+    @Expose
 	@SerializedName("estado")
 	@DatabaseField(columnName = Endereco.ESTADO_FIELD_NAME, foreign = true, foreignAutoRefresh = true)
 	private Estado estado;
 
+    @Expose
 	@SerializedName("logradouro")
 	@DatabaseField(columnName = Endereco.LOGRADOURO_FIELD_NAME)
 	private String logradouro;
 
+    @Expose
 	@SerializedName("telefone")
 	@DatabaseField(columnName = Endereco.TELEFONE_FIELD_NAME)
 	private String telefone;
 
+    @Expose
 	@SerializedName("celular")
 	@DatabaseField(columnName = Endereco.CELULAR_FIELD_NAME)
 	private String celular;

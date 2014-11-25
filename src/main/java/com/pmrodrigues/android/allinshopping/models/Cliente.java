@@ -3,6 +3,7 @@ package com.pmrodrigues.android.allinshopping.models;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.google.gson.annotations.Expose;
 import org.apache.commons.validator.GenericValidator;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,29 +39,35 @@ public class Cliente extends ValidationConstraint
 
     public static final String ULTIMO_NOME_FIELD_NAME = "ultimonome";
 
+    @Expose
     @SerializedName("dataNascimento")
 	@DatabaseField(columnName = Cliente.DATA_NASCIMENTO_FIELD_NAME)
     private Date dataNascimento;
-    
+
+    @Expose
 	@SerializedName("email")
 	@DatabaseField(columnName = Cliente.EMAIL_FIELD_NAME)
     private String email;
     
     @DatabaseField(columnName = Cliente.ID_FIELD_NAME ,  generatedId=true)
-	private Long internalId; 
-    
+	private Long internalId;
+
+    @Expose
     @SerializedName("id")
     @DatabaseField(columnName = Cliente.BACKOFFICE_ID_FIELD_NAME)
     private Long backofficeId;
 
+    @Expose
     @SerializedName("primeiroNome")
     @DatabaseField(columnName = Cliente.PRIMEIRO_NOME_FIELD_NAME)
 	private String primeiroNome;
 
+    @Expose
     @SerializedName("ultimoNome")
     @DatabaseField(columnName = Cliente.ULTIMO_NOME_FIELD_NAME)
     private String ultimoNome;
-	
+
+    @Expose
 	@SerializedName("endereco")
 	@DatabaseField(columnName = Cliente.ENDERECO_FIELD_NAME,foreign = true,foreignAutoCreate = true,foreignAutoRefresh = true)
 	private Endereco endereco;

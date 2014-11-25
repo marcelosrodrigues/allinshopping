@@ -6,6 +6,8 @@
 package com.pmrodrigues.android.allinshopping.models;
 
 import com.akatus.connect.api.v1.entity.Transaction.PaymentMethod;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -21,17 +23,20 @@ public class FormaPagamento
     public static final String NOME_FIELD = "nome";
     public static final String PAYMENT_METHOD_FIELD = "metodo";
 
+    @Expose
+    @SerializedName(ID_FIELD)
     @DatabaseField(id = true , columnName = FormaPagamento.ID_FIELD)
     private Long id;
 
+    @SerializedName("descricao")
     @DatabaseField(columnName = FormaPagamento.NOME_FIELD)
     private String nome;
 
+    @SerializedName("method")
     @DatabaseField(columnName = FormaPagamento.PAYMENT_METHOD_FIELD)
     private PaymentMethod paymentMethod;
 
-    public FormaPagamento() {
-    }
+    public FormaPagamento() {}
 
     public FormaPagamento(final Long id, final String nome, final PaymentMethod metodo) {
         this();
@@ -65,4 +70,7 @@ public class FormaPagamento
         this.nome = nome;
     }
 
+    public void setId(final Long id) {
+        this.id = id;
+    }
 }

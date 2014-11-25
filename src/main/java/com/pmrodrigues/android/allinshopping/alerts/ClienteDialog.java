@@ -5,6 +5,7 @@
 
 package com.pmrodrigues.android.allinshopping.alerts;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -39,15 +40,16 @@ public class ClienteDialog extends AbstractDialog
     public void show()
     {
     	AlertDialog dialog = getBuilder().create();
-    	
+
     	dialog.setButton(Dialog.BUTTON_NEGATIVE, "Cliente novo", new OnClickListener() {
 			
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				Context context = getContext();
+				Activity context = (Activity) getContext();
 	            Intent intent = new Intent(context, ClienteActivity.class);
 	            intent.putExtra(Constante.PEDIDO, pedido);
 	            getContext().startActivity(intent);
+                context.finish();
 				
 			}
 		});
@@ -57,10 +59,11 @@ public class ClienteDialog extends AbstractDialog
 			
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				Context context = getContext();
+                Activity context = (Activity) getContext();
 	            Intent intent = new Intent(context,ListClientesActivity.class);
 	            intent.putExtra(Constante.PEDIDO, pedido);
 	            getContext().startActivity(intent);
+                context.finish();
 				
 			}
 		});

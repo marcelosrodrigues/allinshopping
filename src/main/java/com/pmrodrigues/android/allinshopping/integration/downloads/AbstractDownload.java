@@ -41,7 +41,6 @@ public abstract class AbstractDownload<E> implements Download<E> {
 		this.url = bundle.getString(this.persistentClass.getSimpleName()
 				.toLowerCase()); 
 		GET = new GetResource(url,username,password);
-		
 	}
 
 	protected List<E> toList(final Object json) {

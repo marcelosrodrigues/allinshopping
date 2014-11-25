@@ -7,6 +7,8 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 import org.apache.commons.validator.GenericValidator;
 
 import android.util.Log;
@@ -27,30 +29,31 @@ import com.pmrodrigues.android.allinshopping.utilities.ParseUtilities;
 public class Pedido
     implements Serializable
 {
-
     private static final long serialVersionUID = 1L;
 
+    @Expose
     @DatabaseField(foreign=true,foreignAutoRefresh=true)
     private Cliente cliente;
-    
+
+    @Expose
     @DatabaseField(foreign=true,foreignAutoRefresh=true)
     private DadosPagamento dadosPagamento;
-    
+
     @DatabaseField
     private Date dataEnvio;
-    
+
     @DatabaseField
     private Date dataPedido;
-    
+
     @DatabaseField
     private Date dataPagamento;
-    
+
     @DatabaseField(foreign=true,foreignAutoRefresh=true)
     private FormaPagamento formaPagamento;
-    
+
     @DatabaseField(generatedId=true)
     private Long id;
-    
+
     @ForeignCollectionField(eager=true)
     private Collection<ItemPedido> itens = new ArrayList<ItemPedido>();
 

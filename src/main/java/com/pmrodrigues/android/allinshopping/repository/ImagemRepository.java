@@ -28,5 +28,4 @@ public class ImagemRepository extends AbstractRepository<Imagem, Long> {
 		}
 		
 	}
-
 }
