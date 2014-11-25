@@ -1,25 +1,22 @@
 package test.com.pmrodrigues.android.allinshopping.repository;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-
-import java.util.List;
-import java.util.ResourceBundle;
-
+import android.content.Context;
 import com.pmrodrigues.android.allinshopping.MainActivity;
+import com.pmrodrigues.android.allinshopping.async.IntegrationProcess;
+import com.pmrodrigues.android.allinshopping.models.Secao;
+import com.pmrodrigues.android.allinshopping.repository.SectionRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
-
-import sun.applet.Main;
 import test.com.pmrodrigues.android.allinshopping.responserules.HttpEntityResponseRule;
-import android.content.Context;
 
-import com.pmrodrigues.android.allinshopping.async.IntegrationProcess;
-import com.pmrodrigues.android.allinshopping.models.Secao;
-import com.pmrodrigues.android.allinshopping.repository.SectionRepository;
+import java.util.List;
+import java.util.ResourceBundle;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 @RunWith(RobolectricTestRunner.class)
 public class TestSecaoRepository {
