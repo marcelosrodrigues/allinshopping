@@ -2,15 +2,12 @@ package com.pmrodrigues.android.allinshopping.integration.upload;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.pmrodrigues.android.allinshopping.exceptions.IntegrationException;
 import com.pmrodrigues.android.allinshopping.models.ItemPedido;
 import com.pmrodrigues.android.allinshopping.models.Pedido;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import com.pmrodrigues.android.allinshopping.exceptions.IntegrationException;
-import com.pmrodrigues.android.allinshopping.integration.rest.PostResource;
-import sun.security.jgss.GSSCaller;
 
 import static java.lang.String.format;
 

@@ -1,39 +1,33 @@
 package com.pmrodrigues.android.allinshopping.models;
 
-import java.io.Serializable;
-import java.util.Date;
-
 import com.google.gson.annotations.Expose;
-import org.apache.commons.validator.GenericValidator;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.akatus.connect.api.v1.entity.Address;
-import com.akatus.connect.api.v1.entity.Payer;
-import com.akatus.connect.api.v1.entity.Phone;
-import com.akatus.connect.api.v1.entity.Phone.Type;
 import com.google.gson.annotations.SerializedName;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import com.pmrodrigues.android.allinshopping.models.constraints.ValidationConstraint;
 import com.pmrodrigues.android.allinshopping.utilities.ParseUtilities;
+import org.apache.commons.validator.GenericValidator;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.Serializable;
+import java.util.Date;
 
 @DatabaseTable
 public class Cliente extends ValidationConstraint
-    implements Serializable
-{
+        implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-	public static final String DATA_NASCIMENTO_FIELD_NAME = "datanascimento"; 
+    public static final String DATA_NASCIMENTO_FIELD_NAME = "datanascimento";
 
-	public static final String EMAIL_FIELD_NAME = "email";
+    public static final String EMAIL_FIELD_NAME = "email";
 
-	public static final String ENDERECO_FIELD_NAME = "endereco";
+    public static final String ENDERECO_FIELD_NAME = "endereco";
 
-	public static final String BACKOFFICE_ID_FIELD_NAME = "backoffice_id";
+    public static final String BACKOFFICE_ID_FIELD_NAME = "backoffice_id";
 
-	public static final String ID_FIELD_NAME = "id";
+    public static final String ID_FIELD_NAME = "id";
 
     public static final String PRIMEIRO_NOME_FIELD_NAME = "primeironome";
 
@@ -41,16 +35,16 @@ public class Cliente extends ValidationConstraint
 
     @Expose
     @SerializedName("dataNascimento")
-	@DatabaseField(columnName = Cliente.DATA_NASCIMENTO_FIELD_NAME)
+    @DatabaseField(columnName = Cliente.DATA_NASCIMENTO_FIELD_NAME)
     private Date dataNascimento;
 
     @Expose
-	@SerializedName("email")
-	@DatabaseField(columnName = Cliente.EMAIL_FIELD_NAME)
+    @SerializedName("email")
+    @DatabaseField(columnName = Cliente.EMAIL_FIELD_NAME)
     private String email;
-    
-    @DatabaseField(columnName = Cliente.ID_FIELD_NAME ,  generatedId=true)
-	private Long internalId;
+
+    @DatabaseField(columnName = Cliente.ID_FIELD_NAME, generatedId = true)
+    private Long internalId;
 
     @Expose
     @SerializedName("id")
@@ -60,7 +54,7 @@ public class Cliente extends ValidationConstraint
     @Expose
     @SerializedName("primeiroNome")
     @DatabaseField(columnName = Cliente.PRIMEIRO_NOME_FIELD_NAME)
-	private String primeiroNome;
+    private String primeiroNome;
 
     @Expose
     @SerializedName("ultimoNome")
@@ -68,75 +62,34 @@ public class Cliente extends ValidationConstraint
     private String ultimoNome;
 
     @Expose
-	@SerializedName("endereco")
-	@DatabaseField(columnName = Cliente.ENDERECO_FIELD_NAME,foreign = true,foreignAutoCreate = true,foreignAutoRefresh = true)
-	private Endereco endereco;
-    
-    public Payer toPayer() {
-    	
-		final Payer payer = new Payer();
-    	payer.setName(this.getNomeCompleto());
-    	payer.setEmail(this.getEmail());
-    	
-		final Address address = payer.newAddress();
-    	address.setStreet(endereco.getLogradouro());
-    	address.setNumber(0);
-        address.setComplement("");
-        address.setCity(endereco.getCidade());
-        address.setNeighbourhood(endereco.getBairro());
-        address.setState(Address.State.valueOf(endereco.getEstado().getUf()));
-        address.setType(Address.Type.SHIPPING);
-        address.setZip(endereco.getCep());
-        address.setCountry(Address.Country.BRA);
-                
-        
-        if( !GenericValidator.isBlankOrNull(endereco.getTelefone())  && !"{}".equalsIgnoreCase(endereco.getTelefone()) ) {
-			final Phone phone = new Phone();
-        	phone.setNumber(endereco.getTelefone());
-        	phone.setType(Type.RESIDENTIAL);
-        	payer.addPhone(phone);
-        }
-        
-        if( !GenericValidator.isBlankOrNull(endereco.getCelular()) && !"{}".equalsIgnoreCase(endereco.getCelular())) {
-			final Phone phone = new Phone();
-        	phone.setNumber(endereco.getCelular());
-        	phone.setType(Type.CELLPHONE);
-        	payer.addPhone(phone);
-        }
-        
-        return payer;
+    @SerializedName("endereco")
+    @DatabaseField(columnName = Cliente.ENDERECO_FIELD_NAME, foreign = true, foreignAutoCreate = true, foreignAutoRefresh = true)
+    private Endereco endereco;
+
+    public Cliente() {
+        super();
     }
 
-    public Cliente()
-    {
-		super();
-    }
-
-    public Date getDataNascimento()
-    {
+    public Date getDataNascimento() {
         return dataNascimento;
     }
 
-    public String getEmail()
-    {
+    public String getEmail() {
         return email;
     }
 
-    public Long getId()
-    {
+    public Long getId() {
         return internalId;
     }
 
 
-    public String getNomeCompleto()
-    {
-        return String.format("%s %s",this.primeiroNome,this.ultimoNome);
+    public String getNomeCompleto() {
+        return String.format("%s %s", this.primeiroNome, this.ultimoNome);
     }
 
     public JSONObject toJSON()
-        throws JSONException
-    {
-		final JSONObject jsonobject = new JSONObject();
+            throws JSONException {
+        final JSONObject jsonobject = new JSONObject();
         jsonobject.put("nome", getNomeCompleto());
         jsonobject.put("sobrenome", getNomeCompleto());
         jsonobject.put("email", getEmail());
@@ -151,42 +104,39 @@ public class Cliente extends ValidationConstraint
         return jsonobject;
     }
 
-	@Override
-	protected void validate()
-    {
-        if (GenericValidator.isBlankOrNull(primeiroNome))
-        {
-			super.add("Primeiro nome é obrigatório");
+    @Override
+    protected void validate() {
+        if (GenericValidator.isBlankOrNull(primeiroNome)) {
+            super.add("Primeiro nome é obrigatório");
         }
-        if (GenericValidator.isBlankOrNull(ultimoNome))
-        {
+        if (GenericValidator.isBlankOrNull(ultimoNome)) {
             super.add("Ultimo nome é obrigatório");
         }
-        if (dataNascimento == null)
-        {
-			add("Data de nascimento é obrigatório");
+        if (dataNascimento == null) {
+            add("Data de nascimento é obrigatório");
         }
-        if( GenericValidator.isBlankOrNull(email) || !GenericValidator.isEmail(email) ){
+        if (GenericValidator.isBlankOrNull(email) || !GenericValidator.isEmail(email)) {
             add("E-mail inválido");
         }
 
-        if(!endereco.isValid() ){
+        if (!endereco.isValid()) {
             addAll(endereco.errors());
         }
-       
+
     }
 
-	public void setId(final Long id) {
-		this.internalId = id;
-	}
+    public void setId(final Long id) {
+        this.internalId = id;
+    }
 
-	public Endereco getEndereco() {
-		return this.endereco;
-	}
+    public Endereco getEndereco() {
+        return this.endereco;
+    }
 
-	public void setEndereco(final Endereco endereco) {
-		this.endereco = endereco;
-	}
+    public void setEndereco(final Endereco endereco) {
+        this.endereco = endereco;
+    }
+
     public String getPrimeiroNome() {
         return primeiroNome;
     }
@@ -204,10 +154,10 @@ public class Cliente extends ValidationConstraint
     }
 
     public void setDataNascimento(final Date dataNascimento) {
-		this.dataNascimento = dataNascimento;		
-	}
+        this.dataNascimento = dataNascimento;
+    }
 
-	public void setEmail(final String email) {
-		this.email = email;
-	}
+    public void setEmail(final String email) {
+        this.email = email;
+    }
 }

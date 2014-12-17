@@ -187,9 +187,22 @@
 						<avd>ellasa</avd>
 						<wait>60000</wait>
 					</emulator>
-					<proguard>
-						<skip>true</skip>
-					</proguard>
+                    <dex>
+                        <coreLibrary>true</coreLibrary>
+                    </dex>
+                    <proguard>
+                        <skip>false</skip>
+                        <config>proguard.cfg</config>
+                        <jvmArguments>
+                            <jvmArgument>-Xms2048m</jvmArgument>
+                            <jvmArgument>-Xmx2048m</jvmArgument>
+                        </jvmArguments>
+                        <proguardJarPath>D:/proguard5.1/lib/proguard.jar</proguardJarPath>
+                    </proguard>
+                    <manifest>
+                        <debuggable>false</debuggable>
+                        <!-- TODO false in production -->
+                    </manifest>
                     <zipalign>
                         <skip>false</skip>
                     </zipalign>

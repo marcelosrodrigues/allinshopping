@@ -1,32 +1,22 @@
 package com.pmrodrigues.android.allinshopping.async;
 
-import java.util.List;
-import java.util.ResourceBundle;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
-
-import com.pmrodrigues.android.allinshopping.models.*;
-import com.pmrodrigues.android.allinshopping.repository.FormaPagamentoRepository;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.Context;
-
 import com.pmrodrigues.android.allinshopping.enumations.IntegrationType;
 import com.pmrodrigues.android.allinshopping.enumations.ResourceType;
 import com.pmrodrigues.android.allinshopping.exceptions.IntegrationException;
 import com.pmrodrigues.android.allinshopping.exceptions.NoUniqueRegistryException;
 import com.pmrodrigues.android.allinshopping.integration.Integration;
 import com.pmrodrigues.android.allinshopping.integration.IntegrationFactory;
-import com.pmrodrigues.android.allinshopping.integration.upload.Upload;
-import com.pmrodrigues.android.allinshopping.services.CEPService;
-import com.pmrodrigues.android.allinshopping.services.ClienteService;
-import com.pmrodrigues.android.allinshopping.services.EstadoService;
-import com.pmrodrigues.android.allinshopping.services.PedidoService;
-import com.pmrodrigues.android.allinshopping.services.ProdutoService;
-import com.pmrodrigues.android.allinshopping.services.SecaoService;
+import com.pmrodrigues.android.allinshopping.models.*;
+import com.pmrodrigues.android.allinshopping.repository.FormaPagamentoRepository;
+import com.pmrodrigues.android.allinshopping.services.*;
+
+import java.util.List;
+import java.util.ResourceBundle;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 public class IntegrationProcess {
 
@@ -68,8 +58,8 @@ public class IntegrationProcess {
 	}
 
 	public void enviarPedido() throws Exception {
-		(new PedidoService(context)).sendToBackoffice();
-	}
+        (new PedidoService(context)).send();
+    }
 
 	@SuppressWarnings("unchecked")
 	public void importarCEP() throws IntegrationException { 
@@ -86,6 +76,10 @@ public class IntegrationProcess {
         final List<FormaPagamento> formas = integration.getDownload(ResourceType.FORMA_PAGAMENTO).list();
         final FormaPagamentoRepository repository = new FormaPagamentoRepository(context);
         for(final FormaPagamento formaPagamento : formas ){
+            final FormaPagamento existed = repository.getById(formaPagamento.getId());
+            if (existed != null) {
+                repository.delete(existed);
+            }
             repository.insert(formaPagamento);
         }
     }
