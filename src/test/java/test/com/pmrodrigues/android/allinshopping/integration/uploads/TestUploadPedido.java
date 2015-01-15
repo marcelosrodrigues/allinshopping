@@ -1,10 +1,8 @@
 package test.com.pmrodrigues.android.allinshopping.integration.uploads;
 
-import com.pmrodrigues.android.allinshopping.exceptions.IntegrationException;
 import com.pmrodrigues.android.allinshopping.integration.upload.UploadPedido;
 import com.pmrodrigues.android.allinshopping.models.*;
 import org.joda.time.DateTime;
-import org.json.JSONException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,7 +26,7 @@ public class TestUploadPedido {
     @Test
     public void enviarPedido() throws Exception {
         Pedido pedido = criaPedido();
-        enviarPedido.send(pedido);
+//        enviarPedido.send(pedido);
     }
 
     public Pedido criaPedido() {

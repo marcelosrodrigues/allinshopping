@@ -1,24 +1,21 @@
 package test.com.pmrodrigues.android.allinshopping.activities;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import java.util.ResourceBundle;
-
+import android.os.AsyncTask;
+import android.view.View;
+import com.pmrodrigues.android.allinshopping.HomeActivity;
+import com.pmrodrigues.android.allinshopping.async.IntegrationAsyncProcess;
+import com.pmrodrigues.android.allinshopping.models.Secao;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
-
 import test.com.pmrodrigues.android.allinshopping.responserules.HttpEntityResponseRule;
-import android.os.AsyncTask;
-import android.view.View;
 
-import com.pmrodrigues.android.allinshopping.HomeActivity;
-import com.pmrodrigues.android.allinshopping.async.IntegrationAsyncProcess;
-import com.pmrodrigues.android.allinshopping.models.Secao;
+import java.util.ResourceBundle;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(RobolectricTestRunner.class)
 public class TestHomeActivity {
@@ -39,7 +36,8 @@ public class TestHomeActivity {
 		Robolectric.getFakeHttpLayer().addHttpResponseRule(integration.getString("secao"),response.getString("secao"));
 		Robolectric.getFakeHttpLayer().addHttpResponseRule(integration.getString("produto"),response.getString("produto"));		
 		Robolectric.getFakeHttpLayer().addHttpResponseRule(integration.getString("cliente"),response.getString("cliente"));
-		Robolectric.getFakeHttpLayer().addHttpResponseRule(new HttpEntityResponseRule());
+        Robolectric.getFakeHttpLayer().addHttpResponseRule(integration.getString("formapagamento"), response.getString("formapagamento"));
+        Robolectric.getFakeHttpLayer().addHttpResponseRule(new HttpEntityResponseRule());
 		
 		IntegrationAsyncProcess integration = new IntegrationAsyncProcess(Robolectric.application.getApplicationContext());
 		integration.setUserName("teste")
